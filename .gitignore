@@ -1,0 +1,11 @@
+
+# Ignore Java class files
+*.class
+
+# Ignore Java Artifact files
+*.jar
+*.war
+*.ear
+
+
+
