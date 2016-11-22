@@ -1,0 +1,11 @@
+<project name="HelloWorld" default="run" basedir=".">
+  <description>
+    Simple example build file
+  </description>
+  <target name="build">
+    <javac includeantruntime="false" srcdir="." destdir="." />
+  </target>
+  <target name="run" depends="build">
+    <java classname="HelloWorld" classpath="." />
+  </target>
+</project>
