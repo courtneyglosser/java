@@ -2,10 +2,16 @@
   <description>
     Simple example build file
   </description>
-  <target name="build">
+  <target name="build"
+        description="Build the HelloWorld command line application.">
     <javac includeantruntime="false" srcdir="." destdir="." />
   </target>
-  <target name="run" depends="build">
+  <target name="run" depends="build"
+        description="Run the HelloWorld command line application.">
     <java classname="HelloWorld" classpath="." />
+  </target>
+  <target name="clean"
+        description="Remove building / non-committed artifacts.">
+    <delete file="HelloWorld.class" />
   </target>
 </project>

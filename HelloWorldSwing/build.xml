@@ -1,0 +1,17 @@
+<project name="HelloWorldSwing" default="run" basedir=".">
+  <description>
+    Simple example build file
+  </description>
+  <target name="pre-build">
+    <mkdir dir="build" />
+  </target>
+  <target name="build" depends="pre-build">
+    <javac includeantruntime="false" srcdir="src" destdir="build" />
+  </target>
+  <target name="run" depends="build">
+    <java classname="HelloWorldSwing" classpath="build" />
+  </target>
+  <target name="clean">
+    <delete dir="build" />
+  </target>
+</project>
