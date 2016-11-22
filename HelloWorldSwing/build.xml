@@ -9,7 +9,7 @@
     <javac includeantruntime="false" srcdir="src" destdir="build" />
   </target>
   <target name="run" depends="build">
-    <java classname="HelloWorldSwing" classpath="build" />
+    <java classname="HelloWorldSwing" classpath="build" fork="true" />
   </target>
   <target name="clean">
     <delete dir="build" />
