@@ -6,10 +6,10 @@ import java.awt.Graphics2D;
 import java.util.Random;
 
 
-public class MyPanel extends JPanel{
+public class SnakePanel extends JPanel{
 
-    public MyPanel () {
-        System.out.println("Constructing MyPanel");
+    public SnakePanel () {
+        System.out.println("Constructing Snake Panel");
 
         repaint();
     }
