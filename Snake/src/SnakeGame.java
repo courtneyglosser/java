@@ -54,16 +54,13 @@ public class SnakeGame {
 
                 Thread t = new Thread(new Runnable(){
                     public void run() {
-                        update(); //say it takes 1 min
+                        // @TODO:  Learning more about Threads vs Runnable
+                        update();
                     }
                 });
 
                 t.start();
                 render();
-            }
-            else {
-
-                System.out.println("Not rendering, yet");
             }
         } 
 
