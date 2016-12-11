@@ -43,7 +43,7 @@ public class SnakeGame {
         sf.setVisible(true);
 
         long lastLoopTime = System.nanoTime();
-        final int TARGET_FPS = 120;
+        final int TARGET_FPS = 60;
         final int OPTIMAL_TIME = 1000000000 / TARGET_FPS;
 
         while (gameLoop) {

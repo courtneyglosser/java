@@ -10,7 +10,7 @@ public class SnakePanel extends JPanel{
 
     private int score;
 
-    private int[] snakePos = {1};
+    private Snake snake = new Snake();
 
     private static final int WIDTH = 160;
     private static final int HEIGHT = WIDTH / 12 * 9;
@@ -22,6 +22,20 @@ public class SnakePanel extends JPanel{
 
     public SnakePanel () {
         System.out.println("Constructing Snake Panel");
+
+//Need to learn more about key event listening
+//        InputMap im = getInputMap(WHEN_FOCUSED);
+//        ActionMap am = getActionMap();
+//
+//        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "onEnter");
+//
+//        am.put("onEnter", new AbstractAction() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                // Enter pressed
+//                System.out.println("Pressed Enter");
+//            }
+//        });
 
         repaint();
     }
@@ -45,6 +59,7 @@ public class SnakePanel extends JPanel{
 
         drawScore(g2d);
 
+        moveSnake();
         drawSnake(g2d);
 
 //        Random r = new Random();
@@ -67,14 +82,20 @@ public class SnakePanel extends JPanel{
     }
 
     public void drawSnake(Graphics2D g2d) {
-        for(int i = 0; i < snakePos.length; i++) {
-            System.out.println("Snake array val: " + snakePos[i]);
-            g2d.fillRect(snakePos[i] * WIDTH_UNIT, snakePos[i] * HEIGHT_UNIT, WIDTH_UNIT, HEIGHT_UNIT);
-        }
+        int snakeX = snake.getX() * WIDTH_UNIT;
+        int snakeY = snake.getY() * HEIGHT_UNIT;
 
+        g2d.fillRect(snakeX, snakeY, WIDTH_UNIT, HEIGHT_UNIT);
     }
 
     public void moveSnake() {
 
+        if (snake.moveTime() ) {
+            snake.move();
+        }
+
     }
+
+
+
 }
