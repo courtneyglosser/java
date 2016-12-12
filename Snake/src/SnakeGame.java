@@ -68,12 +68,6 @@ public class SnakeGame {
 
     public void update() {
 
-        System.out.println("Update!");
-
-        if (gameLoopCount++ > 1000) {
-            gameLoop = false;
-        }
-
     }
 
 

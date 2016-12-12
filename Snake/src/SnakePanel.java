@@ -16,13 +16,22 @@ public class SnakePanel extends JPanel implements ActionListener{
 
     private Snake snake = new Snake();
 
+    // Set basic unit height and width
     private static final int WIDTH = 160;
     private static final int HEIGHT = WIDTH / 12 * 9;
 
+    // Set scale
     private static final int SCALE = 10;
 
+    // Define pixel units
     private static final int WIDTH_UNIT = WIDTH / SCALE;
     private static final int HEIGHT_UNIT = HEIGHT / SCALE;
+
+    // Define board dimentions
+    private static final int BOARD_X = WIDTH_UNIT * 5;
+    private static final int BOARD_Y = HEIGHT_UNIT * 2;
+    private static final int BOARD_WIDTH = WIDTH_UNIT * 30;
+    private static final int BOARD_HEIGHT = HEIGHT_UNIT * 30;
 
     public SnakePanel () {
         System.out.println("Constructing Snake Panel");
@@ -52,6 +61,7 @@ public class SnakePanel extends JPanel implements ActionListener{
         int h = getHeight();
 
         drawScore(g2d);
+        drawGameBoard(g2d);
 
         moveSnake();
         drawSnake(g2d);
@@ -63,6 +73,12 @@ public class SnakePanel extends JPanel implements ActionListener{
     public void drawScore(Graphics2D g2d) {
 
        g2d.drawString("Score: " + score++, 10, 10); 
+
+    }
+
+    public void drawGameBoard(Graphics2D g2d) {
+
+       g2d.drawRect(BOARD_X, BOARD_Y, BOARD_WIDTH, BOARD_HEIGHT); 
 
     }
 
