@@ -1,5 +1,6 @@
 
 
+import java.awt.event.KeyEvent;
 
 class Snake {
 
@@ -12,7 +13,7 @@ class Snake {
 
     // Managing snake speed.
     private long moveTimer = System.nanoTime();
-    private static final int TARGET_MOVEMENT = 3; // speed per second
+    private static final int TARGET_MOVEMENT = 6; // speed per second
     private static final int OPTIMAL_MOVE = 1000000000 / TARGET_MOVEMENT;
 
     public Snake() {
@@ -66,5 +67,28 @@ class Snake {
                 y++;
                 break;
         }
+    }
+
+    public void keyPressed(KeyEvent e) {
+
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
+            direction = 'a';
+        }
+
+        if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
+            direction = 'd';
+        }
+
+        if (key == KeyEvent.VK_UP || key == KeyEvent.VK_W) {
+            direction = 'w';
+        }
+
+        if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) {
+            direction = 's';
+        }
+
+        System.out.println("Changed Direction to: " + direction);
     }
 }

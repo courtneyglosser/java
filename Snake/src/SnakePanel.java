@@ -4,9 +4,13 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.Random;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
-public class SnakePanel extends JPanel{
+public class SnakePanel extends JPanel implements ActionListener{
 
     private int score;
 
@@ -23,19 +27,9 @@ public class SnakePanel extends JPanel{
     public SnakePanel () {
         System.out.println("Constructing Snake Panel");
 
-//Need to learn more about key event listening
-//        InputMap im = getInputMap(WHEN_FOCUSED);
-//        ActionMap am = getActionMap();
-//
-//        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "onEnter");
-//
-//        am.put("onEnter", new AbstractAction() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                // Enter pressed
-//                System.out.println("Pressed Enter");
-//            }
-//        });
+        addKeyListener(new TAdapter());
+
+        setFocusable(true);
 
         repaint();
     }
@@ -63,15 +57,6 @@ public class SnakePanel extends JPanel{
         drawSnake(g2d);
 
 //        Random r = new Random();
-//
-//        for (int i = 0; i < 2000; i++) {
-//
-//            int x = Math.abs(r.nextInt()) % w;
-//            int y = Math.abs(r.nextInt()) % h;
-//            g2d.drawLine(x, y, x, y);
-//            g2d.fillRect(100, 100, WIDTH_UNIT, HEIGHT_UNIT);
-//            
-//        }
     }
 
 
@@ -96,6 +81,24 @@ public class SnakePanel extends JPanel{
 
     }
 
+    @Override
+    /**
+        This implements the necessary functionality for the ActionListener
+        abstract interface
+     */
+    public void actionPerformed(ActionEvent e) {
+        // @TODO:  Learn more about this repaint functionality.
+        repaint();  
+    }
 
+
+    private class TAdapter extends KeyAdapter {
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            System.out.println("Registered a keyboard button press.");
+            snake.keyPressed(e);
+        }
+    }
 
 }
