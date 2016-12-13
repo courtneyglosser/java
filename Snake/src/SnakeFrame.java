@@ -26,8 +26,6 @@ public class SnakeFrame extends JFrame {
 
 
     public void render() {
-        System.out.println("Frame Render!");
-
         sp.repaint();
     }
 }

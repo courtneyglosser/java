@@ -1,14 +1,17 @@
 
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.util.Random;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
+import java.util.Random;
+import javax.swing.ImageIcon;
 
 public class SnakePanel extends JPanel implements ActionListener{
 
@@ -33,14 +36,30 @@ public class SnakePanel extends JPanel implements ActionListener{
     private static final int BOARD_WIDTH = WIDTH_UNIT * 30;
     private static final int BOARD_HEIGHT = HEIGHT_UNIT * 30;
 
+    private Image snakeSegment;
+
     public SnakePanel () {
         System.out.println("Constructing Snake Panel");
 
         addKeyListener(new TAdapter());
-
+        setBackground(Color.black);
         setFocusable(true);
 
+        setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+
+
+        loadImages();
         repaint();
+    }
+
+    private void loadImages() {
+
+        ImageIcon iid = new ImageIcon("snake-seg.png");
+        snakeSegment = iid.getImage();
+
+        System.out.println("Got ImageIcon:  " + iid);
+        System.out.println("Load Status: " + iid.getImageLoadStatus());
+        System.out.println("Got Image:  " + snakeSegment);
     }
 
     @Override
@@ -83,10 +102,14 @@ public class SnakePanel extends JPanel implements ActionListener{
     }
 
     public void drawSnake(Graphics2D g2d) {
-        int snakeX = snake.getX() * WIDTH_UNIT;
-        int snakeY = snake.getY() * HEIGHT_UNIT;
+        int snakeX = BOARD_X + snake.getX() * WIDTH_UNIT;
+        int snakeY = BOARD_Y + snake.getY() * HEIGHT_UNIT;
 
-        g2d.fillRect(snakeX, snakeY, WIDTH_UNIT, HEIGHT_UNIT);
+        g2d.drawImage(snakeSegment, snakeX, snakeY, this);
+        g2d.drawImage(snakeSegment, 0, 0, this);
+
+        Toolkit.getDefaultToolkit().sync();
+//        g2d.fillRect(snakeX, snakeY, WIDTH_UNIT, HEIGHT_UNIT);
     }
 
     public void moveSnake() {
