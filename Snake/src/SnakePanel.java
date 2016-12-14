@@ -4,14 +4,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Random;
-import javax.swing.ImageIcon;
 
 public class SnakePanel extends JPanel implements ActionListener{
 
@@ -36,7 +34,17 @@ public class SnakePanel extends JPanel implements ActionListener{
     private static final int BOARD_WIDTH = WIDTH_UNIT * 30;
     private static final int BOARD_HEIGHT = HEIGHT_UNIT * 30;
 
-    private Image snakeSegment;
+    // Defining snake as a grid
+    private final int DOT_SIZE = 10;
+    private final int ALL_DOTS = 900;
+    private final int RAND_POS = 29;
+    private int dots;
+
+    // Defining time delay for timer.
+    private final int DELAY = 140;
+
+    private final int x[] = new int[ALL_DOTS];
+    private final int y[] = new int[ALL_DOTS];
 
     public SnakePanel () {
         System.out.println("Constructing Snake Panel");
@@ -47,19 +55,28 @@ public class SnakePanel extends JPanel implements ActionListener{
 
         setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 
-
         loadImages();
+        initPanel();
+
+
         repaint();
     }
 
+    /**
+        @TODO:  Re-introduce images when I get package management / jar file
+        creation figured out.
+     */
     private void loadImages() {
 
-        ImageIcon iid = new ImageIcon("snake-seg.png");
-        snakeSegment = iid.getImage();
+    }
 
-        System.out.println("Got ImageIcon:  " + iid);
-        System.out.println("Load Status: " + iid.getImageLoadStatus());
-        System.out.println("Got Image:  " + snakeSegment);
+    private void initPanel() {
+        dots = 3;
+
+        for (int z = 0; z < dots; z++) {
+            x[z] = 50 - z * 10;
+            y[z] = 50;
+        }
     }
 
     @Override
@@ -92,6 +109,7 @@ public class SnakePanel extends JPanel implements ActionListener{
     public void drawScore(Graphics2D g2d) {
 
        g2d.drawString("Score: " + score++, 10, 10); 
+       g2d.drawString("Snake Length: " + dots, 10, 40); 
 
     }
 
@@ -102,20 +120,44 @@ public class SnakePanel extends JPanel implements ActionListener{
     }
 
     public void drawSnake(Graphics2D g2d) {
-        int snakeX = BOARD_X + snake.getX() * WIDTH_UNIT;
-        int snakeY = BOARD_Y + snake.getY() * HEIGHT_UNIT;
-
-        g2d.drawImage(snakeSegment, snakeX, snakeY, this);
-        g2d.drawImage(snakeSegment, 0, 0, this);
-
-        Toolkit.getDefaultToolkit().sync();
-//        g2d.fillRect(snakeX, snakeY, WIDTH_UNIT, HEIGHT_UNIT);
+        for (int z = 0; z < dots; z++) {
+            if (z == 0) {
+                // @TODO:  Make head different color
+                g2d.setColor(Color.yellow);
+                g2d.fillRect(x[z], y[z], DOT_SIZE, DOT_SIZE);
+                g2d.setColor(Color.blue);
+            } else {
+                g2d.fillRect(x[z], y[z], DOT_SIZE, DOT_SIZE);
+            }
+        }
     }
 
     public void moveSnake() {
 
         if (snake.moveTime() ) {
-            snake.move();
+//            snake.move();
+            for (int z = dots; z > 0; z--) {
+                x[z] = x[(z - 1)];
+                y[z] = y[(z - 1)];
+            }
+
+            if (snake.getDirection() == 'a') {
+                x[0] -= DOT_SIZE;
+            }
+
+            if (snake.getDirection() == 'd') {
+                x[0] += DOT_SIZE;
+            }
+
+            if (snake.getDirection() == 'w') {
+                y[0] -= DOT_SIZE;
+            }
+
+            if (snake.getDirection() == 's') {
+                y[0] += DOT_SIZE;
+                // Temp:  Testing snake growing:
+                dots++;
+            }
         }
 
     }

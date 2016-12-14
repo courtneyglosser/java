@@ -32,9 +32,11 @@ class Snake {
 
     int getX() { return x; }
     int getY() { return y; }
+    int getDirection() {return direction; }
 
     void setX(int setX) {x = setX;}
     void setY(int setY) {y = setY;}
+    void setDirection(char d) {direction = d;}
 
 
     boolean moveTime() {
