@@ -13,7 +13,7 @@ public class FillPanel extends JPanel implements ActionListener{
     private Board gameBoard;
 
     public FillPanel() {
-        System.out.println("Constructing the fill panel");
+        System.out.println("Constructing the Fill panel");
 
         gameBoard = new Board();
 
@@ -48,30 +48,6 @@ public class FillPanel extends JPanel implements ActionListener{
             System.out.println("Mouse pressed at: (" + e.getX() + ", "
                         + e.getY() + ")");
             System.out.println("Pressed button: " + e.getButton() );
-        }
-
-        public void mouseReleased(MouseEvent e) {
-           System.out.println("Mouse released; # of clicks: "
-                        + e.getClickCount());
-            System.out.println("Mouse released at: (" + e.getX() + ", "
-                        + e.getY() + ")");
-            System.out.println("released button: " + e.getButton() );
-        }
-//
-//        public void mouseEntered(MouseEvent e) {
-//           System.out.println("Mouse entered");
-//        }
-//
-//        public void mouseExited(MouseEvent e) {
-//           System.out.println("Mouse exited");
-//        }
-//
-        public void mouseClicked(MouseEvent e) {
-           System.out.println("Mouse clicked; # of clicks: "
-                        + e.getClickCount());
-            System.out.println("Mouse clicked at: (" + e.getX() + ", "
-                        + e.getY() + ")");
-            System.out.println("clicked button: " + e.getButton() );
         }
 
     }

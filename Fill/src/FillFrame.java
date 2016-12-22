@@ -9,6 +9,7 @@ public class FillFrame extends JFrame {
 
     private FillPanel fp;
 
+    // Implementing a 16:9 ratio.
     private static final int WIDTH = 640;
     private static final int HEIGHT = 360;
 
@@ -25,6 +26,5 @@ public class FillFrame extends JFrame {
 
         setLocationRelativeTo(null);
         setVisible(true);
-
     }
 }
