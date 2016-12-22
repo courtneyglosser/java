@@ -10,9 +10,12 @@ import java.awt.event.MouseEvent;
 
 
 public class FillPanel extends JPanel implements ActionListener{
+    private Board gameBoard;
 
     public FillPanel() {
         System.out.println("Constructing the fill panel");
+
+        gameBoard = new Board();
 
         addMouseListener(new MAdapter());
 
@@ -20,6 +23,17 @@ public class FillPanel extends JPanel implements ActionListener{
         setFocusable(true);
 
         repaint();
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        doDrawing(g);
+    }
+
+    public void doDrawing(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+
+        gameBoard.drawBoard(g2d);
     }
 
     public void actionPerformed(ActionEvent e) {
