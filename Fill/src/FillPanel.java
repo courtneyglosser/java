@@ -11,11 +11,13 @@ import java.awt.event.MouseEvent;
 
 public class FillPanel extends JPanel implements ActionListener{
     private Board gameBoard;
+    private ButtonManager bm;
 
     public FillPanel() {
         System.out.println("Constructing the Fill panel");
 
         gameBoard = new Board();
+        bm = new ButtonManager();
 
         addMouseListener(new MAdapter());
 
@@ -34,6 +36,7 @@ public class FillPanel extends JPanel implements ActionListener{
         Graphics2D g2d = (Graphics2D) g;
 
         gameBoard.drawBoard(g2d);
+        bm.drawButtons(g2d);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -43,11 +46,23 @@ public class FillPanel extends JPanel implements ActionListener{
     private class MAdapter extends MouseAdapter {
 
         public void mousePressed(MouseEvent e) {
-           System.out.println("Mouse pressed; # of clicks: "
-                        + e.getClickCount());
-            System.out.println("Mouse pressed at: (" + e.getX() + ", "
-                        + e.getY() + ")");
-            System.out.println("Pressed button: " + e.getButton() );
+            if (bm.clickedButton( e.getX(), e.getY() ) == true) {
+                System.out.println("Clicked a button!");
+
+                Button clickBtn = bm.registerClick(e.getX(), e.getY());
+
+                if (clickBtn.getColor() != Color.black) {
+                    System.out.println("Got a colored button!");
+                    // TODO:  Change color!
+                }
+                else {
+                    // ASSERT:  Convention to set New / Exit buttons as black
+                    System.out.println("Got a new / exit button!");
+                }
+            }
+            else {
+                System.out.println("Did not click a button!");
+            }
         }
 
     }
