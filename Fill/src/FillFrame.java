@@ -16,6 +16,6 @@ public class FillFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setLocationRelativeTo(null);
-
+        setVisible(true);
     }
 }
