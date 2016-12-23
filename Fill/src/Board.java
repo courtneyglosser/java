@@ -90,4 +90,47 @@ public class Board {
 
         return rawPos;
     }
+
+    public void handleClick(Color clr) {
+        // ASSERT:  User clicked a color.  Update the array of tiles to
+        // reflect the change.
+        Color origColor = tiles[0].getColor();
+        tiles[0].setColor(clr);
+
+        colorNeighbors(0, origColor, clr);
+    }
+
+    private void colorNeighbors(int idx, Color origColor, Color clr) {
+        if (idx > NUM_COLS) {
+            // ASSERT:  Not on the top row, need to check "up"
+            if (tiles[idx - NUM_COLS].getColor() == origColor) {
+                tiles[idx - NUM_COLS].setColor(clr);
+                colorNeighbors(idx-NUM_COLS, origColor, clr);
+            }
+        }
+
+        if (idx % NUM_COLS != NUM_COLS - 1) {
+            // ASSERT:  Not on the column furtherst to the right, check right.
+            if (tiles[idx+1].getColor() == origColor) {
+                tiles[idx+1].setColor(clr);
+                colorNeighbors(idx+1, origColor, clr);
+            }
+        }
+
+        if (idx + NUM_COLS < NUM_TILES) {
+            // ASSERT:  Not on the bottome row, check below.
+            if (tiles[idx+NUM_COLS].getColor() == origColor) {
+                tiles[idx+NUM_COLS].setColor(clr);
+                colorNeighbors(idx+NUM_COLS, origColor, clr);
+            }
+        }
+
+        if (idx % NUM_COLS > 0) {
+            // ASSERT:  This cannot be the furthest left, check left.
+            if (tiles[idx-1].getColor() == origColor) {
+                tiles[idx-1].setColor(clr);
+                colorNeighbors(idx-1, origColor, clr);
+            }
+        }
+    }
 }

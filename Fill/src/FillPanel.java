@@ -54,6 +54,8 @@ public class FillPanel extends JPanel implements ActionListener{
                 if (clickBtn.getColor() != Color.black) {
                     System.out.println("Got a colored button!");
                     // TODO:  Change color!
+                    gameBoard.handleClick(clickBtn.getColor());
+                    repaint();
                 }
                 else {
                     // ASSERT:  Convention to set New / Exit buttons as black
