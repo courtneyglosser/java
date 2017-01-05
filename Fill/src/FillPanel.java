@@ -53,8 +53,10 @@ public class FillPanel extends JPanel implements ActionListener{
 
                 if (clickBtn.getColor() != Color.black) {
                     System.out.println("Got a colored button!");
-                    // TODO:  Change color!
-                    gameBoard.handleClick(clickBtn.getColor());
+                    if (gameBoard.handleClick(clickBtn.getColor())) {
+                        // ASSERT:  Winner!
+                        System.out.println("Winner!!");
+                    }
                     repaint();
                 }
                 else {

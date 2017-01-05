@@ -53,6 +53,7 @@ public class Board {
         for (int i = 0; i < NUM_TILES; i++) {
             tiles[i] = new Tile();
             tiles[i].setColor(colors[rand.nextInt(6)]);
+            tiles[i].setChecked(false);
         }
 
     }
@@ -91,19 +92,22 @@ public class Board {
         return rawPos;
     }
 
-    public void handleClick(Color clr) {
+    public boolean handleClick(Color clr) {
         // ASSERT:  User clicked a color.  Update the array of tiles to
         // reflect the change.
         Color origColor = tiles[0].getColor();
         tiles[0].setColor(clr);
 
         colorNeighbors(0, origColor, clr);
+        resetChecks();
+        return checkWin();
     }
 
     private void colorNeighbors(int idx, Color origColor, Color clr) {
         if (idx > NUM_COLS) {
             // ASSERT:  Not on the top row, need to check "up"
-            if (tiles[idx - NUM_COLS].getColor() == origColor) {
+            if (tiles[idx - NUM_COLS].getColor() == origColor
+                && !tiles[idx - NUM_COLS].getChecked()) {
                 tiles[idx - NUM_COLS].setColor(clr);
                 colorNeighbors(idx-NUM_COLS, origColor, clr);
             }
@@ -111,7 +115,8 @@ public class Board {
 
         if (idx % NUM_COLS != NUM_COLS - 1) {
             // ASSERT:  Not on the column furtherst to the right, check right.
-            if (tiles[idx+1].getColor() == origColor) {
+            if (tiles[idx+1].getColor() == origColor
+                && !tiles[idx+1].getChecked()) {
                 tiles[idx+1].setColor(clr);
                 colorNeighbors(idx+1, origColor, clr);
             }
@@ -119,18 +124,47 @@ public class Board {
 
         if (idx + NUM_COLS < NUM_TILES) {
             // ASSERT:  Not on the bottome row, check below.
-            if (tiles[idx+NUM_COLS].getColor() == origColor) {
-                tiles[idx+NUM_COLS].setColor(clr);
-                colorNeighbors(idx+NUM_COLS, origColor, clr);
+            if (tiles[idx + NUM_COLS].getColor() == origColor
+                && !tiles[idx + NUM_COLS].getChecked()) {
+                tiles[idx + NUM_COLS].setColor(clr);
+                colorNeighbors(idx + NUM_COLS, origColor, clr);
             }
         }
 
         if (idx % NUM_COLS > 0) {
             // ASSERT:  This cannot be the furthest left, check left.
-            if (tiles[idx-1].getColor() == origColor) {
+            if (tiles[idx-1].getColor() == origColor
+                && !tiles[idx-1].getChecked()) {
                 tiles[idx-1].setColor(clr);
                 colorNeighbors(idx-1, origColor, clr);
             }
         }
+        // ASSERT:  this tile has been checked.
+        tiles[idx].setChecked(true);
+    }
+
+    /**
+        Ensure all tiles are ready to receive another click.
+     */
+    private void resetChecks() {
+        for (int i = 0; i < NUM_TILES; i++) {
+            tiles[i].setChecked(false);
+        }
+    }
+
+    /**
+        Look for win state. If all tiles are the same color, winner!
+     */
+    private boolean checkWin() {
+        boolean rtn = true;
+        Color checkColor = tiles[0].getColor();
+
+        for (int i = 0; i < NUM_TILES; i++) {
+            if (tiles[i].getColor() != checkColor) {
+                rtn = false;
+            }
+        }
+
+        return rtn;
     }
 }
