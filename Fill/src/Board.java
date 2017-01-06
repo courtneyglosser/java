@@ -32,7 +32,7 @@ public class Board {
     private Tile[] tiles = new Tile[NUM_TILES];
 
     // Available Colors
-    private Color[] colors = new Color[6];
+    private ColorManager cm;
 
     // Ranodmize Colors
     private Random rand = new Random();
@@ -42,17 +42,12 @@ public class Board {
     }
 
     public void initBoard() {
-        colors[0] = Color.cyan;
-        colors[1] = Color.yellow;
-        colors[2] = Color.red;
-        colors[3] = Color.green;
-        colors[4] = Color.magenta;
-        colors[5] = Color.lightGray;
+        cm = new ColorManager();
 
         // Loop through array of tiles and randomize colors
         for (int i = 0; i < NUM_TILES; i++) {
             tiles[i] = new Tile();
-            tiles[i].setColor(colors[rand.nextInt(6)]);
+            tiles[i].setColor(cm.getColor(rand.nextInt(6)));
             tiles[i].setChecked(false);
         }
 

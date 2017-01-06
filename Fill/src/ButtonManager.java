@@ -12,27 +12,23 @@ public class ButtonManager {
 
     private Button[] buttons = new Button[8]; 
     // Available Colors
-    private Color[] colors = new Color[6];
+    private ColorManager cm;
 
     public ButtonManager() {
         init();
     }
 
     private void init() {
-        colors[0] = Color.cyan;
-        colors[1] = Color.yellow;
-        colors[2] = Color.red;
-        colors[3] = Color.green;
-        colors[4] = Color.magenta;
-        colors[5] = Color.lightGray;
+
+        cm = new ColorManager();
 
         // Define each button.
-        buttons[0] = new Button(25, 25, colors[0]);
-        buttons[1] = new Button(25, 65, colors[1]);
-        buttons[2] = new Button(25, 105, colors[2]);
-        buttons[3] = new Button(25, 145, colors[3]);
-        buttons[4] = new Button(25, 185, colors[4]);
-        buttons[5] = new Button(25, 225, colors[5]);
+        buttons[0] = new Button(25, 25, cm.getColor(0));
+        buttons[1] = new Button(25, 65, cm.getColor(1));
+        buttons[2] = new Button(25, 105, cm.getColor(2));
+        buttons[3] = new Button(25, 145, cm.getColor(3));
+        buttons[4] = new Button(25, 185, cm.getColor(4));
+        buttons[5] = new Button(25, 225, cm.getColor(5));
 
     }
 
