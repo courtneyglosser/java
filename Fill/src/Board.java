@@ -97,6 +97,7 @@ public class Board {
         // reflect the change.
         Color origColor = tiles[0].getColor();
         tiles[0].setColor(clr);
+        tiles[0].setChecked(true);
 
         colorNeighbors(0, origColor, clr);
         resetChecks();
@@ -104,6 +105,8 @@ public class Board {
     }
 
     private void colorNeighbors(int idx, Color origColor, Color clr) {
+        // ASSERT:  this tile has been checked.
+        tiles[idx].setChecked(true);
         if (idx > NUM_COLS) {
             // ASSERT:  Not on the top row, need to check "up"
             if (tiles[idx - NUM_COLS].getColor() == origColor
@@ -139,8 +142,6 @@ public class Board {
                 colorNeighbors(idx-1, origColor, clr);
             }
         }
-        // ASSERT:  this tile has been checked.
-        tiles[idx].setChecked(true);
     }
 
     /**
