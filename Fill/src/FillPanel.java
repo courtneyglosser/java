@@ -49,6 +49,7 @@ public class FillPanel extends JPanel implements ActionListener{
         }
         else if (gameState == "win") {
             // Draw a win screen
+            gameScreen.drawWin(g2d);
         }
         else if (gameState == "lose") {
             // Draw a lose screen
@@ -73,6 +74,7 @@ public class FillPanel extends JPanel implements ActionListener{
                         System.out.println("Got a colored button!");
                         if (gameBoard.handleClick(clickBtn.getColor())) {
                             // ASSERT:  Winner!
+                            gameState = "win";
                             System.out.println("Winner!!");
                         }
                         repaint();
