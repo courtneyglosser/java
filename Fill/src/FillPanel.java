@@ -10,14 +10,18 @@ import java.awt.event.MouseEvent;
 
 
 public class FillPanel extends JPanel implements ActionListener{
+    private String gameState; // welcome, active, win, lose
     private Board gameBoard;
     private ButtonManager bm;
+    private Screen gameScreen;
 
     public FillPanel() {
         System.out.println("Constructing the Fill panel");
 
+        gameState = "welcome";
         gameBoard = new Board();
         bm = new ButtonManager();
+        gameScreen = new Screen();
 
         addMouseListener(new MAdapter());
 
@@ -35,8 +39,21 @@ public class FillPanel extends JPanel implements ActionListener{
     public void doDrawing(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
-        gameBoard.drawBoard(g2d);
-        bm.drawButtons(g2d);
+        if (gameState == "active") {
+            gameBoard.drawBoard(g2d);
+            bm.drawButtons(g2d);
+        }
+        else if (gameState == "welcome") {
+            // Draw a welcome screen
+            gameScreen.drawWelcome(g2d);
+        }
+        else if (gameState == "win") {
+            // Draw a win screen
+        }
+        else if (gameState == "lose") {
+            // Draw a lose screen
+        }
+
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -46,26 +63,38 @@ public class FillPanel extends JPanel implements ActionListener{
     private class MAdapter extends MouseAdapter {
 
         public void mousePressed(MouseEvent e) {
-            if (bm.clickedButton( e.getX(), e.getY() ) == true) {
-                System.out.println("Clicked a button!");
+            if (gameState == "active") {
+                if (bm.clickedButton( e.getX(), e.getY() ) == true) {
+                    System.out.println("Clicked a button!");
 
-                Button clickBtn = bm.registerClick(e.getX(), e.getY());
+                    Button clickBtn = bm.registerClick(e.getX(), e.getY());
 
-                if (clickBtn.getColor() != Color.black) {
-                    System.out.println("Got a colored button!");
-                    if (gameBoard.handleClick(clickBtn.getColor())) {
-                        // ASSERT:  Winner!
-                        System.out.println("Winner!!");
+                    if (clickBtn.getColor() != Color.black) {
+                        System.out.println("Got a colored button!");
+                        if (gameBoard.handleClick(clickBtn.getColor())) {
+                            // ASSERT:  Winner!
+                            System.out.println("Winner!!");
+                        }
+                        repaint();
                     }
-                    repaint();
+                    else {
+                        // ASSERT:  Convention to set New / Exit buttons as black
+                        System.out.println("Got a new / exit button!");
+                    }
                 }
                 else {
-                    // ASSERT:  Convention to set New / Exit buttons as black
-                    System.out.println("Got a new / exit button!");
+                    System.out.println("Did not click a button!");
                 }
             }
             else {
-                System.out.println("Did not click a button!");
+                if (gameScreen.checkStart(gameState, e.getX(), e.getY())) {
+                    gameState = "active";
+                    gameBoard = new Board();
+                    repaint();
+                }
+                if (gameScreen.checkExit(gameState, e.getX(), e.getY())) {
+                    System.exit(0);
+                }
             }
         }
 
