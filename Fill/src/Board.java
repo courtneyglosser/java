@@ -65,6 +65,14 @@ public class Board {
 
             g2d.fillRect(x, y, TILE_WIDTH, TILE_HEIGHT);
         }
+
+        g2d.setColor(Color.white);
+
+        g2d.drawRect(500, 65, 50, 20);
+        g2d.drawString("Restart?", 500, 80);
+
+        g2d.drawRect(500, 95, 50, 20);
+        g2d.drawString("Exit", 500, 110);
     }
 
     private void drawBorder(Graphics2D g2d) {

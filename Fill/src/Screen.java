@@ -46,6 +46,11 @@ public class Screen {
                 rtn = true;
             }
         }
+        else {
+            if (x > 500 && x < 650 && y > 65 && y < 85) {
+                rtn = true;
+            }
+        }
 
         return rtn;
     }
@@ -58,6 +63,12 @@ public class Screen {
                 rtn = true;
             }
         }
+        else {
+            if (x > 500 && x < 650 && y > 95 && y < 115) {
+                rtn = true;
+            }
+        }
+
         return rtn;
     }
 }

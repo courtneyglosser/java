@@ -70,33 +70,24 @@ public class FillPanel extends JPanel implements ActionListener{
 
                     Button clickBtn = bm.registerClick(e.getX(), e.getY());
 
-                    if (clickBtn.getColor() != Color.black) {
-                        System.out.println("Got a colored button!");
-                        if (gameBoard.handleClick(clickBtn.getColor())) {
-                            // ASSERT:  Winner!
-                            gameState = "win";
-                            System.out.println("Winner!!");
-                        }
-                        repaint();
+                    if (gameBoard.handleClick(clickBtn.getColor())) {
+                        // ASSERT:  Winner!
+                        gameState = "win";
+                        System.out.println("Winner!!");
                     }
-                    else {
-                        // ASSERT:  Convention to set New / Exit buttons as black
-                        System.out.println("Got a new / exit button!");
-                    }
+                    repaint();
                 }
                 else {
                     System.out.println("Did not click a button!");
                 }
             }
-            else {
-                if (gameScreen.checkStart(gameState, e.getX(), e.getY())) {
-                    gameState = "active";
-                    gameBoard = new Board();
-                    repaint();
-                }
-                if (gameScreen.checkExit(gameState, e.getX(), e.getY())) {
-                    System.exit(0);
-                }
+            if (gameScreen.checkStart(gameState, e.getX(), e.getY())) {
+                gameState = "active";
+                gameBoard = new Board();
+                repaint();
+            }
+            if (gameScreen.checkExit(gameState, e.getX(), e.getY())) {
+                System.exit(0);
             }
         }
 
