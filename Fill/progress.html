@@ -23,6 +23,11 @@ body {
     border-left: 1px solid white;
 }
 
+.new {
+    color: #ff0;
+    font-weight: bold;
+}
+
 .not-started {
 }
 
@@ -49,12 +54,14 @@ body {
 
 <table class="legend" cellspacing="0" cellpadding="5">
     <tr>
+        <th>Newly Added</th>
         <th>Not Started</th>
         <th>In Progress</th>
         <th>Testing</th>
         <th>Released</th>
     </tr>
     <tr>
+        <td class="new">Newly Added</th>
         <td class="not-started">Not Started</td>
         <td class="in-progress">In Progress</td>
         <td class="testing">Testing</td>
@@ -83,6 +90,12 @@ body {
         </ul>
     </ul>
     <li class="not-started">Release process</li>
+    <ul>
+        <li class="new">Review itch.io site's release guide</li>
+        <li class="new">Review kongregate's process</li>
+        <li class="new">Checkout the java-gaming-dev forum</li>
+        <li class="new">Document the process</li>
+    </ul>
     <li class="not-started">some basic pixel art for the background</li>
     <li class="released">Defining, then tracking a "loss" state</li>
     <ul>
@@ -92,6 +105,14 @@ body {
     <ul>
         <li class="not-started">Some more robust treatments to show clicks</li>
     </ul>
+    <li class="new">Refactor checkWin</li>
+    <ul>
+        <li class="new">
+            Decouple checkWin() call from Board.handleClick() function
+        </li>
+        <li class="new">Update panel conditionals to reflect</li>
+    </ul>
+    <li class="new">Project planning for tasking tool</li>
 </ul>
 
 
