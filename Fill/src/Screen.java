@@ -38,6 +38,20 @@ public class Screen {
         g2d.drawString("Exit", 100, 110);
     }
 
+    public void drawLose(Graphics2D g2d) {
+
+        System.out.println("Loser!");
+
+        g2d.setColor(Color.white);
+        g2d.drawString("Loser!", 100, 50);
+
+        g2d.drawRect(100, 65, 50, 20);
+        g2d.drawString("Restart?", 100, 80);
+
+        g2d.drawRect(100, 95, 50, 20);
+        g2d.drawString("Exit", 100, 110);
+    }
+
     public boolean checkStart(String gameState, int x, int y) {
         boolean rtn = false;
 

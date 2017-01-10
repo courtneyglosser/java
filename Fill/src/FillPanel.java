@@ -53,6 +53,7 @@ public class FillPanel extends JPanel implements ActionListener{
         }
         else if (gameState == "lose") {
             // Draw a lose screen
+            gameScreen.drawLose(g2d);
         }
 
     }
