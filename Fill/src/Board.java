@@ -11,6 +11,9 @@ of tiles that will be multiple colors.
 
 public class Board {
 
+    // Track available moves to determine failure state
+    private int availMoves;
+
     // Board dimensions (in pixels)
     private static final int BOARD_WIDTH = 250;
     private static final int BOARD_HEIGHT = 250;
@@ -42,6 +45,7 @@ public class Board {
     }
 
     public void initBoard() {
+        availMoves = 30;
         cm = new ColorManager();
 
         // Loop through array of tiles and randomize colors
@@ -67,6 +71,8 @@ public class Board {
         }
 
         g2d.setColor(Color.white);
+
+        g2d.drawString("Moves: " + availMoves, 500, 30);
 
         g2d.drawRect(500, 65, 50, 20);
         g2d.drawString("Restart?", 500, 80);
@@ -104,6 +110,7 @@ public class Board {
 
         colorNeighbors(0, origColor, clr);
         resetChecks();
+        availMoves--;
         return checkWin();
     }
 
@@ -167,6 +174,19 @@ public class Board {
             if (tiles[i].getColor() != checkColor) {
                 rtn = false;
             }
+        }
+
+        return rtn;
+    }
+
+    /**
+        Look for loss state. If all "availMoves" move exhausted, loser.
+     */
+    public boolean checkLose() {
+        boolean rtn = false;
+
+        if (availMoves <= 0) {
+            rtn = true;
         }
 
         return rtn;

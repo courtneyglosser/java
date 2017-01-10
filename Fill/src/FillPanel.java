@@ -75,6 +75,10 @@ public class FillPanel extends JPanel implements ActionListener{
                         gameState = "win";
                         System.out.println("Winner!!");
                     }
+                    else if (gameBoard.checkLose()) {
+                        gameState = "lose";
+                        System.out.println("Loser!!");
+                    }
                     repaint();
                 }
                 else {
