@@ -1,4 +1,6 @@
 
+package cglosser;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.lang.Math;

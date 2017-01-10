@@ -1,3 +1,4 @@
+package cglosser;
 
 import javax.swing.JFrame;
 

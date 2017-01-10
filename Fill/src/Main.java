@@ -1,4 +1,4 @@
-
+package cglosser;
 
 /**
     Main game application class

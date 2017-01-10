@@ -1,3 +1,4 @@
+package cglosser;
 
 import java.awt.Color;
 
