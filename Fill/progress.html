@@ -44,6 +44,11 @@ body {
     font-weight: bold;
 }
 
+.cancelled {
+    color: #F33;
+    text-decoration: line-through;
+}
+
 </style>
 
 </head>
@@ -59,6 +64,7 @@ body {
         <th>In Progress</th>
         <th>Testing</th>
         <th>Released</th>
+        <th>Cancelled</th>
     </tr>
     <tr>
         <td class="new">Newly Added</th>
@@ -66,6 +72,7 @@ body {
         <td class="in-progress">In Progress</td>
         <td class="testing">Testing</td>
         <td class="released">Released</td>
+        <td class="cancelled">cancelled</td>
     </tr>
 </table>
 
@@ -74,6 +81,40 @@ body {
     recreating the web game available
     <a href="http://www.flashbynight.com/drench/" target="_blank">here</a>.
 </p>
+
+<h2>2017-01-16</h2>
+
+<ul>
+    <li class="in-progress">Release process</li>
+    <ul>
+        <li class="in-progress">Review itch.io site's release guide</li>
+        <li class="cancelled">Review kongregate's process</li>
+        <li class="in-progress">Checkout the java-gaming-dev forum</li>
+        <li class="not-started">Document the process</li>
+    </ul>
+    <li class="not-started">some basic pixel art for the background</li>
+    <li class="in-progress">Some button treatments to make them look better</li>
+    <ul>
+        <li class="released">Start with basic text buttons</li>
+        <li class="in-progress">ensure you can save in resources</li>
+        <li class="in-progress">Ensure assets are built into Jar file</li>
+        <li class="in-progress">Pull button images into the game</li>
+        <li class="in-progress">Ensure clicking works correctly</li>
+        <li class="in-progress">Pull buttons into Piskel to improve them</li>
+    </ul>
+    <ul>
+        <li class="not-started">Some more robust treatments to show clicks</li>
+    </ul>
+    <li class="not-started">Refactor checkWin</li>
+    <ul>
+        <li class="not-started">
+            Decouple checkWin() call from Board.handleClick() function
+        </li>
+        <li class="not-started">Update panel conditionals to reflect</li>
+    </ul>
+    <li class="not-started">Project planning for tasking tool</li>
+</ul>
+
 
 <h2>2017-01-10</h2>
 
