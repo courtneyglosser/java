@@ -43,7 +43,7 @@ public class FillPanel extends JPanel implements ActionListener{
 
         if (gameState == "active") {
             gameBoard.drawBoard(g2d);
-            bm.drawButtons(g2d);
+            bm.drawBoardButtons(g2d);
         }
         else if (gameState == "welcome") {
             // Draw a welcome screen

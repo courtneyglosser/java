@@ -7,7 +7,6 @@ import java.awt.Image;
 import java.io.IOException;
 import java.io.File;
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 
 /**
@@ -32,10 +31,9 @@ public class Screen {
         }
         catch (IOException e) {
             // Handle exception
-            System.out.println("Exception: " + e.getMessage());
+            System.out.println("Exception loading button images: " +
+                e.getMessage());
         }
-
-        System.out.println("Image to string? " + StartBtn);
     }
 
     public void drawWelcome(Graphics2D g2d) {
@@ -75,10 +73,10 @@ public class Screen {
         g2d.drawString("Loser!", 100, 50);
 
         g2d.drawRect(100, 65, 50, 20);
-        g2d.drawString("Restart?", 100, 80);
+        g2d.drawImage(RestartBtn, 100, 65, null);
 
         g2d.drawRect(100, 95, 50, 20);
-        g2d.drawString("Exit", 100, 110);
+        g2d.drawImage(ExitBtn, 100, 95, null);
     }
 
     public boolean checkStart(String gameState, int x, int y) {
