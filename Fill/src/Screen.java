@@ -3,6 +3,12 @@ package cglosser;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.io.IOException;
+import java.io.File;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
 
 /**
  * Class to manage the non-active game screens, welcome, win, and lose
@@ -10,7 +16,27 @@ import java.awt.Graphics2D;
 
 public class Screen {
 
-    public Screen() {}
+    private Image StartBtn;
+    private Image RestartBtn;
+    private Image ExitBtn;
+
+    public Screen() {
+        LoadImages();
+    }
+
+    private void LoadImages() {
+        try {
+            StartBtn = ImageIO.read(new File("build/Start.png"));
+            RestartBtn = ImageIO.read(new File("build/Restart.png"));
+            ExitBtn = ImageIO.read(new File("build/Exit.png"));
+        }
+        catch (IOException e) {
+            // Handle exception
+            System.out.println("Exception: " + e.getMessage());
+        }
+
+        System.out.println("Image to string? " + StartBtn);
+    }
 
     public void drawWelcome(Graphics2D g2d) {
 
@@ -20,10 +46,11 @@ public class Screen {
         g2d.drawString("Welcome", 100, 50);
 
         g2d.drawRect(100, 65, 50, 20);
-        g2d.drawString("Start", 100, 80);
+        g2d.drawImage(StartBtn, 100, 65, null);
 
         g2d.drawRect(100, 95, 50, 20);
-        g2d.drawString("Exit", 100, 110);
+        g2d.drawImage(ExitBtn, 100, 95, null);
+
     }
 
     public void drawWin(Graphics2D g2d) {
@@ -34,10 +61,10 @@ public class Screen {
         g2d.drawString("Winner!", 100, 50);
 
         g2d.drawRect(100, 65, 50, 20);
-        g2d.drawString("Restart?", 100, 80);
+        g2d.drawImage(RestartBtn, 100, 65, null);
 
         g2d.drawRect(100, 95, 50, 20);
-        g2d.drawString("Exit", 100, 110);
+        g2d.drawImage(ExitBtn, 100, 95, null);
     }
 
     public void drawLose(Graphics2D g2d) {
