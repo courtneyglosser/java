@@ -73,7 +73,8 @@ public class FillPanel extends JPanel implements ActionListener{
 
                     Button clickBtn = bm.registerClick(e.getX(), e.getY());
 
-                    if (gameBoard.handleClick(clickBtn.getColor())) {
+                    gameBoard.handleClick(clickBtn.getColor());
+                    if (gameBoard.checkWin()) {
                         // ASSERT:  Winner!
                         gameState = "win";
                         System.out.println("Winner!!");

@@ -98,7 +98,7 @@ public class Board {
         return rawPos;
     }
 
-    public boolean handleClick(Color clr) {
+    public void handleClick(Color clr) {
         // ASSERT:  User clicked a color.  Update the array of tiles to
         // reflect the change.
         Color origColor = tiles[0].getColor();
@@ -108,7 +108,6 @@ public class Board {
         colorNeighbors(0, origColor, clr);
         resetChecks();
         availMoves--;
-        return checkWin();
     }
 
     private void colorNeighbors(int idx, Color origColor, Color clr) {
@@ -163,7 +162,7 @@ public class Board {
     /**
         Look for win state. If all tiles are the same color, winner!
      */
-    private boolean checkWin() {
+    public boolean checkWin() {
         boolean rtn = true;
         Color checkColor = tiles[0].getColor();
 
