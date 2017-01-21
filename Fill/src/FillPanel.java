@@ -68,7 +68,7 @@ public class FillPanel extends JPanel implements ActionListener{
 
         public void mousePressed(MouseEvent e) {
             if (gameState == "active") {
-                if (bm.clickedButton( e.getX(), e.getY() ) == true) {
+                if (bm.clickedColoredButton( e.getX(), e.getY() ) == true) {
                     System.out.println("Clicked a button!");
 
                     Button clickBtn = bm.registerClick(e.getX(), e.getY());
@@ -89,12 +89,12 @@ public class FillPanel extends JPanel implements ActionListener{
                     System.out.println("Did not click a button!");
                 }
             }
-            if (gameScreen.checkStart(gameState, e.getX(), e.getY())) {
+            if (bm.checkStart(gameState, e.getX(), e.getY())) {
                 gameState = "active";
                 gameBoard = new Board();
                 repaint();
             }
-            if (gameScreen.checkExit(gameState, e.getX(), e.getY())) {
+            if (bm.checkExit(gameState, e.getX(), e.getY())) {
                 System.exit(0);
             }
         }

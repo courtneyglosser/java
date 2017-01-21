@@ -19,7 +19,11 @@ public class Screen {
     private Image RestartBtn;
     private Image ExitBtn;
 
+    private ButtonManager bm;
+
     public Screen() {
+        bm = new ButtonManager();
+
         LoadImages();
     }
 
@@ -43,11 +47,7 @@ public class Screen {
         g2d.setColor(Color.white);
         g2d.drawString("Welcome", 100, 50);
 
-        g2d.drawRect(100, 65, 50, 20);
-        g2d.drawImage(StartBtn, 100, 65, null);
-
-        g2d.drawRect(100, 95, 50, 20);
-        g2d.drawImage(ExitBtn, 100, 95, null);
+        bm.drawWelcomeButtons(g2d);
 
     }
 
@@ -58,11 +58,7 @@ public class Screen {
         g2d.setColor(Color.white);
         g2d.drawString("Winner!", 100, 50);
 
-        g2d.drawRect(100, 65, 50, 20);
-        g2d.drawImage(RestartBtn, 100, 65, null);
-
-        g2d.drawRect(100, 95, 50, 20);
-        g2d.drawImage(ExitBtn, 100, 95, null);
+        bm.drawWinButtons(g2d);
     }
 
     public void drawLose(Graphics2D g2d) {
@@ -72,44 +68,6 @@ public class Screen {
         g2d.setColor(Color.white);
         g2d.drawString("Loser!", 100, 50);
 
-        g2d.drawRect(100, 65, 50, 20);
-        g2d.drawImage(RestartBtn, 100, 65, null);
-
-        g2d.drawRect(100, 95, 50, 20);
-        g2d.drawImage(ExitBtn, 100, 95, null);
-    }
-
-    public boolean checkStart(String gameState, int x, int y) {
-        boolean rtn = false;
-
-        if (gameState != "active") {
-            if (x > 100 && x < 150 && y > 65 && y < 85) {
-                rtn = true;
-            }
-        }
-        else {
-            if (x > 500 && x < 650 && y > 65 && y < 85) {
-                rtn = true;
-            }
-        }
-
-        return rtn;
-    }
-
-    public boolean checkExit(String gameState, int x, int y) {
-        boolean rtn = false;
-
-        if (gameState != "active") {
-            if (x > 100 && x < 150 && y > 95 && y < 115) {
-                rtn = true;
-            }
-        }
-        else {
-            if (x > 500 && x < 650 && y > 95 && y < 115) {
-                rtn = true;
-            }
-        }
-
-        return rtn;
+        bm.drawLoseButtons(g2d);
     }
 }

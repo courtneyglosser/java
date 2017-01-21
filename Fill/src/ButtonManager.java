@@ -56,13 +56,13 @@ public class ButtonManager {
         }
     }
 
-    public void drawButtons(Graphics2D g2d) {
+    public void drawColorButtons(Graphics2D g2d) {
         for (int i = 0; i < NUM_BUTTONS; i++) {
             buttons[i].drawButton(g2d);
         }
     }
 
-    public boolean clickedButton(int x, int y) {
+    public boolean clickedColoredButton(int x, int y) {
         boolean rtn = false;
 
         for (int i = 0; i < NUM_BUTTONS; i++) {
@@ -86,12 +86,76 @@ public class ButtonManager {
 
 
     public void drawBoardButtons(Graphics2D g2d) {
-        drawButtons(g2d);
+        drawColorButtons(g2d);
 
         g2d.drawRect(500, 65, 50, 20);
         g2d.drawImage(RestartBtn, 500, 65, null);
 
         g2d.drawRect(500, 95, 50, 20);
         g2d.drawImage(ExitBtn, 500, 95, null);
+    }
+
+    public void drawWelcomeButtons(Graphics2D g2d) {
+
+        g2d.drawRect(100, 65, 50, 20);
+        g2d.drawImage(StartBtn, 100, 65, null);
+
+        g2d.drawRect(100, 95, 50, 20);
+        g2d.drawImage(ExitBtn, 100, 95, null);
+
+    }
+
+    public void drawWinButtons(Graphics2D g2d) {
+
+        g2d.drawRect(100, 65, 50, 20);
+        g2d.drawImage(RestartBtn, 100, 65, null);
+
+        g2d.drawRect(100, 95, 50, 20);
+        g2d.drawImage(ExitBtn, 100, 95, null);
+
+    }
+
+    public void drawLoseButtons(Graphics2D g2d) {
+
+        g2d.drawRect(100, 65, 50, 20);
+        g2d.drawImage(RestartBtn, 100, 65, null);
+
+        g2d.drawRect(100, 95, 50, 20);
+        g2d.drawImage(ExitBtn, 100, 95, null);
+
+    }
+
+    public boolean checkStart(String gameState, int x, int y) {
+        boolean rtn = false;
+
+        if (gameState != "active") {
+            if (x > 100 && x < 150 && y > 65 && y < 85) {
+                rtn = true;
+            }
+        }
+        else {
+            if (x > 500 && x < 650 && y > 65 && y < 85) {
+                rtn = true;
+            }
+        }
+
+        return rtn;
+    }
+
+    public boolean checkExit(String gameState, int x, int y) {
+        boolean rtn = false;
+
+        if (gameState != "active") {
+            if (x > 100 && x < 150 && y > 95 && y < 115) {
+                rtn = true;
+            }
+        }
+        else {
+            if (x > 500 && x < 650 && y > 95 && y < 115) {
+                rtn = true;
+            }
+        }
+
+        return rtn;
     }
 }
