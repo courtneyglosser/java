@@ -5,7 +5,12 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 
 /**
-    Buttons that allow users to choose a color
+    Currently, class handles the various colored buttons correspoding to the
+    colored tiles on the game board.  Will refactor soon to represent more
+    robust OOP design as a parent Button class that will have children to
+    handle colored and system / menu buttons (i.e. Start / Restart and Exit).
+
+    @author Courtney Glosser
  */
 
 public class Button {

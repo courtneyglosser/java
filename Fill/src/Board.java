@@ -7,8 +7,22 @@ import java.lang.Math;
 import java.util.Random;
 
 /**
-    A manager class that will handle drawing the game board, including a list
-of tiles that will be multiple colors.
+    The Board class manages several aspects of the user's interaction with the
+    game board:
+    <ul>
+    <li>Drawing the board of multi-colored tiles
+    <li>Handling the process of changing tile colors based on user clicks
+    <li>Checking state of tiles for win condition
+    <li>Managing available moves to track lose condition
+    </ul>
+    <p>
+    The difficulty of the game can be arbitrarily set by updating the number of
+    available moves (availMoves).  The game is simpler with more available
+    moves, and more difficult with fewer.  In addition, the NUM_COLS and
+    NUM_ROWS have the converse relationship to difficulty.  That is, larger
+    values will present a more challenging board.
+
+    @author Courtney Glosser
  */
 
 public class Board {
@@ -78,6 +92,47 @@ public class Board {
 
     }
 
+    public void handleClick(Color clr) {
+        // ASSERT:  User clicked a color.  Update the array of tiles to
+        // reflect the change.
+        Color origColor = tiles[0].getColor();
+        tiles[0].setColor(clr);
+        tiles[0].setChecked(true);
+
+        colorNeighbors(0, origColor, clr);
+        resetChecks();
+        availMoves--;
+    }
+
+    /**
+        Look for win state. If all tiles are the same color, winner!
+     */
+    public boolean checkWin() {
+        boolean rtn = true;
+        Color checkColor = tiles[0].getColor();
+
+        for (int i = 0; i < NUM_TILES; i++) {
+            if (tiles[i].getColor() != checkColor) {
+                rtn = false;
+            }
+        }
+
+        return rtn;
+    }
+
+    /**
+        Look for loss state. If all "availMoves" move exhausted, loser.
+     */
+    public boolean checkLose() {
+        boolean rtn = false;
+
+        if (availMoves <= 0) {
+            rtn = true;
+        }
+
+        return rtn;
+    }
+
     private void drawBorder(Graphics2D g2d) {
         int x = BOARD_X - 1;
         int y = BOARD_Y - 1;
@@ -96,18 +151,6 @@ public class Board {
         int rawPos = (int)Math.floor(idx / NUM_COLS);
 
         return rawPos;
-    }
-
-    public void handleClick(Color clr) {
-        // ASSERT:  User clicked a color.  Update the array of tiles to
-        // reflect the change.
-        Color origColor = tiles[0].getColor();
-        tiles[0].setColor(clr);
-        tiles[0].setChecked(true);
-
-        colorNeighbors(0, origColor, clr);
-        resetChecks();
-        availMoves--;
     }
 
     private void colorNeighbors(int idx, Color origColor, Color clr) {
@@ -157,34 +200,5 @@ public class Board {
         for (int i = 0; i < NUM_TILES; i++) {
             tiles[i].setChecked(false);
         }
-    }
-
-    /**
-        Look for win state. If all tiles are the same color, winner!
-     */
-    public boolean checkWin() {
-        boolean rtn = true;
-        Color checkColor = tiles[0].getColor();
-
-        for (int i = 0; i < NUM_TILES; i++) {
-            if (tiles[i].getColor() != checkColor) {
-                rtn = false;
-            }
-        }
-
-        return rtn;
-    }
-
-    /**
-        Look for loss state. If all "availMoves" move exhausted, loser.
-     */
-    public boolean checkLose() {
-        boolean rtn = false;
-
-        if (availMoves <= 0) {
-            rtn = true;
-        }
-
-        return rtn;
     }
 }

@@ -9,7 +9,14 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 /**
-    Manage an array of buttons the player can manipulate
+    Manages the various buttons with which the user can interact:
+    <ul>
+    <li>Manage placement of buttons on the screen for drawing
+    <li>Manage which buttons are displayed based on game state
+    <li>Identify if a user's "click" event is on a visible button
+    </ul>
+
+    @author Courtney Glosser
  */
 
 public class ButtonManager {
