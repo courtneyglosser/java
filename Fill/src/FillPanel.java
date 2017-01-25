@@ -10,6 +10,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+    Extendings the Swing JPanel class with Fill game specific settings.  Also,
+    implementing ActionListener to register and handle mouse click events.
+    This class contains the primary Fill game loop, handled as a collaboration
+    between the actionPerformed function and the doDrawing function.  The game
+    loop is not timer based, and simply awaits user input (actionPerformed),
+    calculates the user's impact on the overall game state (within the private
+    MAdapter class below), and provides the user an updated game state drawing
+    as feedback (doDrawing).
+
+    @author Courtney Glosser
+ */
 
 public class FillPanel extends JPanel implements ActionListener{
     private String gameState; // welcome, active, win, lose
@@ -63,6 +75,14 @@ public class FillPanel extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         repaint();
     }
+
+    /**
+        Class extends the MouseAdapter abstract class.  This class will
+        register mousePressed events and utilize helper classes to execute
+        appropriate game responses.
+
+        @author Courtney Glosser
+     */
 
     private class MAdapter extends MouseAdapter {
 

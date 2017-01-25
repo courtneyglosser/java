@@ -4,7 +4,10 @@ package cglosser;
 import java.awt.Color;
 
 /**
-    Each individual block of color to fill.
+    The Tile class represents each individual tile of color on the game board
+    that requires filling to complete the game.
+
+    @author Courtney Glosser
  */
 
 public class Tile {
@@ -21,6 +24,4 @@ public class Tile {
 
     public void setColor(Color inColor) { tileColor = inColor; }
     public void setChecked(boolean inChecked) { checked = inChecked; }
-
-    public String testString() {return "test"; }
 }

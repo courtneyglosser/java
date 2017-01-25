@@ -3,7 +3,9 @@ package cglosser;
 import javax.swing.JFrame;
 
 /**
-    Primary window management
+    Extending the swing JFrame class with Fill game specific settings.
+
+    @author Courtney Glosser
  */
 
 public class FillFrame extends JFrame {

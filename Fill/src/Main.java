@@ -1,7 +1,10 @@
 package cglosser;
 
 /**
-    Main game application class
+    Main game application class.  Wanted to define a clear entry point for the
+    application.
+
+    @author Courtney Glosser
  */
 
 public class Main {

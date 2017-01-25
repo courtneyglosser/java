@@ -10,7 +10,16 @@ import javax.imageio.ImageIO;
 
 
 /**
- * Class to manage the non-active game screens, welcome, win, and lose
+    Sreen management class to handle drawing the appropriate display based on
+    the current state of the game.  Expects the following states:
+    <ul>
+    <li>welcome
+    <li>active
+    <li>win
+    <li>lose
+    </ul>
+
+    @author
  */
 
 public class Screen {
