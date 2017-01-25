@@ -10,3 +10,5 @@
 # Ignore build files
 build/
 
+#ignore generated JavaDocs files...
+htmldocs/

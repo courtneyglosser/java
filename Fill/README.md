@@ -17,6 +17,17 @@ Command to run Jar file:
 
 $ java -jar fill-0.1.jar
 
+2017-01-25
+==========
+
+Dev log;
+- More documentation today, and taking notes for future refactoring.
+- Also, running Javadocs on completed documentation:
+
+$  javadoc -d ./htmldocs cgloser ./src/*.java
+
+- Note */ is a .md special character sequence...
+
 2017-01-21
 ==========
 
@@ -30,4 +41,4 @@ Dev log:
 -- in the FillPanel class, I cleaned up some function names.
 -- Need to move the drawing and click-checking functions from the Screen class
 over to the ButtonManager class.
- 
+
