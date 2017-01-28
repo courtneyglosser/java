@@ -36,20 +36,51 @@ public class Button {
         clr = inColor;
     }
 
+    /**
+        @return X-axis pixel coordinate
+     */
     public int getX() {return x;}
+    /**
+        @return Y-axis pixel coordinate
+     */
     public int getY() {return y;}
+    /**
+        @return Color of this button
+     */
     public Color getColor() {return clr;}
 
 
+    /**
+        @param inX X-axis pixel coordinate
+     */
     public void setX(int inX) {x = inX;}
+    /**
+        @param inY Y-axis pixel coordinate
+     */
     public void setY(int inY) {y = inY;}
+    /**
+        @param inColor Color of the button
+     */
     public void setColor (Color inColor) {clr = inColor;}
 
+    /**
+        Draw the button.
+
+        @param g2d Graphics2D Java library
+     */
     public void drawButton(Graphics2D g2d) {
         g2d.setColor(clr);
         g2d.fillRect(x, y, BUTTON_WIDTH, BUTTON_HEIGHT);
     }
 
+    /**
+        Did the user click this button?
+
+        @param inX X-axis coordinate of user's click event
+        @param inY Y-axis coordinate of user's click event
+        @return <code>true</code> if user clicked this button.
+                <code>false</code> otherwise.
+     */
     public boolean clicked (int inX, int inY) {
         boolean rtn = false;
         if (inX > x && inX < x + BUTTON_WIDTH &&

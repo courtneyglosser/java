@@ -60,7 +60,10 @@ public class Board {
         initBoard();
     }
 
-    public void initBoard() {
+    /**
+        Initialize settings
+     */
+    private void initBoard() {
         availMoves = 30;
         cm = new ColorManager();
 
@@ -73,6 +76,11 @@ public class Board {
 
     }
 
+    /**
+        Draw the board to the Panel, including drawing the individual tiles.
+
+        @param g2d - The Java Graphics2D library
+     */
     public void drawBoard(Graphics2D g2d) {
         g2d.setColor(Color.blue);
         drawBorder(g2d);
@@ -92,6 +100,14 @@ public class Board {
 
     }
 
+    /**
+        Update the state of the board to reflect a new clicked color.  Colors
+        spread until they reach a new color.  handleClick will set up the
+        appropriate variables and settings to initiate the recursive call to
+        colorNeighbors.
+
+        @param clr  The new color the user clicked.
+     */
     public void handleClick(Color clr) {
         // ASSERT:  User clicked a color.  Update the array of tiles to
         // reflect the change.
@@ -106,6 +122,9 @@ public class Board {
 
     /**
         Look for win state. If all tiles are the same color, winner!
+
+        @return <code>true</code> if the board is all one color.
+                <code>false</code> otherwise
      */
     public boolean checkWin() {
         boolean rtn = true;
@@ -122,6 +141,9 @@ public class Board {
 
     /**
         Look for loss state. If all "availMoves" move exhausted, loser.
+
+        @return <code>true</code> if the user has exhauted all their moves
+                <code>false</code> otherwise
      */
     public boolean checkLose() {
         boolean rtn = false;
@@ -133,6 +155,9 @@ public class Board {
         return rtn;
     }
 
+    /**
+        Simple border around the dimensions of the board.
+     */
     private void drawBorder(Graphics2D g2d) {
         int x = BOARD_X - 1;
         int y = BOARD_Y - 1;
@@ -141,18 +166,45 @@ public class Board {
         g2d.drawRect(x, y, width, height);
     }
 
+    /**
+        A mapping service to simplify the one dimensional array of Tiles into a
+        system of x,y coordinates.
+
+        @param idx tile's array index
+        @return the tile's position within its row on the board 
+     */
     private int getTileX(int idx) {
         int rawPos = idx % NUM_COLS;
         return rawPos;
     }
 
 
+    /**
+        A mapping service to simplify the one dimensional array of Tiles into a
+        system of x,y coordinates.
+
+        @param idx tile's array index
+        @return the tile's position within its column on the board 
+     */
     private int getTileY(int idx) {
         int rawPos = (int)Math.floor(idx / NUM_COLS);
 
         return rawPos;
     }
 
+    /**
+        Recursive function to "spread" the newly selected color across the
+        board.  If the tile neighboring the <code>idx</code> tile (in the rows
+        above and below, or the columns to the left or right) match the current
+        color (<code>origColor</code>), then change them to the new color
+        (<code>clr</code>), and make a recursive call to check _that_ tile's
+        neighbors.  Each tile's "checked" state is tracked, and the recursion
+        ends when all applicable neighbors have been "checked".
+
+        @param idx represents the tile's place in the Board's array of Tiles
+        @param origColor the color on the board before the user's click.
+        @param clr the new color that the user's chosen to "spread"
+      */
     private void colorNeighbors(int idx, Color origColor, Color clr) {
         // ASSERT:  this tile has been checked.
         tiles[idx].setChecked(true);

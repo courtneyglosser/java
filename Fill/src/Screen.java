@@ -18,8 +18,11 @@ import javax.imageio.ImageIO;
     <li>win
     <li>lose
     </ul>
+    <p>
+    Screen also acts as an ButtonManager class wrapper to provide appropriate
+    game state information to the ButtonManager class.
 
-    @author
+    @author Courtney Glosser
  */
 
 public class Screen {
