@@ -17,7 +17,6 @@ public class FillFrame extends JFrame {
     private static final int HEIGHT = 360;
 
     public FillFrame() {
-        System.out.println("GameFrame Constructor");
 
         fp = new FillPanel();
         add(fp);

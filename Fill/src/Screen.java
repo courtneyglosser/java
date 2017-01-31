@@ -53,9 +53,6 @@ public class Screen {
     }
 
     public void drawWelcome(Graphics2D g2d) {
-
-        System.out.println("Welcome!");
-
         g2d.setColor(Color.white);
         g2d.drawString("Welcome", 100, 50);
 
@@ -64,9 +61,6 @@ public class Screen {
     }
 
     public void drawWin(Graphics2D g2d) {
-
-        System.out.println("Winner!");
-
         g2d.setColor(Color.white);
         g2d.drawString("Winner!", 100, 50);
 
@@ -74,9 +68,6 @@ public class Screen {
     }
 
     public void drawLose(Graphics2D g2d) {
-
-        System.out.println("Loser!");
-
         g2d.setColor(Color.white);
         g2d.drawString("Loser!", 100, 50);
 
