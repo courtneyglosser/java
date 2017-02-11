@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.File;
 import javax.imageio.ImageIO;
 
@@ -52,9 +53,16 @@ public class ButtonManager {
 
     private void LoadImages() {
         try {
-            StartBtn = ImageIO.read(new File("build/Start.png"));
-            RestartBtn = ImageIO.read(new File("build/Restart.png"));
-            ExitBtn = ImageIO.read(new File("build/Exit.png"));
+            InputStream startResource =
+                ButtonManager.class.getResourceAsStream("/Start.png");
+            InputStream restartResource =
+                ButtonManager.class.getResourceAsStream("/Restart.png");
+            InputStream exitResource =
+                ButtonManager.class.getResourceAsStream("/Exit.png");
+
+            StartBtn = ImageIO.read(startResource);
+            RestartBtn = ImageIO.read(restartResource);
+            ExitBtn = ImageIO.read(exitResource);
         }
         catch (IOException e) {
             // Handle exception

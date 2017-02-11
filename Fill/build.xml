@@ -30,4 +30,13 @@
       </fileset>
     </javadoc>
   </target>
+  <target name="jardist" depends="build">
+    <jar destfile="fill-1.0.1.jar">
+      <fileset dir="build" />
+      <manifest>
+        <attribute name="Main-Class"
+              value="cglosser.Main"/>
+      </manifest>
+    </jar>
+  </target>
 </project>
