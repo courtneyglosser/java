@@ -1,0 +1,100 @@
+
+
+<html>
+
+<head>
+
+<title>Thread Playground Progress</title>
+
+<style>
+
+body {
+    background-color: black;
+    color: white;
+}
+
+.legend {
+    border: 1px solid white;
+    border-radius: 2px;
+}
+
+.legend th, .legend td {
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+}
+
+.new {
+    color: #ff0;
+    font-weight: bold;
+}
+
+.not-started {
+}
+
+.in-progress {
+    color: #0F9;
+}
+
+.testing {
+    color: #F96;
+}
+
+.released {
+    color: #39F;
+    font-weight: bold;
+}
+
+.cancelled {
+    color: #F33;
+    text-decoration: line-through;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Fill Game</h1>
+
+<table class="legend" cellspacing="0" cellpadding="5">
+    <tr>
+        <th>Newly Added</th>
+        <th>Not Started</th>
+        <th>In Progress</th>
+        <th>Testing</th>
+        <th>Released</th>
+        <th>Cancelled</th>
+    </tr>
+    <tr>
+        <td class="new">Newly Added</th>
+        <td class="not-started">Not Started</td>
+        <td class="in-progress">In Progress</td>
+        <td class="testing">Testing</td>
+        <td class="released">Released</td>
+        <td class="cancelled">cancelled</td>
+    </tr>
+</table>
+
+<p>
+    Some simple applications to learn more about threads and how to use them as
+    game loops.
+</p>
+
+<h2>2017-02-19</h2>
+
+<ul>
+    <li class="new">Build a simple seconds counter</li>
+    <li class="released">Expand to include basic swing window support</li>
+    <li class="new">Move a rectangle acrosse the screen</li>
+    <ul>
+        <li class="new">Draw a simple rectangle to the screen</li>
+        <li class="new">Move it as a part of the threaded loop</li>
+        <li class="new">Bounce it off the walls</li>
+    </ul>
+</ul>
+
+
+</body>
+
+</html>
