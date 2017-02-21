@@ -63,7 +63,9 @@ public class MyPanel extends JPanel implements ActionListener{
         g2d.setColor(Color.white);
         g2d.drawString("Count: " + count, 20, 20);
         g2d.drawString("Seconds: " + seconds, 20, 50);
-        g2d.drawString("FPS: " + count / seconds, 200, 20);
+        if (seconds > 0) {
+            g2d.drawString("FPS: " + count / seconds, 200, 20);
+        }
         
         g2d.drawString("Money: " + money, 200, 50);
         g2d.drawString("Per Second: " + perSecond, 200, 80);
