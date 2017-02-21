@@ -53,10 +53,6 @@ public class MyFrame extends JFrame implements Runnable {
         float optimalFPS = 1000/60;
 
         while (!done) {
-            if (safety++ > 3600) {
-                done = true;
-            }
-            System.out.println("Looping...." + safety);
             if (System.currentTimeMillis() - secondTime >= 1000) {
                 secondTime = System.currentTimeMillis();
                 seconds++;

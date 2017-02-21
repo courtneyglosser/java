@@ -23,8 +23,15 @@ public class MyPanel extends JPanel implements ActionListener{
     private String gameState; // welcome, active, win, lose
     private ButtonManager bm;
     private Screen gameScreen;
+
     private int count;
     private int seconds;
+    private int perSecond;
+    private int money;
+
+    private int singleCost;
+    private int tenCost;
+    private int hundredCost;
 
     public MyPanel() {
 
@@ -37,8 +44,10 @@ public class MyPanel extends JPanel implements ActionListener{
         setBackground(Color.black);
         setFocusable(true);
 
-        count = 0;
-        seconds = 0;
+        count = seconds = perSecond = 0;
+        money = singleCost = 1;
+        tenCost = 10;
+        hundredCost = 100;
 
         repaint();
     }
@@ -55,6 +64,9 @@ public class MyPanel extends JPanel implements ActionListener{
         g2d.drawString("Count: " + count, 20, 20);
         g2d.drawString("Seconds: " + seconds, 20, 50);
         g2d.drawString("FPS: " + count / seconds, 200, 20);
+        
+        g2d.drawString("Money: " + money, 200, 50);
+        g2d.drawString("Per Second: " + perSecond, 200, 80);
 
         if (gameState == "active") {
             bm.drawBoardButtons(g2d);
@@ -75,10 +87,25 @@ public class MyPanel extends JPanel implements ActionListener{
     }
 
     public void update(int updateSeconds) {
-        System.out.println("Updating the Panel!");
-        seconds = updateSeconds;
+        if (seconds != updateSeconds) {
+            // ASSERT:  ticked over a second:
+            money += perSecond;
+            seconds = updateSeconds;
+            updateButtons();
+        }
+        else {
+        }
         count++;
         repaint();
+    }
+
+    private void updateButtons() {
+        if (!bm.checkTens() && money > 10) {
+            bm.showTens();
+        }
+        if (!bm.checkHundreds() && money > 100) {
+            bm.showHundreds();
+        }
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -97,6 +124,11 @@ public class MyPanel extends JPanel implements ActionListener{
 
         public void mousePressed(MouseEvent e) {
             if (gameState == "active") {
+                int purchaseAmt = bm.checkPurchase(e.getX(), e.getY());
+                if ( purchaseAmt > 0) {
+                    perSecond += purchaseAmt;
+                    money = bm.applyPurchase(money, e.getX(), e.getY());
+                }
             }
             if (bm.checkStart(gameState, e.getX(), e.getY())) {
                 gameState = "active";

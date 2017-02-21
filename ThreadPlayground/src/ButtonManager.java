@@ -26,11 +26,17 @@ public class ButtonManager {
     private Image RestartBtn;
     private Image ExitBtn;
 
+    private boolean showSingle;
+    private boolean showTens;
+    private boolean showHundreds;
+
     public ButtonManager() {
         init();
     }
 
     private void init() {
+        showSingle = true;
+        showTens = showHundreds = false;
 
         LoadImages();
     }
@@ -55,7 +61,38 @@ public class ButtonManager {
         }
     }
 
+    public boolean checkTens() {
+        return showTens;
+    }
+
+    public boolean checkHundreds() {
+        return showHundreds;
+    }
+
+    public void showTens() {
+        showTens = true;
+    }
+    public void showHundreds() {
+        showHundreds = true;
+    }
+
     public void drawBoardButtons(Graphics2D g2d) {
+        if (showSingle) {
+            g2d.setColor(Color.white);
+            g2d.drawString("Single: ", 20, 120);
+            g2d.drawRect(18, 100, 150, 30);
+        }
+        if (showTens) {
+            g2d.setColor(Color.white);
+            g2d.drawString("Tens: ", 20, 150);
+            g2d.drawRect(18, 130, 150, 30);
+        }
+        if (showHundreds) {
+            g2d.setColor(Color.white);
+            g2d.drawString("Hundreds: ", 20, 180);
+            g2d.drawRect(18, 160, 150, 30);
+        }
+
         g2d.drawRect(500, 65, 50, 20);
         g2d.drawImage(RestartBtn, 500, 65, null);
 
@@ -91,6 +128,39 @@ public class ButtonManager {
         g2d.drawRect(100, 95, 50, 20);
         g2d.drawImage(ExitBtn, 100, 95, null);
 
+    }
+
+    public int checkPurchase(int x, int y) {
+        // Check for single:
+        if (x > 18 && x < 168 && y > 100 && y < 130) {
+            return 1;
+        }
+        // Check for tens:
+        if (x > 18 && x < 168 && y > 130 && y < 160) {
+            return 10;
+        }
+        // Check for hundreds:
+        if (x > 18 && x < 168 && y > 160 && y < 190) {
+            return 100;
+        }
+
+        return 0;
+    }
+    public int applyPurchase(int money, int x, int y) {
+        // Check for single:
+        if (x > 18 && x < 168 && y > 100 && y < 130) {
+            return money - 1;
+        }
+        // Check for tens:
+        if (x > 18 && x < 168 && y > 130 && y < 160) {
+            return money - 10;
+        }
+        // Check for hundreds:
+        if (x > 18 && x < 168 && y > 160 && y < 190) {
+            return money - 100;
+        }
+
+        return money;
     }
 
     public boolean checkStart(String gameState, int x, int y) {
