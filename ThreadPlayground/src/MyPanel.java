@@ -23,6 +23,8 @@ public class MyPanel extends JPanel implements ActionListener{
     private String gameState; // welcome, active, win, lose
     private ButtonManager bm;
     private Screen gameScreen;
+    private int count;
+    private int seconds;
 
     public MyPanel() {
 
@@ -35,6 +37,9 @@ public class MyPanel extends JPanel implements ActionListener{
         setBackground(Color.black);
         setFocusable(true);
 
+        count = 0;
+        seconds = 0;
+
         repaint();
     }
 
@@ -45,6 +50,11 @@ public class MyPanel extends JPanel implements ActionListener{
 
     public void doDrawing(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
+
+        g2d.setColor(Color.white);
+        g2d.drawString("Count: " + count, 20, 20);
+        g2d.drawString("Seconds: " + seconds, 20, 50);
+        g2d.drawString("FPS: " + count / seconds, 200, 20);
 
         if (gameState == "active") {
             bm.drawBoardButtons(g2d);
@@ -62,6 +72,13 @@ public class MyPanel extends JPanel implements ActionListener{
             gameScreen.drawLose(g2d);
         }
 
+    }
+
+    public void update(int updateSeconds) {
+        System.out.println("Updating the Panel!");
+        seconds = updateSeconds;
+        count++;
+        repaint();
     }
 
     public void actionPerformed(ActionEvent e) {

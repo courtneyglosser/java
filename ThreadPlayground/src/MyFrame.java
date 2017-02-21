@@ -8,18 +8,21 @@ import javax.swing.JFrame;
     @author Courtney Glosser
  */
 
-public class MyFrame extends JFrame {
+public class MyFrame extends JFrame implements Runnable {
 
-    private MyPanel fp;
+    private MyPanel mp;
 
     // Implementing a 16:9 ratio.
     private static final int WIDTH = 640;
     private static final int HEIGHT = 360;
 
+    private boolean done = false;
+    private int safety = 0;
+
     public MyFrame() {
 
-        fp = new MyPanel();
-        add(fp);
+        mp = new MyPanel();
+        add(mp);
 
         setSize(WIDTH, HEIGHT);
         setTitle ("My Game");
@@ -28,5 +31,48 @@ public class MyFrame extends JFrame {
 
         setLocationRelativeTo(null);
         setVisible(true);
+
+        gameLoop();
     }
+
+    private void gameLoop() {
+        new Thread(this).start();
+    }
+
+    /**
+        Interpreting from here:
+        http://www.java-gaming.org/index.php?topic=24220.0
+
+     */
+    public void run() {
+        System.out.println("Hello from the thread");
+
+        long loopTime = System.currentTimeMillis();
+        long secondTime = System.currentTimeMillis();
+        int seconds = 0;
+        float optimalFPS = 1000/60;
+
+        while (!done) {
+            if (safety++ > 3600) {
+                done = true;
+            }
+            System.out.println("Looping...." + safety);
+            if (System.currentTimeMillis() - secondTime >= 1000) {
+                secondTime = System.currentTimeMillis();
+                seconds++;
+            }
+            mp.update(seconds);
+
+            while (System.currentTimeMillis() - loopTime < optimalFPS) {
+                Thread.yield();
+                try {
+                    Thread.sleep(1);
+                }
+                catch (Exception e) {
+                }
+            }
+            loopTime = System.currentTimeMillis();
+        }
+    }
+
 }
