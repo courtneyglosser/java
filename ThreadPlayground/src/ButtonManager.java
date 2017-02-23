@@ -30,6 +30,10 @@ public class ButtonManager {
     private boolean showTens;
     private boolean showHundreds;
 
+    private AssetButton singles;
+    private AssetButton tens;
+    private AssetButton hundreds;
+
     public ButtonManager() {
         init();
     }
@@ -37,6 +41,10 @@ public class ButtonManager {
     private void init() {
         showSingle = true;
         showTens = showHundreds = false;
+
+        singles = new AssetButton(1, 1);
+        tens = new AssetButton(10, 10);
+        hundreds = new AssetButton(100, 100);
 
         LoadImages();
     }
@@ -79,17 +87,17 @@ public class ButtonManager {
     public void drawBoardButtons(Graphics2D g2d) {
         if (showSingle) {
             g2d.setColor(Color.white);
-            g2d.drawString("Single: ", 20, 120);
+            g2d.drawString("Single: " + singles.getPrice(), 20, 120);
             g2d.drawRect(18, 100, 150, 30);
         }
         if (showTens) {
             g2d.setColor(Color.white);
-            g2d.drawString("Tens: ", 20, 150);
+            g2d.drawString("Tens: " + tens.getPrice(), 20, 150);
             g2d.drawRect(18, 130, 150, 30);
         }
         if (showHundreds) {
             g2d.setColor(Color.white);
-            g2d.drawString("Hundreds: ", 20, 180);
+            g2d.drawString("Hundreds: " + hundreds.getPrice(), 20, 180);
             g2d.drawRect(18, 160, 150, 30);
         }
 
@@ -130,21 +138,28 @@ public class ButtonManager {
 
     }
 
-    public int checkPurchase(int x, int y) {
+    public Purchase doPurchase(int x, int y) {
+        Purchase rtn = new Purchase();
         // Check for single:
         if (x > 18 && x < 168 && y > 100 && y < 130) {
-            return 1;
+            rtn.setPrice(singles.getPrice());
+            rtn.setPerSecond(singles.getPerSecond());
+            singles.updatePriceForPurchase();
         }
         // Check for tens:
         if (x > 18 && x < 168 && y > 130 && y < 160) {
-            return 10;
+            rtn.setPrice(tens.getPrice());
+            rtn.setPerSecond(tens.getPerSecond());
+            tens.updatePriceForPurchase();
         }
         // Check for hundreds:
         if (x > 18 && x < 168 && y > 160 && y < 190) {
-            return 100;
+            rtn.setPrice(hundreds.getPrice());
+            rtn.setPerSecond(hundreds.getPerSecond());
+            hundreds.updatePriceForPurchase();
         }
 
-        return 0;
+        return rtn;
     }
     public int applyPurchase(int money, int x, int y) {
         // Check for single:
