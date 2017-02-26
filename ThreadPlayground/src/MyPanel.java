@@ -126,7 +126,7 @@ public class MyPanel extends JPanel implements ActionListener{
 
         public void mousePressed(MouseEvent e) {
             if (gameState == "active") {
-                Purchase myPurchase = bm.doPurchase(e.getX(), e.getY());
+                Purchase myPurchase = bm.doPurchase(e.getX(), e.getY(), money);
                 if ( myPurchase.getPerSecond() > 0) {
                     perSecond += myPurchase.getPerSecond();
                     money -= myPurchase.getPrice();

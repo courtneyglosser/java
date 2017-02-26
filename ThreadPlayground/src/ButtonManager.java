@@ -138,25 +138,31 @@ public class ButtonManager {
 
     }
 
-    public Purchase doPurchase(int x, int y) {
+    public Purchase doPurchase(int x, int y, int money) {
         Purchase rtn = new Purchase();
         // Check for single:
         if (x > 18 && x < 168 && y > 100 && y < 130) {
-            rtn.setPrice(singles.getPrice());
-            rtn.setPerSecond(singles.getPerSecond());
-            singles.updatePriceForPurchase();
+            if (singles.getPrice() <= money) {
+                rtn.setPrice(singles.getPrice());
+                rtn.setPerSecond(singles.getPerSecond());
+                singles.updatePriceForPurchase();
+            }
         }
         // Check for tens:
         if (x > 18 && x < 168 && y > 130 && y < 160) {
-            rtn.setPrice(tens.getPrice());
-            rtn.setPerSecond(tens.getPerSecond());
-            tens.updatePriceForPurchase();
+            if (tens.getPrice() <= money) {
+                rtn.setPrice(tens.getPrice());
+                rtn.setPerSecond(tens.getPerSecond());
+                tens.updatePriceForPurchase();
+            }
         }
         // Check for hundreds:
         if (x > 18 && x < 168 && y > 160 && y < 190) {
-            rtn.setPrice(hundreds.getPrice());
-            rtn.setPerSecond(hundreds.getPerSecond());
-            hundreds.updatePriceForPurchase();
+            if (hundreds.getPrice() <= money) {
+                rtn.setPrice(hundreds.getPrice());
+                rtn.setPerSecond(hundreds.getPerSecond());
+                hundreds.updatePriceForPurchase();
+            }
         }
 
         return rtn;
