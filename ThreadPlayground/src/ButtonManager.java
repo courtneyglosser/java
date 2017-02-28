@@ -35,19 +35,24 @@ public class ButtonManager {
     private AssetButton tens;
     private AssetButton hundreds;
     private AssetButton thousands;
+    private AssetButton tenK;
 
     public ButtonManager() {
         init();
     }
 
     private void init() {
-        showSingle = true;
-        showTens = showHundreds = showThousands = false;
+        singles = new AssetButton(1, 1, "Singles: ");
+        tens = new AssetButton(10, 10, "Tens: ");
+        hundreds = new AssetButton(100, 100, "Hundreds: ");
+        thousands = new AssetButton(1000, 1000, "Thousands: ");
+        tenK = new AssetButton(10000, 10000, "10K: ");
 
-        singles = new AssetButton(1, 1);
-        tens = new AssetButton(10, 10);
-        hundreds = new AssetButton(100, 100);
-        thousands = new AssetButton(1000, 1000);
+        singles.setDisplay(true);
+        tens.setDisplay(false);
+        hundreds.setDisplay(false);
+        thousands.setDisplay(false);
+        tenK.setDisplay(false);
 
         LoadImages();
     }
@@ -72,48 +77,41 @@ public class ButtonManager {
         }
     }
 
-    public boolean checkTens() {
-        return showTens;
-    }
+    public boolean checkTens() {return tens.getDisplay();}
+    public boolean checkHundreds() {return hundreds.getDisplay();}
+    public boolean checkThousands() {return thousands.getDisplay();}
+    public boolean checkTenK() {return tenK.getDisplay();}
 
-    public boolean checkHundreds() {
-        return showHundreds;
-    }
-
-    public boolean checkThousands() {
-        return showThousands;
-    }
-
-    public void showTens() {
-        showTens = true;
-    }
-    public void showHundreds() {
-        showHundreds = true;
-    }
-    public void showThousands() {
-        showThousands = true;
-    }
+    public void showTens() {tens.setDisplay(true);}
+    public void showHundreds() {hundreds.setDisplay(true);}
+    public void showThousands() {thousands.setDisplay(true);}
+    public void showTenK() {tenK.setDisplay(true);}
 
     public void drawBoardButtons(Graphics2D g2d) {
-        if (showSingle) {
+        if (singles.getDisplay()) {
             g2d.setColor(Color.white);
-            g2d.drawString("Single: " + singles.getPrice(), 20, 120);
+            g2d.drawString(singles.getDisplayName() + singles.getPrice(), 20, 120);
             g2d.drawRect(18, 100, 150, 30);
         }
-        if (showTens) {
+        if (tens.getDisplay()) {
             g2d.setColor(Color.white);
-            g2d.drawString("Tens: " + tens.getPrice(), 20, 150);
+            g2d.drawString(tens.getDisplayName() + tens.getPrice(), 20, 150);
             g2d.drawRect(18, 130, 150, 30);
         }
-        if (showHundreds) {
+        if (hundreds.getDisplay()) {
             g2d.setColor(Color.white);
-            g2d.drawString("Hundreds: " + hundreds.getPrice(), 20, 180);
+            g2d.drawString(hundreds.getDisplayName() + hundreds.getPrice(), 20, 180);
             g2d.drawRect(18, 160, 150, 30);
         }
-        if (showThousands) {
+        if (thousands.getDisplay()) {
             g2d.setColor(Color.white);
-            g2d.drawString("Thousands: " + thousands.getPrice(), 20, 210);
+            g2d.drawString(thousands.getDisplayName() + thousands.getPrice(), 20, 210);
             g2d.drawRect(18, 190, 150, 30);
+        }
+        if (tenK.getDisplay()) {
+            g2d.setColor(Color.white);
+            g2d.drawString(tenK.getDisplayName() + tenK.getPrice(), 20, 240);
+            g2d.drawRect(18, 220, 150, 30);
         }
 
         g2d.drawRect(500, 65, 50, 20);
@@ -187,6 +185,14 @@ public class ButtonManager {
                 thousands.updatePriceForPurchase();
             }
         }
+        // Check for tens of thousands:
+        if (x > 18 && x < 168 && y > 220 && y < 250) {
+            if (tenK.getPrice() <= money) {
+                rtn.setPrice(tenK.getPrice());
+                rtn.setPerSecond(tenK.getPerSecond());
+                tenK.updatePriceForPurchase();
+            }
+        }
 
         return rtn;
     }
@@ -207,6 +213,11 @@ public class ButtonManager {
         if (x > 18 && x < 168 && y > 190 && y < 220) {
             return money - 1000;
         }
+        // Check for tens of thousands:
+        if (x > 18 && x < 168 && y > 220 && y < 250) {
+            return money - 1000;
+        }
+
 
         return money;
     }
