@@ -108,6 +108,9 @@ public class MyPanel extends JPanel implements ActionListener{
         if (!bm.checkHundreds() && money > 100) {
             bm.showHundreds();
         }
+        if (!bm.checkThousands() && money > 1000) {
+            bm.showThousands();
+        }
     }
 
     public void actionPerformed(ActionEvent e) {

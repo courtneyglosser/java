@@ -29,10 +29,12 @@ public class ButtonManager {
     private boolean showSingle;
     private boolean showTens;
     private boolean showHundreds;
+    private boolean showThousands;
 
     private AssetButton singles;
     private AssetButton tens;
     private AssetButton hundreds;
+    private AssetButton thousands;
 
     public ButtonManager() {
         init();
@@ -40,11 +42,12 @@ public class ButtonManager {
 
     private void init() {
         showSingle = true;
-        showTens = showHundreds = false;
+        showTens = showHundreds = showThousands = false;
 
         singles = new AssetButton(1, 1);
         tens = new AssetButton(10, 10);
         hundreds = new AssetButton(100, 100);
+        thousands = new AssetButton(1000, 1000);
 
         LoadImages();
     }
@@ -77,11 +80,18 @@ public class ButtonManager {
         return showHundreds;
     }
 
+    public boolean checkThousands() {
+        return showThousands;
+    }
+
     public void showTens() {
         showTens = true;
     }
     public void showHundreds() {
         showHundreds = true;
+    }
+    public void showThousands() {
+        showThousands = true;
     }
 
     public void drawBoardButtons(Graphics2D g2d) {
@@ -99,6 +109,11 @@ public class ButtonManager {
             g2d.setColor(Color.white);
             g2d.drawString("Hundreds: " + hundreds.getPrice(), 20, 180);
             g2d.drawRect(18, 160, 150, 30);
+        }
+        if (showThousands) {
+            g2d.setColor(Color.white);
+            g2d.drawString("Thousands: " + thousands.getPrice(), 20, 210);
+            g2d.drawRect(18, 190, 150, 30);
         }
 
         g2d.drawRect(500, 65, 50, 20);
@@ -164,6 +179,14 @@ public class ButtonManager {
                 hundreds.updatePriceForPurchase();
             }
         }
+        // Check for thousands:
+        if (x > 18 && x < 168 && y > 190 && y < 220) {
+            if (thousands.getPrice() <= money) {
+                rtn.setPrice(thousands.getPrice());
+                rtn.setPerSecond(thousands.getPerSecond());
+                thousands.updatePriceForPurchase();
+            }
+        }
 
         return rtn;
     }
@@ -179,6 +202,10 @@ public class ButtonManager {
         // Check for hundreds:
         if (x > 18 && x < 168 && y > 160 && y < 190) {
             return money - 100;
+        }
+        // Check for thousands:
+        if (x > 18 && x < 168 && y > 190 && y < 220) {
+            return money - 1000;
         }
 
         return money;
