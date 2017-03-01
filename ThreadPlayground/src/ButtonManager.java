@@ -129,6 +129,8 @@ public class ButtonManager {
         g2d.drawRect(100, 95, 50, 20);
         g2d.drawImage(ExitBtn, 100, 95, null);
 
+        g2d.drawRect(100, 125, 50, 20);
+        g2d.drawString("Cont", 102, 140);
     }
 
     public void drawWinButtons(Graphics2D g2d) {
@@ -253,6 +255,17 @@ public class ButtonManager {
             }
         }
 
+        return rtn;
+    }
+
+    public boolean checkContinue(String gameState, int x, int y) {
+        boolean rtn = false;
+
+        if (gameState == "welcome") {
+            if (x > 100 && x < 150 && y > 125 && y < 145) {
+                rtn = true;
+            }
+        }
         return rtn;
     }
 }

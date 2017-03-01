@@ -150,14 +150,29 @@ public class MyPanel extends JPanel implements ActionListener{
                 wg.setSave(sg);
                 wg.write();
 
-                ReadGame rg = new ReadGame();
-                rg.read();
-                sg = rg.getSave();
-
                 repaint();
             }
             if (bm.checkExit(gameState, e.getX(), e.getY())) {
                 System.exit(0);
+            }
+            if (bm.checkContinue(gameState, e.getX(), e.getY())) {
+                System.out.println ("Load Saved Game");
+
+                ReadGame rg = new ReadGame();
+                rg.read();
+                SaveGame sg = rg.getSave();
+
+                int elapsedSeconds = (int)
+                    (System.currentTimeMillis() - sg.getTime()) / 1000;
+
+                perSecond = sg.getPerSecond();
+                money = sg.getMoney();
+                money += elapsedSeconds * perSecond;
+
+                System.out.println("Calculating... ");
+                System.out.println("Money:  " + money);
+                System.out.println("Gathered over: " + elapsedSeconds);
+                System.out.println("at: " + perSecond + " per second");
             }
         }
 
