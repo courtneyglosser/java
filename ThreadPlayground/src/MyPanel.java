@@ -140,6 +140,20 @@ public class MyPanel extends JPanel implements ActionListener{
             }
             if (bm.checkStart(gameState, e.getX(), e.getY())) {
                 gameState = "active";
+                // Testing save game reading / writing
+                SaveGame sg = new SaveGame();
+                sg.setMoney(money);
+                sg.setPerSecond(perSecond);
+                sg.setTime(System.currentTimeMillis());
+
+                WriteGame wg = new WriteGame();
+                wg.setSave(sg);
+                wg.write();
+
+                ReadGame rg = new ReadGame();
+                rg.read();
+                sg = rg.getSave();
+
                 repaint();
             }
             if (bm.checkExit(gameState, e.getX(), e.getY())) {

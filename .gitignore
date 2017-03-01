@@ -12,3 +12,6 @@ build/
 
 #ignore generated JavaDocs files...
 htmldocs/
+
+#ignore savegame files
+save.dat

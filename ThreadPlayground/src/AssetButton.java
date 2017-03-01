@@ -3,6 +3,7 @@ package cglosser;
 
 import java.awt.Graphics2D;
 import java.awt.Color;
+import java.lang.Math;
 
 /**
     Handle Expand basic Button data and handle income generating asset features
@@ -15,6 +16,7 @@ public class AssetButton extends Button {
     int price;
     int origPrice;
     int perSecond;
+    double costEscalation;
 
     boolean display;
     String displayName;
@@ -29,6 +31,7 @@ public class AssetButton extends Button {
         price = p;
         origPrice = p;
         perSecond = ps;
+        costEscalation = 2.1;
 
         displayName = dn;
     }
@@ -50,7 +53,7 @@ public class AssetButton extends Button {
     }
 
     public void updatePriceForPurchase() {
-        price = price * 2;
+        price = (int) Math.ceil (price * costEscalation);
     }
 
 }
