@@ -1,0 +1,118 @@
+
+
+<html>
+
+<head>
+
+<title>IdleClicker Progress</title>
+
+<style>
+
+body {
+    background-color: black;
+    color: white;
+}
+
+.legend {
+    border: 1px solid white;
+    border-radius: 2px;
+}
+
+.legend th, .legend td {
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+}
+
+.new {
+    color: #ff0;
+    font-weight: bold;
+}
+
+.not-started {
+}
+
+.in-progress {
+    color: #0F9;
+}
+
+.testing {
+    color: #F96;
+}
+
+.released {
+    color: #39F;
+    font-weight: bold;
+}
+
+.cancelled {
+    color: #F33;
+    text-decoration: line-through;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Fill Game</h1>
+
+<table class="legend" cellspacing="0" cellpadding="5">
+    <tr>
+        <th>Newly Added</th>
+        <th>Not Started</th>
+        <th>In Progress</th>
+        <th>Testing</th>
+        <th>Released</th>
+        <th>Cancelled</th>
+    </tr>
+    <tr>
+        <td class="new">Newly Added</th>
+        <td class="not-started">Not Started</td>
+        <td class="in-progress">In Progress</td>
+        <td class="testing">Testing</td>
+        <td class="released">Released</td>
+        <td class="cancelled">cancelled</td>
+    </tr>
+</table>
+
+<p>
+    Playing around with a simple IdleClicker game concept inspired by such
+    Kongregate games as "Get a Little Gold" and "Idle Wizard" etc.  Importing
+    the task list from the ThreadPlayground as it had become completely about
+    this game.
+</p>
+
+<h2>2017-03-03</h2>
+
+<ul>
+    <li class="not-started">Button for 100k second buy</li>
+    <li class="in-progress">Simplify adding buttons</li>
+    <li class="released">Better paradigm for escalating cost</li>
+    <li class="not-started">Get "Restart" button working</li>
+    <li class="not-started">New buttons art for each price point</li>
+    <li class="not-started">Design price escalation</li>
+    <li class="in-progress">Save progress</li>
+    <ul>
+        <li class="released">Add a "continue" button to welcome</li>
+        <li class="released">Add SaveGame class implements Serializable</li>
+        <li class="new">New "Save" button on 'active' screen</li>
+        <li class="released">Test out writing</li>
+        <li class="released">Test out reading</li>
+        <li class="released">Track time, money, and perSecond</li>
+        <li class="released">Calculate money onClick for continue</li>
+        <li class="new">Track accumulated assets</li>
+        <li class="new">Track price for each asset</li>
+        <li class="new">Support multiple save states</li>
+    </ul>
+    <li class="not-started">Define "upgrades"</li>
+    <li class="in-progress">Plan out prestige / ascension</li>
+    <ul>
+        <li class="new">Simple Restart with 1% of money saved.</li>
+        <li class="new">Restart screen with confirmation</li>
+    </ul>
+</ul>
+
+</body>
+
+</html>
