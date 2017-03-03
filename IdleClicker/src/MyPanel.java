@@ -29,9 +29,8 @@ public class MyPanel extends JPanel implements ActionListener{
     private int perSecond;
     private int money;
 
-    private int singleCost;
-    private int tenCost;
-    private int hundredCost;
+    // 0 => Singles, 1 => tens, etc
+    private int[] assets = {0, 0, 0, 0, 0};
 
     public MyPanel() {
 
@@ -45,9 +44,8 @@ public class MyPanel extends JPanel implements ActionListener{
         setFocusable(true);
 
         count = seconds = perSecond = 0;
-        money = singleCost = 1;
-        tenCost = 10;
-        hundredCost = 100;
+        money = 1;
+
 
         repaint();
     }
@@ -102,16 +100,16 @@ public class MyPanel extends JPanel implements ActionListener{
     }
 
     private void updateButtons() {
-        if (!bm.checkTens() && money > 10) {
+        if (!bm.checkTens() && money >= 10) {
             bm.showTens();
         }
-        if (!bm.checkHundreds() && money > 100) {
+        if (!bm.checkHundreds() && money >= 100) {
             bm.showHundreds();
         }
-        if (!bm.checkThousands() && money > 1000) {
+        if (!bm.checkThousands() && money >= 1000) {
             bm.showThousands();
         }
-        if (!bm.checkTenK() && money > 10000) {
+        if (!bm.checkTenK() && money >= 10000) {
             bm.showTenK();
         }
     }
@@ -136,6 +134,23 @@ public class MyPanel extends JPanel implements ActionListener{
                 if ( myPurchase.getPerSecond() > 0) {
                     perSecond += myPurchase.getPerSecond();
                     money -= myPurchase.getPrice();
+                    switch(myPurchase.getPerSecond()) {
+                        case 1:
+                            assets[0]++;
+                            break;
+                        case 10:
+                            assets[1]++;
+                            break;
+                        case 100:
+                            assets[2]++;
+                            break;
+                        case 1000:
+                            assets[3]++;
+                            break;
+                        case 10000:
+                            assets[4]++;
+                            break;
+                    }
                 }
             }
             if (bm.checkStart(gameState, e.getX(), e.getY())) {
@@ -145,6 +160,11 @@ public class MyPanel extends JPanel implements ActionListener{
                 sg.setMoney(money);
                 sg.setPerSecond(perSecond);
                 sg.setTime(System.currentTimeMillis());
+                sg.setNumSingles(assets[0]);
+                sg.setNumTens(assets[1]);
+                sg.setNumHundreds(assets[2]);
+                sg.setNumThousands(assets[3]);
+                sg.setNumTenKs(assets[4]);
 
                 WriteGame wg = new WriteGame();
                 wg.setSave(sg);
@@ -168,11 +188,17 @@ public class MyPanel extends JPanel implements ActionListener{
                 perSecond = sg.getPerSecond();
                 money = sg.getMoney();
                 money += elapsedSeconds * perSecond;
+                assets[0] = sg.getNumSingles();
+                assets[1] = sg.getNumTens();
+                assets[2] = sg.getNumHundreds();
+                assets[3] = sg.getNumThousands();
+                assets[4] = sg.getNumTenKs();
 
                 System.out.println("Calculating... ");
                 System.out.println("Money:  " + money);
                 System.out.println("Gathered over: " + elapsedSeconds);
                 System.out.println("at: " + perSecond + " per second");
+                System.out.println("And assets: " + assets.toString());
             }
         }
 
