@@ -26,12 +26,6 @@ public class MyPanel extends JPanel implements ActionListener{
 
     private int count;
     private int seconds;
-    private int perSecond;
-    private int money;
-
-    private int singleCost;
-    private int tenCost;
-    private int hundredCost;
 
     public MyPanel() {
 
@@ -44,10 +38,7 @@ public class MyPanel extends JPanel implements ActionListener{
         setBackground(Color.black);
         setFocusable(true);
 
-        count = seconds = perSecond = 0;
-        money = singleCost = 1;
-        tenCost = 10;
-        hundredCost = 100;
+        count = seconds = 0;
 
         repaint();
     }
@@ -67,9 +58,6 @@ public class MyPanel extends JPanel implements ActionListener{
             g2d.drawString("FPS: " + count / seconds, 200, 20);
         }
         
-        g2d.drawString("Money: " + money, 200, 50);
-        g2d.drawString("Per Second: " + perSecond, 200, 80);
-
         if (gameState == "active") {
             bm.drawBoardButtons(g2d);
         }
@@ -91,29 +79,12 @@ public class MyPanel extends JPanel implements ActionListener{
     public void update(int updateSeconds) {
         if (seconds != updateSeconds) {
             // ASSERT:  ticked over a second:
-            money += perSecond;
-            seconds = updateSeconds;
-            updateButtons();
+            seconds++;
         }
         else {
         }
         count++;
         repaint();
-    }
-
-    private void updateButtons() {
-        if (!bm.checkTens() && money > 10) {
-            bm.showTens();
-        }
-        if (!bm.checkHundreds() && money > 100) {
-            bm.showHundreds();
-        }
-        if (!bm.checkThousands() && money > 1000) {
-            bm.showThousands();
-        }
-        if (!bm.checkTenK() && money > 10000) {
-            bm.showTenK();
-        }
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -132,47 +103,13 @@ public class MyPanel extends JPanel implements ActionListener{
 
         public void mousePressed(MouseEvent e) {
             if (gameState == "active") {
-                Purchase myPurchase = bm.doPurchase(e.getX(), e.getY(), money);
-                if ( myPurchase.getPerSecond() > 0) {
-                    perSecond += myPurchase.getPerSecond();
-                    money -= myPurchase.getPrice();
-                }
             }
             if (bm.checkStart(gameState, e.getX(), e.getY())) {
                 gameState = "active";
-                // Testing save game reading / writing
-                SaveGame sg = new SaveGame();
-                sg.setMoney(money);
-                sg.setPerSecond(perSecond);
-                sg.setTime(System.currentTimeMillis());
-
-                WriteGame wg = new WriteGame();
-                wg.setSave(sg);
-                wg.write();
-
                 repaint();
             }
             if (bm.checkExit(gameState, e.getX(), e.getY())) {
                 System.exit(0);
-            }
-            if (bm.checkContinue(gameState, e.getX(), e.getY())) {
-                System.out.println ("Load Saved Game");
-
-                ReadGame rg = new ReadGame();
-                rg.read();
-                SaveGame sg = rg.getSave();
-
-                int elapsedSeconds = (int)
-                    (System.currentTimeMillis() - sg.getTime()) / 1000;
-
-                perSecond = sg.getPerSecond();
-                money = sg.getMoney();
-                money += elapsedSeconds * perSecond;
-
-                System.out.println("Calculating... ");
-                System.out.println("Money:  " + money);
-                System.out.println("Gathered over: " + elapsedSeconds);
-                System.out.println("at: " + perSecond + " per second");
             }
         }
 
