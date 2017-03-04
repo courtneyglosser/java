@@ -176,7 +176,6 @@ public class MyPanel extends JPanel implements ActionListener{
                 System.exit(0);
             }
             if (bm.checkContinue(gameState, e.getX(), e.getY())) {
-                System.out.println ("Load Saved Game");
 
                 ReadGame rg = new ReadGame();
                 rg.read();
@@ -194,11 +193,9 @@ public class MyPanel extends JPanel implements ActionListener{
                 assets[3] = sg.getNumThousands();
                 assets[4] = sg.getNumTenKs();
 
-                System.out.println("Calculating... ");
-                System.out.println("Money:  " + money);
-                System.out.println("Gathered over: " + elapsedSeconds);
-                System.out.println("at: " + perSecond + " per second");
-                System.out.println("And assets: " + assets.toString());
+                for (int i = 0; i < assets.length; i++) {
+                    bm.updateButtonForLoad(i, assets[i]);
+                }
             }
         }
 

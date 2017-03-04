@@ -224,6 +224,26 @@ public class ButtonManager {
         return money;
     }
 
+    public void updateButtonForLoad(int btn, int numOwned) {
+        switch(btn) {
+            case 0:
+                singles.updateForLoad(numOwned);
+                break;
+            case 1:
+                tens.updateForLoad(numOwned);
+                break;
+            case 2:
+                hundreds.updateForLoad(numOwned);
+                break;
+            case 3:
+                thousands.updateForLoad(numOwned);
+                break;
+            case 4:
+                tenK.updateForLoad(numOwned);
+                break;
+        }
+    }
+
     public boolean checkStart(String gameState, int x, int y) {
         boolean rtn = false;
 

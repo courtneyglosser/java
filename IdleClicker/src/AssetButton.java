@@ -56,4 +56,10 @@ public class AssetButton extends Button {
         price = (int) Math.ceil (price * costEscalation);
     }
 
+    public void updateForLoad(int numOwned) {
+        for (int i = 0; i < numOwned; i++) {
+            updatePriceForPurchase();
+        }
+    }
+
 }
