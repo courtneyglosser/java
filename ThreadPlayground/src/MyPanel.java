@@ -23,6 +23,7 @@ public class MyPanel extends JPanel implements ActionListener{
     private String gameState; // welcome, active, win, lose
     private ButtonManager bm;
     private Screen gameScreen;
+    private Board board;
 
     private int count;
     private int seconds;
@@ -32,6 +33,7 @@ public class MyPanel extends JPanel implements ActionListener{
         gameState = "welcome";
         bm = new ButtonManager();
         gameScreen = new Screen();
+        board = new Board();
 
         addMouseListener(new MAdapter());
 
@@ -60,6 +62,7 @@ public class MyPanel extends JPanel implements ActionListener{
         
         if (gameState == "active") {
             bm.drawBoardButtons(g2d);
+            board.drawBoard(g2d);
         }
         else if (gameState == "welcome") {
             // Draw a welcome screen
