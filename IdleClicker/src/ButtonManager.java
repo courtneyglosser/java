@@ -27,11 +27,6 @@ public class ButtonManager {
     private Image RestartBtn;
     private Image ExitBtn;
 
-    private boolean showSingle;
-    private boolean showTens;
-    private boolean showHundreds;
-    private boolean showThousands;
-
     private AssetButton singles;
     private AssetButton tens;
     private AssetButton hundreds;
@@ -121,10 +116,14 @@ public class ButtonManager {
         }
 
         g2d.drawRect(500, 65, 50, 20);
-        g2d.drawImage(RestartBtn, 500, 65, null);
+        g2d.drawString("Save", 502, 80);
 
         g2d.drawRect(500, 95, 50, 20);
-        g2d.drawImage(ExitBtn, 500, 95, null);
+        g2d.drawImage(RestartBtn, 500, 95, null);
+
+        g2d.drawRect(500, 125, 50, 20);
+        g2d.drawImage(ExitBtn, 500, 125, null);
+
     }
 
     public void drawWelcomeButtons(Graphics2D g2d) {
@@ -259,12 +258,25 @@ public class ButtonManager {
             }
         }
         else {
+            if (x > 500 && x < 650 && y > 95 && y < 115) {
+                rtn = true;
+            }
+        }
+        return rtn;
+    }
+
+    public boolean checkSave(String gameState, int x, int y) {
+        boolean rtn = false;
+
+        if (gameState == "active") {
+            // ASSERT:  Can't really save in any other state.
             if (x > 500 && x < 650 && y > 65 && y < 85) {
                 rtn = true;
             }
         }
         return rtn;
     }
+
 
     public boolean checkExit(String gameState, int x, int y) {
         boolean rtn = false;
@@ -275,7 +287,7 @@ public class ButtonManager {
             }
         }
         else {
-            if (x > 500 && x < 650 && y > 95 && y < 115) {
+            if (x > 500 && x < 650 && y > 125 && y < 145) {
                 rtn = true;
             }
         }

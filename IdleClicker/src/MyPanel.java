@@ -170,8 +170,7 @@ public class MyPanel extends JPanel implements ActionListener{
                     }
 /**/
                 }
-                if (bm.checkStart(gameState, e.getX(), e.getY())) {
-                    gameState = "active";
+                if (bm.checkSave(gameState, e.getX(), e.getY())) {
                     // Testing save game reading / writing
                     SaveGame sg = new SaveGame();
                     sg.setMoney(money);
@@ -187,6 +186,11 @@ public class MyPanel extends JPanel implements ActionListener{
                     wg.setSave(sg);
                     wg.write();
 
+                    repaint();
+                }
+                if (bm.checkStart(gameState, e.getX(), e.getY())) {
+                    gameState = "active";
+                    System.out.println("Check Start!");
                     repaint();
                 }
                 if (bm.checkExit(gameState, e.getX(), e.getY())) {
