@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.File;
 import javax.imageio.ImageIO;
+import java.math.BigInteger;
 
 /**
     Manages the various buttons with which the user can interact:
@@ -42,11 +43,16 @@ public class ButtonManager {
     }
 
     private void init() {
-        singles = new AssetButton(1, 1, "Singles: ");
-        tens = new AssetButton(10, 10, "Tens: ");
-        hundreds = new AssetButton(100, 100, "Hundreds: ");
-        thousands = new AssetButton(1000, 1000, "Thousands: ");
-        tenK = new AssetButton(10000, 10000, "10K: ");
+        BigInteger tmp = BigInteger.valueOf(1);
+        singles = new AssetButton(tmp, tmp, "Singles: ");
+        tmp = BigInteger.valueOf(10);
+        tens = new AssetButton(tmp, tmp, "Tens: ");
+        tmp = BigInteger.valueOf(100);
+        hundreds = new AssetButton(tmp, tmp, "Hundreds: ");
+        tmp = BigInteger.valueOf(1000);
+        thousands = new AssetButton(tmp, tmp, "Thousands: ");
+        tmp = BigInteger.valueOf(10000);
+        tenK = new AssetButton(tmp, tmp, "10K: ");
 
         singles.setDisplay(true);
         tens.setDisplay(false);
@@ -153,11 +159,11 @@ public class ButtonManager {
 
     }
 
-    public Purchase doPurchase(int x, int y, int money) {
+    public Purchase doPurchase(int x, int y, BigInteger money) {
         Purchase rtn = new Purchase();
         // Check for single:
         if (x > 18 && x < 168 && y > 100 && y < 130) {
-            if (singles.getPrice() <= money) {
+            if (money.compareTo(singles.getPrice()) >= 0) {
                 rtn.setPrice(singles.getPrice());
                 rtn.setPerSecond(singles.getPerSecond());
                 singles.updatePriceForPurchase();
@@ -165,7 +171,7 @@ public class ButtonManager {
         }
         // Check for tens:
         if (x > 18 && x < 168 && y > 130 && y < 160) {
-            if (tens.getPrice() <= money) {
+            if (money.compareTo(tens.getPrice()) >= 0) {
                 rtn.setPrice(tens.getPrice());
                 rtn.setPerSecond(tens.getPerSecond());
                 tens.updatePriceForPurchase();
@@ -173,7 +179,7 @@ public class ButtonManager {
         }
         // Check for hundreds:
         if (x > 18 && x < 168 && y > 160 && y < 190) {
-            if (hundreds.getPrice() <= money) {
+            if (money.compareTo(hundreds.getPrice()) >= 0) {
                 rtn.setPrice(hundreds.getPrice());
                 rtn.setPerSecond(hundreds.getPerSecond());
                 hundreds.updatePriceForPurchase();
@@ -181,7 +187,7 @@ public class ButtonManager {
         }
         // Check for thousands:
         if (x > 18 && x < 168 && y > 190 && y < 220) {
-            if (thousands.getPrice() <= money) {
+            if (money.compareTo(thousands.getPrice()) >= 0) {
                 rtn.setPrice(thousands.getPrice());
                 rtn.setPerSecond(thousands.getPerSecond());
                 thousands.updatePriceForPurchase();
@@ -189,7 +195,7 @@ public class ButtonManager {
         }
         // Check for tens of thousands:
         if (x > 18 && x < 168 && y > 220 && y < 250) {
-            if (tenK.getPrice() <= money) {
+            if (money.compareTo(tenK.getPrice()) >= 0) {
                 rtn.setPrice(tenK.getPrice());
                 rtn.setPerSecond(tenK.getPerSecond());
                 tenK.updatePriceForPurchase();
@@ -257,7 +263,6 @@ public class ButtonManager {
                 rtn = true;
             }
         }
-
         return rtn;
     }
 

@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.math.BigInteger;
 
 /**
     Extendings the Swing JPanel class with My game specific settings.  Also,
@@ -26,8 +27,12 @@ public class MyPanel extends JPanel implements ActionListener{
 
     private int count;
     private int seconds;
-    private int perSecond;
-    private int money;
+    private BigInteger perSecond;
+    private BigInteger money;
+    private BigInteger checkTen;
+    private BigInteger checkHundred;
+    private BigInteger checkThousand;
+    private BigInteger checkTenK;
 
     // 0 => Singles, 1 => tens, etc
     private int[] assets = {0, 0, 0, 0, 0};
@@ -43,8 +48,13 @@ public class MyPanel extends JPanel implements ActionListener{
         setBackground(Color.black);
         setFocusable(true);
 
-        count = seconds = perSecond = 0;
-        money = 1;
+        count = seconds = 0;
+        perSecond = new BigInteger("0");
+        money = new BigInteger("1");
+        checkTen = new BigInteger("10");
+        checkHundred = new BigInteger("100");
+        checkThousand = new BigInteger("1000");
+        checkTenK = new BigInteger("10000");
 
 
         repaint();
@@ -89,7 +99,7 @@ public class MyPanel extends JPanel implements ActionListener{
     public void update(int updateSeconds) {
         if (seconds != updateSeconds) {
             // ASSERT:  ticked over a second:
-            money += perSecond;
+            money = money.add(perSecond);
             seconds = updateSeconds;
             updateButtons();
         }
@@ -100,16 +110,16 @@ public class MyPanel extends JPanel implements ActionListener{
     }
 
     private void updateButtons() {
-        if (!bm.checkTens() && money >= 10) {
+        if (!bm.checkTens() && money.compareTo(checkTen) >= 0) {
             bm.showTens();
         }
-        if (!bm.checkHundreds() && money >= 100) {
+        if (!bm.checkHundreds() && money.compareTo(checkHundred) >= 0) {
             bm.showHundreds();
         }
-        if (!bm.checkThousands() && money >= 1000) {
+        if (!bm.checkThousands() && money.compareTo(checkThousand) >= 0) {
             bm.showThousands();
         }
-        if (!bm.checkTenK() && money >= 10000) {
+        if (!bm.checkTenK() && money.compareTo(checkTenK) >= 0) {
             bm.showTenK();
         }
     }
@@ -129,73 +139,91 @@ public class MyPanel extends JPanel implements ActionListener{
     private class MAdapter extends MouseAdapter {
 
         public void mousePressed(MouseEvent e) {
-            if (gameState == "active") {
-                Purchase myPurchase = bm.doPurchase(e.getX(), e.getY(), money);
-                if ( myPurchase.getPerSecond() > 0) {
-                    perSecond += myPurchase.getPerSecond();
-                    money -= myPurchase.getPrice();
-                    switch(myPurchase.getPerSecond()) {
-                        case 1:
-                            assets[0]++;
-                            break;
-                        case 10:
-                            assets[1]++;
-                            break;
-                        case 100:
-                            assets[2]++;
-                            break;
-                        case 1000:
-                            assets[3]++;
-                            break;
-                        case 10000:
-                            assets[4]++;
-                            break;
+            try {
+                if (gameState == "active") {
+                    Purchase myPurchase = bm.doPurchase(e.getX(), e.getY(), money);
+                    BigInteger comp = new BigInteger("0");
+                    BigInteger tmp = myPurchase.getPerSecond();
+                    if (tmp != null) {
+                        int out = tmp.compareTo(comp);
+                        if (tmp.compareTo(comp) > 0) {
+                            perSecond = perSecond.add(myPurchase.getPerSecond());
+                            BigInteger calc = myPurchase.getPrice();
+                            money = money.subtract(calc);
+                            calc = myPurchase.getPerSecond();
+                            if(calc.compareTo(BigInteger.valueOf(1)) == 0) {
+                                assets[0]++;
+                            }
+                            if(calc.compareTo(BigInteger.valueOf(10)) == 0) {
+                                assets[1]++;
+                            }
+                            if(calc.compareTo(BigInteger.valueOf(100)) == 0) {
+                                assets[2]++;
+                            }
+                            if(calc.compareTo(BigInteger.valueOf(1000)) == 0) {
+                                assets[3]++;
+                            }
+                            if(calc.compareTo(BigInteger.valueOf(10000)) == 0) {
+                                assets[4]++;
+                            }
+                        }
+                    }
+/**/
+                }
+                if (bm.checkStart(gameState, e.getX(), e.getY())) {
+                    gameState = "active";
+                    // Testing save game reading / writing
+                    SaveGame sg = new SaveGame();
+                    sg.setMoney(money);
+                    sg.setPerSecond(perSecond);
+                    sg.setTime(System.currentTimeMillis());
+                    sg.setNumSingles(assets[0]);
+                    sg.setNumTens(assets[1]);
+                    sg.setNumHundreds(assets[2]);
+                    sg.setNumThousands(assets[3]);
+                    sg.setNumTenKs(assets[4]);
+
+                    WriteGame wg = new WriteGame();
+                    wg.setSave(sg);
+                    wg.write();
+
+                    repaint();
+                }
+                if (bm.checkExit(gameState, e.getX(), e.getY())) {
+                    System.exit(0);
+                }
+                if (bm.checkContinue(gameState, e.getX(), e.getY())) {
+
+                    ReadGame rg = new ReadGame();
+                    rg.read();
+                    SaveGame sg = rg.getSave();
+
+                    long tmp = System.currentTimeMillis() - sg.getTime();
+                    tmp = (long) tmp / 1000;
+
+                    BigInteger elapsedSeconds = BigInteger.valueOf(tmp);
+
+                    perSecond = sg.getPerSecond();
+                    money = sg.getMoney();
+
+                    BigInteger calc = perSecond.multiply(elapsedSeconds);
+                    money = money.add(calc);
+                    assets[0] = sg.getNumSingles();
+                    assets[1] = sg.getNumTens();
+                    assets[2] = sg.getNumHundreds();
+                    assets[3] = sg.getNumThousands();
+                    assets[4] = sg.getNumTenKs();
+
+                    for (int i = 0; i < assets.length; i++) {
+                        bm.updateButtonForLoad(i, assets[i]);
                     }
                 }
             }
-            if (bm.checkStart(gameState, e.getX(), e.getY())) {
-                gameState = "active";
-                // Testing save game reading / writing
-                SaveGame sg = new SaveGame();
-                sg.setMoney(money);
-                sg.setPerSecond(perSecond);
-                sg.setTime(System.currentTimeMillis());
-                sg.setNumSingles(assets[0]);
-                sg.setNumTens(assets[1]);
-                sg.setNumHundreds(assets[2]);
-                sg.setNumThousands(assets[3]);
-                sg.setNumTenKs(assets[4]);
-
-                WriteGame wg = new WriteGame();
-                wg.setSave(sg);
-                wg.write();
-
-                repaint();
-            }
-            if (bm.checkExit(gameState, e.getX(), e.getY())) {
-                System.exit(0);
-            }
-            if (bm.checkContinue(gameState, e.getX(), e.getY())) {
-
-                ReadGame rg = new ReadGame();
-                rg.read();
-                SaveGame sg = rg.getSave();
-
-                int elapsedSeconds = (int)
-                    (System.currentTimeMillis() - sg.getTime()) / 1000;
-
-                perSecond = sg.getPerSecond();
-                money = sg.getMoney();
-                money += elapsedSeconds * perSecond;
-                assets[0] = sg.getNumSingles();
-                assets[1] = sg.getNumTens();
-                assets[2] = sg.getNumHundreds();
-                assets[3] = sg.getNumThousands();
-                assets[4] = sg.getNumTenKs();
-
-                for (int i = 0; i < assets.length; i++) {
-                    bm.updateButtonForLoad(i, assets[i]);
-                }
+            catch (Exception ex) {
+                System.out.println("Message: " + ex.getMessage());
+                System.out.println("Cause? " + ex.getCause());
+                System.out.println("Stack: ");
+                ex.printStackTrace();
             }
         }
 

@@ -1,6 +1,8 @@
 
 package cglosser;
 
+import java.math.BigInteger;
+
 /**
     Class to handle basic information around an asset purchase
 
@@ -9,21 +11,22 @@ package cglosser;
 
 public class Purchase {
 
-    int price;
-    int perSecond;
+    BigInteger price;
+    BigInteger perSecond;
 
     void Purhcase() {
-        price = perSecond = 0;
+        price = new BigInteger("0");
+        perSecond = new BigInteger("0");
     }
 
-    void Purchase(int p, int ps) {
+    void Purchase(BigInteger p, BigInteger ps) {
         price = p;
         perSecond = ps;
     }
 
-    public int getPrice() { return price; }
-    public int getPerSecond() {return perSecond; }
+    public BigInteger getPrice() { return price; }
+    public BigInteger getPerSecond() {return perSecond; }
 
-    public void setPrice(int p) {price = p;}
-    public void setPerSecond(int ps) {perSecond = ps; }
+    public void setPrice(BigInteger p) {price = p;}
+    public void setPerSecond(BigInteger ps) {perSecond = ps; }
 }

@@ -2,6 +2,7 @@
 package cglosser;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 
 /**
@@ -11,9 +12,9 @@ import java.io.Serializable;
  */
 
 public class SaveGame implements Serializable {
-    public int money;
+    public BigInteger money;
     public long time;
-    public int perSecond;
+    public BigInteger perSecond;
 
     public int numSingles;
     public int numTens;
@@ -23,18 +24,18 @@ public class SaveGame implements Serializable {
 
     SaveGame() {}
 
-    public void setMoney(int m) {money = m;}
+    public void setMoney(BigInteger m) {money = m;}
+    public void setPerSecond(BigInteger ps) {perSecond = ps;}
     public void setTime(long t) {time = t;}
-    public void setPerSecond(int ps) {perSecond = ps;}
     public void setNumSingles(int s) {numSingles = s;}
     public void setNumTens(int t) {numTens = t;}
     public void setNumHundreds(int h) {numHundreds = h;}
     public void setNumThousands(int t) {numThousands = t;}
     public void setNumTenKs(int t) {numTenKs = t;}
 
-    public int getMoney() {return money;}
+    public BigInteger getMoney() {return money;}
+    public BigInteger getPerSecond() {return perSecond;}
     public long getTime() {return time;}
-    public int getPerSecond() {return perSecond;}
     public int getNumSingles() {return numSingles;}
     public int getNumTens() {return numTens;}
     public int getNumHundreds() {return numHundreds;}
