@@ -6,50 +6,7 @@
 
 <title>Thread Playground Progress</title>
 
-<style>
-
-body {
-    background-color: black;
-    color: white;
-}
-
-.legend {
-    border: 1px solid white;
-    border-radius: 2px;
-}
-
-.legend th, .legend td {
-    border-right: 1px solid white;
-    border-left: 1px solid white;
-}
-
-.new {
-    color: #ff0;
-    font-weight: bold;
-}
-
-.not-started {
-}
-
-.in-progress {
-    color: #0F9;
-}
-
-.testing {
-    color: #F96;
-}
-
-.released {
-    color: #39F;
-    font-weight: bold;
-}
-
-.cancelled {
-    color: #F33;
-    text-decoration: line-through;
-}
-
-</style>
+<link rel="stylesheet" type="text/css" href="./progress.css" />
 
 </head>
 
@@ -80,6 +37,21 @@ body {
     Some simple applications to learn more about threads and how to use them as
     game loops.
 </p>
+
+<h2>2017-03-14</h2>
+
+<ul>
+    <li class="released">Add a second "ball"</li>
+    <li class="new">Move ball movement to Ball class</li>
+    <li class="new">support varying speeds</li>
+    <li class="new">support various ball colors</li>
+    <li class="new">support ball collision</li>
+    <li class="released">Move a rectangle acrosse the screen</li>
+    <ul>
+        <li class="released">Move it as a part of the threaded loop</li>
+        <li class="released">Bounce it off the walls</li>
+    </ul>
+</ul>
 
 <h2>2017-03-06</h2>
 

@@ -29,6 +29,12 @@ public class Ball {
         y = startY;
     }
 
+    public void setX(int inX) {x = inX;}
+    public void setY(int inY) {y = inY;}
+
+    public int getX() {return x;}
+    public int getY() {return y;}
+
     public void drawBall (Graphics2D g2d) {
         g2d.setColor(Color.BLUE);
         g2d.fillRect(x, y, 9, 9);

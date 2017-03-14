@@ -29,13 +29,19 @@ public class Board {
 
     // Board dimensions (in pixels)
     private static final int BOARD_WIDTH = 250;
-    private static final int BOARD_HEIGHT = 250;
+    private static final int BOARD_HEIGHT = 260;
 
     // Board orientation on the Panel
     private static final int BOARD_X = 200;
     private static final int BOARD_Y = 25;
 
     private Ball ball;
+    private Ball ball2;
+
+    boolean x = true;
+    boolean y = true;
+    boolean x2 = true;
+    boolean y2 = true;
 
     public Board () {
         initBoard();
@@ -46,10 +52,81 @@ public class Board {
      */
     private void initBoard() {
         ball = new Ball(BOARD_X, BOARD_Y);
+        ball2 = new Ball(BOARD_X + 18, BOARD_Y);
     }
 
     /**
-        Draw the board to the Panel, including drawing the individual tiles.
+        Update any pertinent board settings (i.e. move the ball)
+
+        @param ticker - a clock item for iteration
+     */
+    public void updateBoard (int ticker) {
+        int tmpX = ball.getX();
+        int tmpY = ball.getY();
+        int tmpX2 = ball2.getX();
+        int tmpY2 = ball2.getY();
+
+
+        if (tmpX + 9 + 1 >= BOARD_X + BOARD_WIDTH) {
+            x = false;
+        }
+        if (tmpX - 1 <= BOARD_X) {
+            x = true;
+        }
+        if (tmpY + 9 + 1 >= BOARD_Y + BOARD_HEIGHT) {
+            y = false;
+        }
+        if (tmpY - 1 <= BOARD_Y) {
+            y = true;
+        }
+        if (tmpX2 + 9 + 1 >= BOARD_X + BOARD_WIDTH) {
+            x2 = false;
+        }
+        if (tmpX2 - 1 <= BOARD_X) {
+            x2 = true;
+        }
+        if (tmpY2 + 9 + 1 >= BOARD_Y + BOARD_HEIGHT) {
+            y2 = false;
+        }
+        if (tmpY2 - 1 <= BOARD_Y) {
+            y2 = true;
+        }
+
+
+
+        if (x) {
+            tmpX++;
+        }
+        else {
+            tmpX--;
+        }
+        if (y) {
+            tmpY++;
+        }
+        else {
+            tmpY--;
+        }
+        if (x2) {
+            tmpX2++;
+        }
+        else {
+            tmpX2--;
+        }
+        if (y2) {
+            tmpY2++;
+        }
+        else {
+            tmpY2--;
+        }
+
+        ball.setX(tmpX);
+        ball.setY(tmpY);
+        ball2.setX(tmpX2);
+        ball2.setY(tmpY2);
+    }
+
+    /**
+        Draw the board to the Panel, including drawing the ball.
 
         @param g2d - The Java Graphics2D library
      */
@@ -58,6 +135,7 @@ public class Board {
         drawBorder(g2d);
 
         ball.drawBall(g2d);
+        ball2.drawBall(g2d);
     }
 
     /**

@@ -62,6 +62,7 @@ public class MyPanel extends JPanel implements ActionListener{
         
         if (gameState == "active") {
             bm.drawBoardButtons(g2d);
+            board.updateBoard(count);
             board.drawBoard(g2d);
         }
         else if (gameState == "welcome") {
