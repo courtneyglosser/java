@@ -1,0 +1,42 @@
+<project name="Pong" default="run" basedir=".">
+  <description>
+    Simple build file for our Pong game
+  </description>
+  <target name="pre-build">
+    <mkdir dir="build" />
+  </target>
+  <target name="copy-assets" depends="pre-build">
+    <copy todir="build">
+      <fileset dir="resources" excludes="**/*.xcf" />
+    </copy>
+  </target>
+  <target name="build" depends="copy-assets">
+    <javac includeantruntime="false" srcdir="src" destdir="build" />
+  </target>
+  <target name="run" depends="build">
+    <java classname="cglosser.Main" classpath="build" fork="true" />
+  </target>
+  <target name="clean">
+    <delete dir="build" />
+  </target>
+  <target name="docs">
+    <javadoc packagenames="cglosser"
+            sourcepath="src"
+            destdir="htmldocs"
+            author="true"
+            version="true" >
+      <fileset dir="src">
+        <include name="**/*.java" />
+      </fileset>
+    </javadoc>
+  </target>
+  <target name="jardist" depends="build">
+    <jar destfile="pong-1.0.1.jar">
+      <fileset dir="build" />
+      <manifest>
+        <attribute name="Main-Class"
+              value="cglosser.Main"/>
+      </manifest>
+    </jar>
+  </target>
+</project>
