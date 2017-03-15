@@ -37,11 +37,8 @@ public class Board {
 
     private Ball ball;
     private Ball ball2;
-
-    boolean x = true;
-    boolean y = true;
-    boolean x2 = true;
-    boolean y2 = true;
+    private Ball ball3;
+    private Ball ball4;
 
     public Board () {
         initBoard();
@@ -51,8 +48,10 @@ public class Board {
         Initialize settings
      */
     private void initBoard() {
-        ball = new Ball(BOARD_X, BOARD_Y);
-        ball2 = new Ball(BOARD_X + 18, BOARD_Y);
+        ball = new Ball(BOARD_X, BOARD_Y, Color.BLUE);
+        ball2 = new Ball(BOARD_X + 18, BOARD_Y, Color.WHITE);
+        ball3 = new Ball(BOARD_X + 18, BOARD_Y + 18, Color.WHITE);
+        ball4 = new Ball(BOARD_X, BOARD_Y + 18, Color.WHITE);
     }
 
     /**
@@ -61,68 +60,10 @@ public class Board {
         @param ticker - a clock item for iteration
      */
     public void updateBoard (int ticker) {
-        int tmpX = ball.getX();
-        int tmpY = ball.getY();
-        int tmpX2 = ball2.getX();
-        int tmpY2 = ball2.getY();
-
-
-        if (tmpX + 9 + 1 >= BOARD_X + BOARD_WIDTH) {
-            x = false;
-        }
-        if (tmpX - 1 <= BOARD_X) {
-            x = true;
-        }
-        if (tmpY + 9 + 1 >= BOARD_Y + BOARD_HEIGHT) {
-            y = false;
-        }
-        if (tmpY - 1 <= BOARD_Y) {
-            y = true;
-        }
-        if (tmpX2 + 9 + 1 >= BOARD_X + BOARD_WIDTH) {
-            x2 = false;
-        }
-        if (tmpX2 - 1 <= BOARD_X) {
-            x2 = true;
-        }
-        if (tmpY2 + 9 + 1 >= BOARD_Y + BOARD_HEIGHT) {
-            y2 = false;
-        }
-        if (tmpY2 - 1 <= BOARD_Y) {
-            y2 = true;
-        }
-
-
-
-        if (x) {
-            tmpX++;
-        }
-        else {
-            tmpX--;
-        }
-        if (y) {
-            tmpY++;
-        }
-        else {
-            tmpY--;
-        }
-        if (x2) {
-            tmpX2++;
-        }
-        else {
-            tmpX2--;
-        }
-        if (y2) {
-            tmpY2++;
-        }
-        else {
-            tmpY2--;
-        }
-
-        ball.setX(tmpX);
-        ball.setY(tmpY);
-        ball2.setX(tmpX2);
-        ball2.setY(tmpY2);
+        ball.updateBall();
+        ball2.updateBall();
+        ball3.updateBall();
+        ball4.updateBall();
     }
 
     /**
@@ -136,6 +77,8 @@ public class Board {
 
         ball.drawBall(g2d);
         ball2.drawBall(g2d);
+        ball3.drawBall(g2d);
+        ball4.drawBall(g2d);
     }
 
     /**
