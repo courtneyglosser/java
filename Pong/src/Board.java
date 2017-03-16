@@ -40,6 +40,9 @@ public class Board {
     private Ball ball3;
     private Ball ball4;
 
+    private Paddle player;
+    private Paddle computer;
+
     public Board () {
         initBoard();
     }
@@ -52,6 +55,9 @@ public class Board {
         ball2 = new Ball(BOARD_X + 18, BOARD_Y, Color.WHITE);
         ball3 = new Ball(BOARD_X + 18, BOARD_Y + 18, Color.WHITE);
         ball4 = new Ball(BOARD_X, BOARD_Y + 18, Color.WHITE);
+
+        player = new Paddle(BOARD_X + 9, BOARD_Y + 80);
+        computer = new Paddle(BOARD_X + BOARD_WIDTH - 18, BOARD_Y + 80);
     }
 
     /**
@@ -79,6 +85,9 @@ public class Board {
         ball2.drawBall(g2d);
         ball3.drawBall(g2d);
         ball4.drawBall(g2d);
+
+        player.drawPaddle(g2d);
+        computer.drawPaddle(g2d);
     }
 
     /**
