@@ -24,8 +24,14 @@ public class Paddle {
     private static final int PADDLE_HEIGHT = 100;
     private static final int PADDLE_WIDTH = 9;
 
+    private static final int SPEED = 3;
+
+    private static final int AI_LAG = 2;
+
     int y = BOARD_Y + 80;
     int x = BOARD_X + 9;
+
+    int lagTimer = 0;
 
     public Paddle () {
         init(x, y);
@@ -40,8 +46,56 @@ public class Paddle {
         y = inY;
     }
 
+    public int getX() {return x;}
+    public int getY() {return y;}
+
+    public int getRightSideX() {
+        return x + PADDLE_WIDTH;
+    }
+
+    public int getBottomY() {
+        return y + PADDLE_HEIGHT;
+    }
+
+    public void setX(int inX) {x = inX;}
+    public void setY(int inY) {y = inY;}
+
+
     public void drawPaddle(Graphics2D g2d) {
         g2d.setColor(Color.BLUE);
         g2d.fillRect(x, y, PADDLE_WIDTH, PADDLE_HEIGHT);
     }
+
+    public void updatePaddle(Ball ball) {
+        // Slow down computer paddle to make is beatable.
+        if (lagTimer++ > AI_LAG) {
+            lagTimer = 0;
+            if (y + PADDLE_HEIGHT / 2 > ball.getY()) {
+                y--;
+            }
+            else {
+                y++;
+            }
+            checkYCollision();
+        }
+    }
+
+    public void down() {
+        y += SPEED;
+        checkYCollision();
+    }
+    public void up() {
+        y -= SPEED;
+        checkYCollision();
+    }
+
+    private void checkYCollision() {
+        if (y < BOARD_Y) {
+            y = BOARD_Y;
+        }
+        if (y + PADDLE_HEIGHT > BOARD_Y + BOARD_HEIGHT) {
+            y = BOARD_Y + BOARD_HEIGHT - PADDLE_HEIGHT;
+        }
+    }
+
 }

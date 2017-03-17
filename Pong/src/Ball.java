@@ -56,20 +56,10 @@ public class Ball {
         g2d.fillRect(x, y, 9, 9);
     }
 
-    public void updateBall() {
+    public void updateBall(Paddle p1, Paddle p2) {
 
-        if (x + 9 + 1 >= BOARD_X + BOARD_WIDTH) {
-            x_positive = false;
-        }
-        if (x - 1 <= BOARD_X) {
-            x_positive = true;
-        }
-        if (y + 9 + 1 >= BOARD_Y + BOARD_HEIGHT) {
-            y_positive = false;
-        }
-        if (y - 1 <= BOARD_Y) {
-            y_positive = true;
-        }
+        checkYAxisCollision();
+        checkPaddleCollision(p1, p2);
 
         if (x_positive) {
             x++;
@@ -82,6 +72,57 @@ public class Ball {
         }
         else {
             y--;
+        }
+    }
+
+    private void checkYAxisCollision() {
+        if (y + 9 + 1 >= BOARD_Y + BOARD_HEIGHT) {
+            y_positive = false;
+        }
+        if (y - 1 <= BOARD_Y) {
+            y_positive = true;
+        }
+    }
+
+    public boolean checkXAxisCollision() {
+        boolean rtn = false;
+        if (x + 9 + 1 >= BOARD_X + BOARD_WIDTH) {
+            x_positive = false;
+            rtn = true;
+        }
+        if (x - 1 <= BOARD_X) {
+            x_positive = true;
+            rtn = true;
+        }
+        return rtn;
+    }
+
+    public boolean playerScore() {
+        return (x + 9 + 1 >= BOARD_X + BOARD_WIDTH);
+    }
+
+    public boolean computerScore() {
+        return (x - 1 <= BOARD_X);
+    }
+
+    private void checkPaddleCollision(Paddle p1, Paddle p2) {
+
+        // Assert: p2 is computer on and the right.
+        if (x_positive) {
+            if (x + 9 + 1 >= p2.getX() ) {
+                if (y > p2.getY() && y < p2.getBottomY() ) {
+                    x_positive = false;
+                }
+            }
+
+        }
+        // Assert; p1 is player and on the left.
+        else {
+            if (x - 1 <= p1.getRightSideX() ) {
+                if (y > p1.getY() && y < p1.getBottomY() ) {
+                    x_positive = true;
+                }
+            }
         }
     }
 }

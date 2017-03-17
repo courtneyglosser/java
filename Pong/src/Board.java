@@ -36,12 +36,12 @@ public class Board {
     private static final int BOARD_Y = 25;
 
     private Ball ball;
-    private Ball ball2;
-    private Ball ball3;
-    private Ball ball4;
 
     private Paddle player;
     private Paddle computer;
+
+    private int playerScore = 0;
+    private int computerScore = 0;
 
     public Board () {
         initBoard();
@@ -51,13 +51,16 @@ public class Board {
         Initialize settings
      */
     private void initBoard() {
-        ball = new Ball(BOARD_X, BOARD_Y, Color.BLUE);
-        ball2 = new Ball(BOARD_X + 18, BOARD_Y, Color.WHITE);
-        ball3 = new Ball(BOARD_X + 18, BOARD_Y + 18, Color.WHITE);
-        ball4 = new Ball(BOARD_X, BOARD_Y + 18, Color.WHITE);
+        ball = new Ball(BOARD_X + 75, BOARD_Y, Color.BLUE);
 
         player = new Paddle(BOARD_X + 9, BOARD_Y + 80);
         computer = new Paddle(BOARD_X + BOARD_WIDTH - 18, BOARD_Y + 80);
+    }
+
+    public void restartBoard() {
+        initBoard();
+        playerScore = 0;
+        computerScore = 0;
     }
 
     /**
@@ -66,10 +69,24 @@ public class Board {
         @param ticker - a clock item for iteration
      */
     public void updateBoard (int ticker) {
-        ball.updateBall();
-        ball2.updateBall();
-        ball3.updateBall();
-        ball4.updateBall();
+        ball.updateBall(player, computer);
+
+        if (ball.checkXAxisCollision()) {
+            // Someone scored:
+            if (ball.playerScore()) { playerScore++; }
+            if (ball.computerScore()) { computerScore++; }
+            initBoard();
+        }
+
+        computer.updatePaddle(ball);
+    }
+
+    public void playerDown() {
+        player.down();
+    }
+
+    public void playerUp() {
+        player.up();
     }
 
     /**
@@ -78,13 +95,15 @@ public class Board {
         @param g2d - The Java Graphics2D library
      */
     public void drawBoard(Graphics2D g2d) {
+        g2d.setColor(Color.white);
+        g2d.drawString("Player1: " + playerScore, 50, 200);
+        g2d.drawString("Computer: " + computerScore, 50, 220);
+
+
         g2d.setColor(Color.blue);
         drawBorder(g2d);
 
         ball.drawBall(g2d);
-        ball2.drawBall(g2d);
-        ball3.drawBall(g2d);
-        ball4.drawBall(g2d);
 
         player.drawPaddle(g2d);
         computer.drawPaddle(g2d);

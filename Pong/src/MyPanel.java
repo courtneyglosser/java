@@ -5,6 +5,8 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -19,7 +21,7 @@ import java.awt.event.MouseEvent;
     @author Courtney Glosser
  */
 
-public class MyPanel extends JPanel implements ActionListener{
+public class MyPanel extends JPanel implements KeyListener, ActionListener{
     private String gameState; // welcome, active, win, lose
     private ButtonManager bm;
     private Screen gameScreen;
@@ -36,6 +38,7 @@ public class MyPanel extends JPanel implements ActionListener{
         board = new Board();
 
         addMouseListener(new MAdapter());
+        addKeyListener(this);
 
         setBackground(Color.black);
         setFocusable(true);
@@ -95,6 +98,27 @@ public class MyPanel extends JPanel implements ActionListener{
         repaint();
     }
 
+    /** Handle the key typed event from the text field. */
+    public void keyTyped(KeyEvent e) {
+    }
+
+    /** Handle the key pressed event from the text field. */
+    public void keyPressed(KeyEvent e) {
+
+        if (e.getKeyCode() == 40) {
+            // Down
+            board.playerDown();
+        }
+        if (e.getKeyCode() == 38) {
+            // Up
+            board.playerUp();
+        }
+    }
+
+    /** Handle the key released event from the text field. */
+    public void keyReleased(KeyEvent e) {
+    }
+
     /**
         Class extends the MouseAdapter abstract class.  This class will
         register mousePressed events and utilize helper classes to execute
@@ -106,10 +130,9 @@ public class MyPanel extends JPanel implements ActionListener{
     private class MAdapter extends MouseAdapter {
 
         public void mousePressed(MouseEvent e) {
-            if (gameState == "active") {
-            }
             if (bm.checkStart(gameState, e.getX(), e.getY())) {
                 gameState = "active";
+                board.restartBoard();
                 repaint();
             }
             if (bm.checkExit(gameState, e.getX(), e.getY())) {
