@@ -25,13 +25,15 @@ public class Paddle {
     private static final int PADDLE_WIDTH = 9;
 
     private static final int SPEED = 3;
+    private static final int MAX_AI_LAG = 3;
 
-    private static final int AI_LAG = 2;
+    int aiLag;
 
     int y = BOARD_Y + 80;
     int x = BOARD_X + 9;
 
     int lagTimer = 0;
+    Random rnd;
 
     public Paddle () {
         init(x, y);
@@ -44,6 +46,9 @@ public class Paddle {
     private void init(int inX, int inY) {
         x = inX;
         y = inY;
+
+        rnd = new Random();
+        aiLag = rnd.nextInt(MAX_AI_LAG);
     }
 
     public int getX() {return x;}
@@ -68,8 +73,9 @@ public class Paddle {
 
     public void updatePaddle(Ball ball) {
         // Slow down computer paddle to make is beatable.
-        if (lagTimer++ > AI_LAG) {
+        if (lagTimer++ > aiLag) {
             lagTimer = 0;
+            aiLag = rnd.nextInt(MAX_AI_LAG);
             if (y + PADDLE_HEIGHT / 2 > ball.getY()) {
                 y--;
             }
