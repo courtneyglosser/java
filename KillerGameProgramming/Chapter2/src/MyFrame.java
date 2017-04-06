@@ -32,7 +32,7 @@ public class MyFrame extends JFrame implements Runnable {
         setLocationRelativeTo(null);
         setVisible(true);
 
-        gameLoop();
+//        gameLoop();
     }
 
     private void gameLoop() {
