@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Toolkit;
 
 /**
     Extendings the Swing JPanel class with My game specific settings.  Also,
@@ -51,6 +52,7 @@ public class MyPanel extends JPanel implements KeyListener, ActionListener{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         doDrawing(g);
+        Toolkit.getDefaultToolkit().sync();
     }
 
     public void doDrawing(Graphics g) {
