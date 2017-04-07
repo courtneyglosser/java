@@ -1,0 +1,42 @@
+
+body {
+    background-color: black;
+    color: white;
+}
+
+.legend {
+    border: 1px solid white;
+    border-radius: 2px;
+}
+
+.legend th, .legend td {
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+}
+
+.new {
+    color: #ff0;
+    font-weight: bold;
+}
+
+.not-started {
+}
+
+.in-progress {
+    color: #0F9;
+}
+
+.testing {
+    color: #F96;
+}
+
+.released {
+    color: #39F;
+    font-weight: bold;
+}
+
+.cancelled {
+    color: #F33;
+    text-decoration: line-through;
+}
+
