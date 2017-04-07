@@ -24,7 +24,7 @@ import java.awt.Toolkit;
     @author Courtney Glosser
  */
 
-public class MyPanel extends JPanel implements ActionListener, Runnable{
+public class WormPanel extends JPanel implements ActionListener, Runnable{
     private String gameState; // welcome, active, win, lose
     private int count;
     private int seconds;
@@ -37,11 +37,12 @@ public class MyPanel extends JPanel implements ActionListener, Runnable{
 
     private volatile boolean running = false;
     private volatile boolean gameOver = false;
+    private volatile boolean isPaused = false;
 
     private Graphics dbg;
     private Image dbImage = null;
 
-    public MyPanel() {
+    public WormPanel() {
 
         setBackground(Color.black);
         setPreferredSize (new Dimension(PWIDTH, PHEIGHT) );
@@ -67,6 +68,14 @@ public class MyPanel extends JPanel implements ActionListener, Runnable{
             animator = new Thread(this);
             animator.start();
         }
+    }
+
+    public void pauseGame() {
+        isPaused = true;
+    }
+
+    public void resumeGame() {
+        isPaused = false;
     }
 
     public void stopGame() {
