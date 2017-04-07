@@ -42,7 +42,7 @@ public class WormPanel extends JPanel implements ActionListener, Runnable{
     private Graphics dbg;
     private Image dbImage = null;
 
-    public WormPanel() {
+    public WormPanel(WormChase wc, int period) {
 
         setBackground(Color.black);
         setPreferredSize (new Dimension(PWIDTH, PHEIGHT) );

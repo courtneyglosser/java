@@ -1,8 +1,11 @@
 package cglosser;
 
+import java.awt.Container;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
@@ -26,23 +29,45 @@ public class WormChase extends JFrame implements WindowListener {
     private JTextField jtfBox;
     private JTextField jtfTime;
 
-    public WormChase(long period) {
 
-        wp = new WormPanel();
-        add(wp);
+    public WormChase(int period) {
+        makeGUI(period);
+
+        addWindowListener( this );
+        pack();
+        setResizable(false);
+        setVisible(true);
 
         setSize(WIDTH, HEIGHT);
-        setTitle ("My Game");
+        setTitle ("Worm Chase Game");
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setLocationRelativeTo(null);
-        setVisible(true);
-
-        jtfBox = new JTextField();
-        jtfTime = new JTextField();
-
     }
+
+    private void makeGUI(int period)
+    {
+        Container c = getContentPane();    // default BorderLayout used
+
+        wp = new WormPanel(this, period);
+        c.add(wp, "Center");
+
+        JPanel ctrls = new JPanel();   // a row of textfields
+        ctrls.setLayout( new BoxLayout(ctrls, BoxLayout.X_AXIS));
+
+        jtfBox = new JTextField("Boxes used: 0");
+        jtfBox.setEditable(false);
+        ctrls.add(jtfBox);
+
+        jtfTime = new JTextField("Time Spent: 0 secs");
+        jtfTime.setEditable(false);
+        ctrls.add(jtfTime);
+
+        c.add(ctrls, "South");
+    }  // end of makeGUI()
+
+
 
     public void setBoxNumber (int no) {
         jtfBox.setText("Boxes used: " + no);

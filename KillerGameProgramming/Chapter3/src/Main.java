@@ -17,7 +17,7 @@ public class Main {
             fps = Integer.parseInt(args[0]);
         }
 
-        long period = (long) 1000/fps;
+        int period = (int) 1000/fps;
         
         // Start up a "Game" frame to display the window.
         new WormChase(period);
