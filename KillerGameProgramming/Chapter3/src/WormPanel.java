@@ -4,6 +4,8 @@ package cglosser;
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -25,13 +27,18 @@ import java.awt.Toolkit;
  */
 
 public class WormPanel extends JPanel implements ActionListener, Runnable{
+    private static final int PWIDTH = 500;
+    private static final int PHEIGHT = 400;
+    // number of FPS values stored to get an average
+    private static int NUM_FPS = 10;
+
     private String gameState; // welcome, active, win, lose
     private int count;
     private int seconds;
     private int period = 1000/100; // ms / FPS;
 
-    private static final int PWIDTH = 500;
-    private static final int PHEIGHT = 400;
+    private double fpsStore[];
+    private double upsStore[];
 
     private Thread animator;
 
@@ -39,19 +46,43 @@ public class WormPanel extends JPanel implements ActionListener, Runnable{
     private volatile boolean gameOver = false;
     private volatile boolean isPaused = false;
 
+    private WormChase wcTop;
+//    private Obstacles obs;
+//    private Worm fred;
+    private Font font;
+    private FontMetrics metrics;
+
     private Graphics dbg;
     private Image dbImage = null;
 
     public WormPanel(WormChase wc, int period) {
+        wcTop = wc;
+        this.period = period;
 
-        setBackground(Color.black);
+        setBackground(Color.white);
         setPreferredSize (new Dimension(PWIDTH, PHEIGHT) );
 
         setFocusable(true);
         requestFocus();
         readyForTermination();
 
+        // Create the game components
+//        obs = new Obstacles(wcTop);
+//        fred = new Worm(PWIDTH, PHEIGHT, obs);
+
         addMouseListener(new MAdapter());
+
+        font = new Font("SansSerif", Font.BOLD, 24);
+        metrics = this.getFontMetrics(font);
+
+        // Timing elements
+        fpsStore = new double[NUM_FPS];
+        upsStore = new double[NUM_FPS];
+
+        for (int i=0; i < NUM_FPS; i++) {
+            fpsStore[i] = 0.0;
+            upsStore[i] = 0.0;
+        }
     }
 
     /**
