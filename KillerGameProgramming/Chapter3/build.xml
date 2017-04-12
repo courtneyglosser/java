@@ -1,6 +1,6 @@
 <project name="KillerGameProgrammingChapter3" default="run" basedir=".">
   <description>
-    Simple build file for our Chapter 3 examples
+    Simple build file for our Chapter 3 example game Worm Chase
   </description>
   <target name="pre-build">
     <mkdir dir="build" />
