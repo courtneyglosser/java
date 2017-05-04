@@ -16,6 +16,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Toolkit;
+import java.text.DecimalFormat;
 
 /**
     Extendings the Swing JPanel class with My game specific settings.  Also,
@@ -29,16 +30,38 @@ import java.awt.Toolkit;
 public class WormPanel extends JPanel implements ActionListener, Runnable{
     private static final int PWIDTH = 500;
     private static final int PHEIGHT = 400;
+
+    // record stats every 1 second (roughly)
+    private static int MAX_STATS_INTERVAL = 1000;
+
     // number of FPS values stored to get an average
     private static int NUM_FPS = 10;
+
+    // used for gathering statistics
+    private int statsInterval = 0;    // in ms
+    private long prevStatsTime = 0;
+    private int totalElapsedTime = 0;
+    private int gameStartTime;
+    private long timeSpentInGame = 0;    // in seconds
+
+    private int frameCount = 0;
+    private double fpsStore[];
+    private int statsCount = 0;
+    private double averageFPS = 0.0;
+
+    private int framesSkipped = 0;
+    private int totalFramesSkipped = 0;
+    private double upsStore[];
+    private double averageUPS = 0.0;
+
+    private DecimalFormat df = new DecimalFormat("0.##");  // 2 dp
+    private DecimalFormat timedf = new DecimalFormat("0.####");  // 4 dp
+
 
     private String gameState; // welcome, active, win, lose
     private int count;
     private int seconds;
     private int period = 1000/100; // ms / FPS;
-
-    private double fpsStore[];
-    private double upsStore[];
 
     private Thread animator;
 
@@ -51,6 +74,7 @@ public class WormPanel extends JPanel implements ActionListener, Runnable{
 //    private Worm fred;
     private Font font;
     private FontMetrics metrics;
+    private int score = 0;
 
     private Graphics dbg;
     private Image dbImage = null;
@@ -139,13 +163,18 @@ public class WormPanel extends JPanel implements ActionListener, Runnable{
             }
 
             beforeTime = System.currentTimeMillis();
+
+            storeStats();
         }
+
+        printStats();
 
         System.exit(0);
     }
 
     private void gameUpdate() {
-        if (!gameOver) {
+        if (!isPaused && !gameOver) {
+//            fred.move();
         }
     }
 
@@ -159,13 +188,28 @@ public class WormPanel extends JPanel implements ActionListener, Runnable{
             else {
                 dbg = dbImage.getGraphics();
             }
+        }
 
-            dbg.setColor(Color.white);
-            dbg.fillRect(0,0, PWIDTH, PHEIGHT);
+        dbg.setColor(Color.white);
+        dbg.fillRect(0,0, PWIDTH, PHEIGHT);
 
-            if (gameOver) {
-                gameOverMessage(dbg);
-            }
+        // report frame count & average FPS and UPS at top left
+        // dbg.drawString("Frame Count " + frameCount, 10, 25);
+        dbg.setColor(Color.blue);
+        dbg.setFont(font);
+
+        dbg.drawString("Average FPS/UPS: " + df.format(averageFPS) + ", " +
+                            df.format(averageUPS), 20, 25);  // was (10,55)
+
+        dbg.setColor(Color.black);
+
+        // draw game elements: the obstacles and the worm
+//            obs.draw(dbg);
+//            fred.draw(dbg);
+
+
+        if (gameOver) {
+            gameOverMessage(dbg);
         }
     }
 
@@ -185,10 +229,13 @@ public class WormPanel extends JPanel implements ActionListener, Runnable{
         }
     }
 
+    // center the game-over message in the panel
     private void gameOverMessage(Graphics g) {
-        int x = 10;
-        int y = 10;
-        String msg = "Game Over";
+        String msg = "Game Over. Your Score: " + score;
+        int x = (PWIDTH - metrics.stringWidth(msg))/2; 
+        int y = (PHEIGHT - metrics.getHeight())/2;
+        g.setColor(Color.red);
+        g.setFont(font);
         g.drawString(msg, x, y);
     }
 
@@ -233,9 +280,27 @@ public class WormPanel extends JPanel implements ActionListener, Runnable{
 
     }
 
+    /**
+        Is the (x,y) close enough to the snake head to count a point?
+        - If yes, score.
+        - If no, is it on the snake's body?
+        -- if yes, do nothing.
+        -- if no, add an obstacle to the board.
+     */
     private void testPress(int x, int y) {
 
-        if (!gameOver) {
+        if (!isPaused && !gameOver) {
+/**
+            if (fred.nearHead(x, y)) {
+                gameOver = true;
+                score = (40 - timeSpentInGame) + 40 - obs.getNumObstacles();
+            }
+            else {
+                if (!fred.touchedAt(x, y) ) {
+                    obs.add(x,y);
+                }
+            }
+/**/
             System.out.println("Clicked: ("+x+","+y+")");
         }
     }
@@ -257,4 +322,105 @@ public class WormPanel extends JPanel implements ActionListener, Runnable{
             }
         });
     }
+
+
+    /** 
+        The statistics:
+        - the summed periods for all the iterations in this interval
+        (period is the amount of time a single frame iteration should take), 
+        the actual elapsed time in this interval, 
+        the error between these two numbers;
+
+        - the total frame count, which is the total number of calls to run();
+
+        - the frames skipped in this interval, the total number of frames
+        skipped. A frame skip is a game update without a corresponding render;
+
+        - the FPS (frames/sec) and UPS (updates/sec) for this interval, 
+        the average FPS & UPS over the last NUM_FPSs intervals.
+
+        The data is collected every MAX_STATS_INTERVAL  (1 sec).
+     */
+    private void storeStats()
+    { 
+        frameCount++;
+        statsInterval += period;
+
+        if (prevStatsTime == 0) {
+            prevStatsTime = System.currentTimeMillis();
+        }
+
+        // record stats every MAX_STATS_INTERVAL
+        if (statsInterval >= MAX_STATS_INTERVAL) {
+            long timeNow = System.currentTimeMillis();
+            timeSpentInGame = (timeNow - gameStartTime);
+            wcTop.setTimeSpent( timeSpentInGame );
+
+            // time since last stats collection
+            long realElapsedTime = timeNow - prevStatsTime;
+            totalElapsedTime += realElapsedTime / 1000;
+
+            double timingError = 
+            ((double)(realElapsedTime - statsInterval) / statsInterval) * 100.0;
+
+            totalFramesSkipped += framesSkipped;
+
+            // calculate the latest FPS and UPS
+            double actualFPS = 0;
+            double actualUPS = 0;
+            if (totalElapsedTime > 0) {
+                actualFPS = ((double)frameCount / totalElapsedTime);
+                actualUPS = ((double)(frameCount + totalFramesSkipped) / totalElapsedTime);
+            }
+
+            // store the latest FPS and UPS
+            fpsStore[ (int)statsCount%NUM_FPS ] = actualFPS;
+            upsStore[ (int)statsCount%NUM_FPS ] = actualUPS;
+            statsCount++;
+
+            // total the stored FPSs and UPSs
+            double totalFPS = 0.0;
+            double totalUPS = 0.0;
+
+            for (int i=0; i < NUM_FPS; i++) {
+                totalFPS += fpsStore[i];
+                totalUPS += upsStore[i];
+            }
+
+            // obtain the average FPS and UPS
+            if (statsCount < NUM_FPS) {
+                averageFPS = totalFPS/statsCount;
+                averageUPS = totalUPS/statsCount;
+            }
+            else {
+                averageFPS = totalFPS/NUM_FPS;
+                averageUPS = totalUPS/NUM_FPS;
+            }
+
+            /**/
+            System.out.println(timedf.format( (double) statsInterval/1000) + " " + 
+            timedf.format((double) realElapsedTime/1000) + "s " + 
+            df.format(timingError) + "% " + 
+            frameCount + "c " +
+            framesSkipped + "/" + totalFramesSkipped + " skip; " +
+            df.format(actualFPS) + " " + df.format(averageFPS) + " afps; " + 
+            df.format(actualUPS) + " " + df.format(averageUPS) + " aups" );
+            /**/
+
+
+            framesSkipped = 0;
+            prevStatsTime = timeNow;
+            statsInterval = 0;   // reset
+        }
+    }  // end of storeStats()
+
+    private void printStats()
+    {
+        System.out.println("Frame Count/Loss: " + frameCount + " / " + totalFramesSkipped);
+        System.out.println("Average FPS: " + df.format(averageFPS));
+        System.out.println("Average UPS: " + df.format(averageUPS));
+        System.out.println("Time Spent: " + timeSpentInGame + " secs");
+//        System.out.println("Boxes used: " + obs.getNumObstacles());
+    }  // end of printStats()
+
 }
