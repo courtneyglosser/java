@@ -70,8 +70,8 @@ public class WormPanel extends JPanel implements ActionListener, Runnable{
     private volatile boolean isPaused = false;
 
     private WormChase wcTop;
-//    private Obstacles obs;
-//    private Worm fred;
+    private Obstacles obs;
+    private Worm fred;
     private Font font;
     private FontMetrics metrics;
     private int score = 0;
@@ -91,8 +91,8 @@ public class WormPanel extends JPanel implements ActionListener, Runnable{
         readyForTermination();
 
         // Create the game components
-//        obs = new Obstacles(wcTop);
-//        fred = new Worm(PWIDTH, PHEIGHT, obs);
+        obs = new Obstacles(wcTop);
+        fred = new Worm(PWIDTH, PHEIGHT, obs);
 
         addMouseListener(new MAdapter());
 
@@ -174,7 +174,7 @@ public class WormPanel extends JPanel implements ActionListener, Runnable{
 
     private void gameUpdate() {
         if (!isPaused && !gameOver) {
-//            fred.move();
+            fred.move();
         }
     }
 
@@ -204,8 +204,8 @@ public class WormPanel extends JPanel implements ActionListener, Runnable{
         dbg.setColor(Color.black);
 
         // draw game elements: the obstacles and the worm
-//            obs.draw(dbg);
-//            fred.draw(dbg);
+            obs.draw(dbg);
+            fred.draw(dbg);
 
 
         if (gameOver) {
@@ -290,10 +290,12 @@ public class WormPanel extends JPanel implements ActionListener, Runnable{
     private void testPress(int x, int y) {
 
         if (!isPaused && !gameOver) {
-/**
+/**/
             if (fred.nearHead(x, y)) {
                 gameOver = true;
-                score = (40 - timeSpentInGame) + 40 - obs.getNumObstacles();
+
+                int intTime = (int)timeSpentInGame;
+                score = (40 - intTime) + 40 - obs.getNumObstacles();
             }
             else {
                 if (!fred.touchedAt(x, y) ) {
@@ -420,7 +422,7 @@ public class WormPanel extends JPanel implements ActionListener, Runnable{
         System.out.println("Average FPS: " + df.format(averageFPS));
         System.out.println("Average UPS: " + df.format(averageUPS));
         System.out.println("Time Spent: " + timeSpentInGame + " secs");
-//        System.out.println("Boxes used: " + obs.getNumObstacles());
+        System.out.println("Boxes used: " + obs.getNumObstacles());
     }  // end of printStats()
 
 }
