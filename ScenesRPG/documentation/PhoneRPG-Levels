@@ -1,0 +1,24 @@
+
+
+There was a simple iPhone RPG I was playing that was pretty simple.  Thinking
+about what I've been learning here, this could definitely be reproduced with
+the simple "menuing" level loading functionality I've already learned.
+
+"Town" menu with buttons for
+- "Mission-giver-1"
+- "Mission-giver-2"
+- "Inn"
+- "Equipment"
+- "Leave"
+
+Then, "Inn" will be the same from town to town, but the price would change.
+"Equipment" will be sword + 1, 2, 3, etc.  Mission givers will be all that
+noticeably changes, from town to town.  That's where story gets written.
+
+"Leave" is what will take you out to handle mission objectives.  Leave would
+provide options like "haunted forest", "grassy plains", etc.  Could even just
+build a list of adjectives and locations (forest, plains, mountains, etc).
+
+Would still need an XP system, Beastiery, weapon / armor system.  Come up with
+locations, missions, stories.
+

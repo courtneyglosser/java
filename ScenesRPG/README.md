@@ -1,44 +1,34 @@
 README
 ======
 
-Fill is a basic color matching game ported from previous implementations in
-JavaScript and C.
+ScenesRPG is a basic project to help me build out my toolkit.  It will consist
+of typical game menu screens, and then progress to slightly more complicated
+screens that include basic game mechanics (e.g. shops, inns, etc).
 
-The purpose of this game is to familiarize myself with some basic Java
-development concepts; implement some basic gaming elements; have a little fun
-with some basic pixel art; and finally, to convince myself that I can create
-things rather than always just consuming them.
+The purpose of this game is to help me investigate approaches to creating
+screen management systems.  The project will attempt to introduce some basic RPG
+elements, but will primarily focus on how to present the user with meaningful
+menuing and display systems with which they can easily interact.
 
 Command to build Jar file:
 
-$ jar -cvfe fill-0.1.jar cglosser.Main resources/ -C build/ .
+$ jar -cvfe ScenesRPG-0.1.jar cglosser.Main resources/ -C build/ .
 
 Command to run Jar file:
 
-$ java -jar fill-0.1.jar
+$ java -jar ScenesRPG-0.1.jar
 
-2017-01-25
+2017-05-08
 ==========
 
 Dev log;
-- More documentation today, and taking notes for future refactoring.
-- Also, running Javadocs on completed documentation:
 
-$  javadoc -d ./htmldocs cgloser ./src/*.java
+- Reviewing this project.  Looks like I didn't spend much actual time on it.
+- Creating a documentation folder to copy over the notes I had captured for
+this game in my word-vomit repo months ago.
+- Cleaning up this README
+- Copying over skeleton from Fill and cleaning it up
+- Adding some notes for todo items to tackle.
 
-- Note */ is a .md special character sequence...
 
-2017-01-21
-==========
-
-Dev log:
-
-- Cleaning up code today.  Focusing on refactoring tasks.  The checkWin
-  conditional was actaully almost there already, so really didn't require much.
-- Working on the ButtonManager clean up, now.  Pulling out display and click
-  logic from the other classes and consolidating in the Manager:
--- in FillPanel, drawing is handed over efficiently in the "drawBoardButtons"
--- in the FillPanel class, I cleaned up some function names.
--- Need to move the drawing and click-checking functions from the Screen class
-over to the ButtonManager class.
 

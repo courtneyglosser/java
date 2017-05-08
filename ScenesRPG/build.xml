@@ -1,6 +1,6 @@
-<project name="Fill" default="run" basedir=".">
+<project name="ScenesRPG" default="run" basedir=".">
   <description>
-    Simple build file for our Fill game
+    Simple build file for our ScenesRPG game
   </description>
   <target name="pre-build">
     <mkdir dir="build" />
@@ -29,5 +29,14 @@
         <include name="**/*.java" />
       </fileset>
     </javadoc>
+  </target>
+  <target name="jardist" depends="build">
+    <jar destfile="ScenesRPG-1.0.1.jar">
+      <fileset dir="build" />
+      <manifest>
+        <attribute name="Main-Class"
+              value="cglosser.Main"/>
+      </manifest>
+    </jar>
   </target>
 </project>

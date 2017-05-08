@@ -1,0 +1,73 @@
+2017-01-27
+==========
+
+So, I'd like to do this as the next step.  I Think it would be a good next
+level in my game development.  But I'm running into more questions about
+whether I'm really using the right tools, again.  Java just doesn't seem to be
+easy to package and publish anywhere.  I could start using GameMaker to start
+writing actual games that I find interesting / compelling, and pushing them out
+to the itch.io site, just to start going through that process...  Good side
+note, I suppose.  Also, noteworthy... Game Maker is only available for Windows.
+
+And writing Java code for Android is fun, but I can't really do it from my Mac
+here, while I'm just chilling.
+
+I think I'm letting myself get distracted.  What I need to do is go get a pad
+and paper, and start drawing these things out.
+
+Basically, what we need here is a good screen management system.  We started
+work on that with the Fill game, where we created a Welcome, Game, Win, and
+Lose screens, and loaded them in succession based on button presses.
+
+That basic skeleton would work here, as well.  So, a basic screen manager, and
+some buttons to let me click through We'd need:
+
+Welcome Screen
+==============
+
+Start -> Town Screen
+Quit -> Exit
+
+Town Screen
+===========
+
+Inn -> In Screen
+Quest1 -> Quest Screen
+Quest2 -> Quest Screen
+Adventure -> Adventure screen
+Shop -> Shop screen
+Quit -> Exit
+
+Inn
+===
+
+Sleep -> Town Screen
+Leave -> Town Screen
+
+Quest Screen
+============
+
+Accept -> Town Screen
+Decline -> Town Screen
+
+Adventure Screen
+================
+
+Fight -> Adventure Screen
+Return to town -> Town Screen
+
+Shop Screen
+===========
+
+Purchase -> Purchase Screen
+Sell -> Sell Screen
+Exit -> Town Screen
+
+
+That would provide me the skeleton of this game, and would require little work
+that requires trememndous thinking to expand on what I already have for the
+Fill game.
+
+From there, I could go a ton of directions, but that's a good start.
+
+
