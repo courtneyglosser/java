@@ -1,5 +1,7 @@
 package cglosser;
 
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 
 /**
@@ -8,9 +10,9 @@ import javax.swing.JFrame;
     @author Courtney Glosser
  */
 
-public class ScenesRPGFrame extends JFrame {
+public class ScenesRPGFrame extends JFrame implements WindowListener {
 
-    private ScenesRPGPanel fp;
+    private ScenesRPGPanel sp;
 
     // Implementing a 16:9 ratio.
     private static final int WIDTH = 640;
@@ -18,8 +20,8 @@ public class ScenesRPGFrame extends JFrame {
 
     public ScenesRPGFrame() {
 
-        fp = new ScenesRPGPanel();
-        add(fp);
+        sp = new ScenesRPGPanel();
+        add(sp);
 
         setSize(WIDTH, HEIGHT);
         setTitle ("Fill Game");
@@ -28,5 +30,32 @@ public class ScenesRPGFrame extends JFrame {
 
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+
+    public void windowActivated(WindowEvent e) {
+        sp.resumeGame();
+    }
+
+    public void windowDeactivated(WindowEvent e) {
+        sp.pauseGame();
+    }
+
+    public void windowDeiconified(WindowEvent e) {
+        sp.resumeGame();
+    }
+
+    public void windowIconified(WindowEvent e) {
+        sp.pauseGame();
+    }
+
+    public void windowClosing(WindowEvent e) {
+        sp.stopGame();
+    }
+
+    public void windowClosed(WindowEvent e) {
+        sp.stopGame();
+    }
+
+    public void windowOpened(WindowEvent e) {
     }
 }
