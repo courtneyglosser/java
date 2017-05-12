@@ -4,6 +4,7 @@ package cglosser;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -31,6 +32,8 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
 
     private int period = 1000/100; // ms / FPS;
 
+    int whichCity = 0;
+
     private Thread animator;
 
     private volatile boolean running = false;
@@ -41,6 +44,8 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
     private Image dbImage = null;
 
     public JButton startBtn, loadBtn, exitBtn, infoBtn, loseBtn, winBtn;
+    public JButton saveBtn, city1Btn, city2Btn, city3Btn, city4Btn;
+    public JButton save1Btn, save2Btn, save3Btn;
 
     public ScenesRPGPanel() {
 
@@ -62,21 +67,60 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
     public void initBtns() {
         startBtn = new JButton ("Start");
         startBtn.addActionListener( new StartListener());
+        this.add(startBtn);
 
         loadBtn = new JButton ("Load");
         loadBtn.addActionListener( new LoadListener());
+        this.add(loadBtn);
 
         infoBtn = new JButton ("Info");
         infoBtn.addActionListener( new InfoListener());
+        this.add(infoBtn);
 
         exitBtn = new JButton ("Exit");
         exitBtn.addActionListener( new ExitListener());
+        this.add(exitBtn);
 
         loseBtn = new JButton ("Lose");
         loseBtn.addActionListener( new LoseListener());
+        this.add(loseBtn);
 
         winBtn = new JButton ("Win");
         winBtn.addActionListener( new WinListener());
+        this.add(winBtn);
+
+        saveBtn = new JButton("Save");
+        saveBtn.addActionListener( new SaveListener());
+        this.add(saveBtn);
+
+        city1Btn = new JButton("City1");
+        city1Btn.addActionListener( new CityListener(1));
+        this.add(city1Btn);
+
+        city2Btn = new JButton("City2");
+        city2Btn.addActionListener( new CityListener(2));
+        this.add(city2Btn);
+
+        city3Btn = new JButton("City3");
+        city3Btn.addActionListener( new CityListener(3));
+        this.add(city3Btn);
+
+        city4Btn = new JButton("City4");
+        city4Btn.addActionListener( new CityListener(4));
+        this.add(city4Btn);
+
+        save1Btn = new JButton("Save1");
+        save1Btn.addActionListener( new SaveListener(1));
+        this.add(save1Btn);
+
+        save2Btn = new JButton("Save2");
+        save2Btn.addActionListener( new SaveListener(2));
+        this.add(save2Btn);
+
+        save3Btn = new JButton("Save3");
+        save3Btn.addActionListener( new SaveListener(3));
+        this.add(save3Btn);
+
     }
 
     public void setGameState(String state) {
@@ -185,7 +229,9 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
             // Draw a lose screen
             gameScreen.drawLose();
         }
-
+        else if (gameState == "city") {
+            drawCity(g2d);
+        }
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -224,17 +270,30 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
     private void drawActive(Graphics2D g2d) {
         gameScreen.drawActive(g2d);
 
+        this.add(city1Btn);
+        this.add(city2Btn);
+        this.add(city3Btn);
+        this.add(city4Btn);
         this.add(exitBtn);
     }
 
     private void drawLoad(Graphics2D g2d) {
         gameScreen.drawLoad(g2d);
 
+        this.add(save1Btn);
+        this.add(save2Btn);
+        this.add(save3Btn);
         this.add(exitBtn);
     }
 
     private void drawInfo(Graphics2D g2d) {
         gameScreen.drawInfo(g2d);
+
+        this.add(exitBtn);
+    }
+
+    private void drawCity(Graphics2D g2d) {
+        gameScreen.drawCity(g2d);
 
         this.add(exitBtn);
     }
@@ -285,4 +344,40 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
             ScenesRPGPanel.this.removeAll();
         }
     }
+
+    public class SaveListener implements ActionListener {
+        int save = 0;
+        //Create constructors to support taking an integer.
+        public SaveListener(int save) {
+            super();
+            this.save = save;
+        }
+        public SaveListener() {
+            super();
+            this.save = -1;
+        }
+        public void actionPerformed(ActionEvent e) {
+            if (save > 0) {
+                gameState = "active";
+            }
+            else {
+                gameState = "save";
+            }
+            ScenesRPGPanel.this.removeAll();
+        }
+    }
+
+    public class CityListener implements ActionListener {
+        int city = 0;
+        public CityListener(int city) {
+            super();
+            this.city = city;
+        }
+        public void actionPerformed(ActionEvent e) {
+            gameState = "city";
+            whichCity = city;
+            ScenesRPGPanel.this.removeAll();
+        }
+    }
+
 }

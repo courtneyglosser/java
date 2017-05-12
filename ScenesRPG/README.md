@@ -31,4 +31,17 @@ this game in my word-vomit repo months ago.
 - Adding some notes for todo items to tackle.
 
 
+2017-05-12
+==========
 
+Spent the last few days transitioning over from manual images and checking for
+clicks between the images x,y perimeter to just using JButtons.
+
+Learned a little about inner classes and referencing the parent panels. (Outer
+clases).
+
+would like to eventually clean this up as seperate classes with divided
+responsibilities, but will need to learn more to get there.
+
+Meanwhile, finally have a framework to wrap up the rest of the wireframing
+which, I hope will help formulate the plans for future refactoring.

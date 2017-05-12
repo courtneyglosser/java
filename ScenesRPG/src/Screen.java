@@ -70,6 +70,12 @@ public class Screen {
 
     }
 
+    public void drawCity(Graphics2D g2d) {
+        g2d.setColor(Color.white);
+        g2d.drawString("City", 100, 50);
+
+    }
+
     public void drawWin() {
 //        g2d.setColor(Color.white);
 //        g2d.drawString("Winner!", 100, 50);
