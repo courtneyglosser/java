@@ -1,152 +1,99 @@
 
 package cglosser;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.File;
-import javax.imageio.ImageIO;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
     Manages the various buttons with which the user can interact:
-    <ul>
-    <li>Manage placement of buttons on the screen for drawing
-    <li>Manage which buttons are displayed based on game state
-    <li>Identify if a user's "click" event is on a visible button
-    </ul>
 
     @author Courtney Glosser
  */
 
 public class ButtonManager {
 
-    private Image StartBtn;
-    private Image RestartBtn;
-    private Image ExitBtn;
+    public JButton startBtn, loadBtn, exitBtn, infoBtn, loseBtn, winBtn;
 
-    private static final int NUM_BUTTONS = 6;
+    String gameState;
+    boolean running = true;
 
-    private Button[] buttons = new Button[8]; 
-    // Available Colors
-
-    public ButtonManager() {
+    public ButtonManager(ScenesRPGPanel jp) {
         init();
     }
 
     private void init() {
 
-        LoadImages();
+        startBtn = new JButton ("Start");
+        startBtn.addActionListener( new StartListener());
+
+        loadBtn = new JButton ("Load");
+        loadBtn.addActionListener( new LoadListener());
+
+        infoBtn = new JButton ("Info");
+        infoBtn.addActionListener( new InfoListener());
+
+        exitBtn = new JButton ("Exit");
+        exitBtn.addActionListener( new ExitListener());
+
+        loseBtn = new JButton ("Lose");
+        loseBtn.addActionListener( new LoseListener());
+
+        winBtn = new JButton ("Win");
+        winBtn.addActionListener( new WinListener());
     }
 
-    private void LoadImages() {
-        try {
-            InputStream startResource =
-                ButtonManager.class.getResourceAsStream("/Start.png");
-            InputStream restartResource =
-                ButtonManager.class.getResourceAsStream("/Restart.png");
-            InputStream exitResource =
-                ButtonManager.class.getResourceAsStream("/Exit.png");
+    public JButton getStartBtn() { return startBtn; }
 
-            StartBtn = ImageIO.read(startResource);
-            RestartBtn = ImageIO.read(restartResource);
-            ExitBtn = ImageIO.read(exitResource);
+    public void drawWinButtons() {
+    }
+
+    public void drawLoseButtons() {
+    }
+
+    public class StartListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Document? ");
         }
-        catch (IOException e) {
-            // Handle exception
-            System.out.println("Exception loading button images: " +
-                e.getMessage());
+    }
+
+    public class LoadListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Action: " + e);
+
+
+            gameState = "load";
         }
     }
 
-    public void drawColorButtons(Graphics2D g2d) {
-        for (int i = 0; i < NUM_BUTTONS; i++) {
-            buttons[i].drawButton(g2d);
+    public class InfoListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Action: " + e);
+
+            gameState = "info";
         }
     }
 
-    public Button registerClick(int x, int y) {
-        Button rtn = new Button();
+    public class ExitListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Action: " + e);
 
-        for (int i = 0; i < NUM_BUTTONS; i++) {
-            if(buttons[i].clicked(x, y)) {
-                rtn = buttons[i];
-            }
+            running = false;
         }
-        return rtn;
     }
 
-
-    public void drawBoardButtons(Graphics2D g2d) {
-        g2d.drawRect(500, 65, 50, 20);
-        g2d.drawImage(RestartBtn, 500, 65, null);
-
-        g2d.drawRect(500, 95, 50, 20);
-        g2d.drawImage(ExitBtn, 500, 95, null);
-    }
-
-    public void drawWelcomeButtons(Graphics2D g2d) {
-
-        g2d.drawRect(100, 65, 50, 20);
-        g2d.drawImage(StartBtn, 100, 65, null);
-
-        g2d.drawRect(100, 95, 50, 20);
-        g2d.drawImage(ExitBtn, 100, 95, null);
-
-    }
-
-    public void drawWinButtons(Graphics2D g2d) {
-
-        g2d.drawRect(100, 65, 50, 20);
-        g2d.drawImage(RestartBtn, 100, 65, null);
-
-        g2d.drawRect(100, 95, 50, 20);
-        g2d.drawImage(ExitBtn, 100, 95, null);
-
-    }
-
-    public void drawLoseButtons(Graphics2D g2d) {
-
-        g2d.drawRect(100, 65, 50, 20);
-        g2d.drawImage(RestartBtn, 100, 65, null);
-
-        g2d.drawRect(100, 95, 50, 20);
-        g2d.drawImage(ExitBtn, 100, 95, null);
-
-    }
-
-    public boolean checkStart(String gameState, int x, int y) {
-        boolean rtn = false;
-
-        if (gameState != "active") {
-            if (x > 100 && x < 150 && y > 65 && y < 85) {
-                rtn = true;
-            }
+    public class LoseListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Lose: " + e);
+            gameState = "lose";
         }
-        else {
-            if (x > 500 && x < 650 && y > 65 && y < 85) {
-                rtn = true;
-            }
-        }
-
-        return rtn;
     }
 
-    public boolean checkExit(String gameState, int x, int y) {
-        boolean rtn = false;
-
-        if (gameState != "active") {
-            if (x > 100 && x < 150 && y > 95 && y < 115) {
-                rtn = true;
-            }
+    public class WinListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Win: " + e);
+            gameState = "win";
         }
-        else {
-            if (x > 500 && x < 650 && y > 95 && y < 115) {
-                rtn = true;
-            }
-        }
-
-        return rtn;
     }
 }

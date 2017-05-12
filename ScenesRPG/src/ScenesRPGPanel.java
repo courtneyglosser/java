@@ -4,6 +4,7 @@ package cglosser;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -17,27 +18,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
-    Extendings the Swing JPanel class with Fill game specific settings.  Also,
-    implementing ActionListener to register and handle mouse click events.
-    This class contains the primary Fill game loop, handled as a collaboration
-    between the actionPerformed function and the doDrawing function.  The game
-    loop is not timer based, and simply awaits user input (actionPerformed),
-    calculates the user's impact on the overall game state (within the private
-    MAdapter class below), and provides the user an updated game state drawing
-    as feedback (doDrawing).
+    Extendings the Swing JPanel class with ScenesRPG game specific settings.
 
     @author Courtney Glosser
  */
 
 public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
-    private String gameState; // welcome, active, win, lose
+    public String gameState; // welcome, load, main, info, win, lose
     private ButtonManager bm;
     private Screen gameScreen;
     private Stats gameStats;
 
-
-    private int count;
-    private int seconds;
     private int period = 1000/100; // ms / FPS;
 
     private Thread animator;
@@ -46,65 +37,19 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
     private volatile boolean gameOver = false;
     private volatile boolean isPaused = false;
 
-    private int score = 0;
-
     private Graphics dbg;
     private Image dbImage = null;
+
+    public JButton startBtn, loadBtn, exitBtn, infoBtn, loseBtn, winBtn;
 
     public ScenesRPGPanel() {
 
         gameState = "welcome";
-        bm = new ButtonManager();
-        gameScreen = new Screen();
+        bm = new ButtonManager(this);
+        gameScreen = new Screen(this);
         gameStats = new Stats();
 
-        JButton myBtn = new JButton("My Button");
-        myBtn.addActionListener( new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Action: " + e);
-            }
-        });
-        this.add(myBtn);
-
-        JButton startBtn = new JButton ("Start");
-        startBtn.addActionListener( new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Action: " + e);
-
-                gameState = "active";
-            }
-        });
-        this.add(startBtn);
-
-        JButton exitBtn = new JButton ("Exit");
-        exitBtn.addActionListener( new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Action: " + e);
-
-                running = false;
-            }
-        });
-        this.add(exitBtn);
-
-        JButton loseBtn = new JButton ("Lose");
-        loseBtn.addActionListener( new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Lose: " + e);
-                gameState = "lose";
-            }
-        });
-        this.add(loseBtn);
-
-        JButton winBtn = new JButton ("Win");
-        winBtn.addActionListener( new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Win: " + e);
-                gameState = "win";
-            }
-        });
-        this.add(winBtn);
-
-        addMouseListener(new MAdapter());
+        initBtns();
 
         setBackground(Color.black);
         setFocusable(true);
@@ -112,8 +57,30 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
         readyForTermination();
 
         repaint();
+    }
 
+    public void initBtns() {
+        startBtn = new JButton ("Start");
+        startBtn.addActionListener( new StartListener());
 
+        loadBtn = new JButton ("Load");
+        loadBtn.addActionListener( new LoadListener());
+
+        infoBtn = new JButton ("Info");
+        infoBtn.addActionListener( new InfoListener());
+
+        exitBtn = new JButton ("Exit");
+        exitBtn.addActionListener( new ExitListener());
+
+        loseBtn = new JButton ("Lose");
+        loseBtn.addActionListener( new LoseListener());
+
+        winBtn = new JButton ("Win");
+        winBtn.addActionListener( new WinListener());
+    }
+
+    public void setGameState(String state) {
+        gameState = state;
     }
 
     public void run() {
@@ -145,6 +112,7 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
 
             gameStats.storeStats();
             requestFocus();
+//            System.out.println("Game State: " + gameState);
         }
 
         gameStats.printStats();
@@ -197,67 +165,31 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
         Graphics2D g2d = (Graphics2D) g;
 
         if (gameState == "active") {
-            bm.drawBoardButtons(g2d);
+            drawActive(g2d);
         }
         else if (gameState == "welcome") {
             // Draw a welcome screen
-            gameScreen.drawWelcome(g2d);
+            drawWelcome(g2d);
+        }
+        else if (gameState == "load") {
+            drawLoad(g2d);
+        }
+        else if (gameState == "info") {
+            drawInfo(g2d);
         }
         else if (gameState == "win") {
             // Draw a win screen
-            gameScreen.drawWin(g2d);
+            gameScreen.drawWin();
         }
         else if (gameState == "lose") {
             // Draw a lose screen
-            gameScreen.drawLose(g2d);
+            gameScreen.drawLose();
         }
 
     }
 
     public void actionPerformed(ActionEvent e) {
         repaint();
-    }
-
-    /**
-        Class extends the MouseAdapter abstract class.  This class will
-        register mousePressed events and utilize helper classes to execute
-        appropriate game responses.
-
-        @author Courtney Glosser
-     */
-
-    private class MAdapter extends MouseAdapter {
-
-        public void mousePressed(MouseEvent e) {
-            if (gameState == "active") {
-/**
-                if (bm.clickedColoredButton( e.getX(), e.getY() ) == true) {
-
-                    Button clickBtn = bm.registerClick(e.getX(), e.getY());
-                    gameBoard.handleClick(clickBtn.getColor());
-                    if (gameBoard.checkWin()) {
-                        // ASSERT:  Winner!
-                        gameState = "win";
-                    }
-                    else if (gameBoard.checkLose()) {
-                        gameState = "lose";
-                    }
-                    repaint();
-                }
-                else {
-                }
-/**/
-            }
-            if (bm.checkStart(gameState, e.getX(), e.getY())) {
-                gameState = "active";
-//                gameBoard = new Board();
-                repaint();
-            }
-            if (bm.checkExit(gameState, e.getX(), e.getY())) {
-                running = false;
-            }
-        }
-
     }
 
     private class KAdapter extends KeyAdapter {
@@ -280,7 +212,77 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
     }
 
 
+    private void drawWelcome(Graphics2D g2d) {
+        gameScreen.drawWelcome(g2d);
 
+        this.add(startBtn);
+        this.add(loadBtn);
+        this.add(infoBtn);
+        this.add(exitBtn);
+    }
 
+    private void drawActive(Graphics2D g2d) {
+        gameScreen.drawActive(g2d);
 
+        this.add(exitBtn);
+    }
+
+    private void drawLoad(Graphics2D g2d) {
+        gameScreen.drawLoad(g2d);
+
+        this.add(exitBtn);
+    }
+
+    private void drawInfo(Graphics2D g2d) {
+        gameScreen.drawInfo(g2d);
+
+        this.add(exitBtn);
+    }
+
+    public class StartListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            gameState = "active";
+            ScenesRPGPanel.this.removeAll();
+        }
+    }
+
+    public class LoadListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            gameState = "load";
+            ScenesRPGPanel.this.removeAll();
+        }
+    }
+
+    public class InfoListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            gameState = "info";
+            ScenesRPGPanel.this.removeAll();
+        }
+    }
+
+    public class ExitListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            if (gameState == "welcome") {
+                running = false;
+            }
+            else {
+                gameState = "welcome";
+            }
+            ScenesRPGPanel.this.removeAll();
+        }
+    }
+
+    public class LoseListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            gameState = "lose";
+            ScenesRPGPanel.this.removeAll();
+        }
+    }
+
+    public class WinListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            gameState = "win";
+            ScenesRPGPanel.this.removeAll();
+        }
+    }
 }

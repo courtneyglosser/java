@@ -7,20 +7,14 @@ import java.awt.Image;
 import java.io.IOException;
 import java.io.File;
 import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
 
 /**
     Sreen management class to handle drawing the appropriate display based on
-    the current state of the game.  Expects the following states:
-    <ul>
-    <li>welcome
-    <li>active
-    <li>win
-    <li>lose
-    </ul>
-    <p>
-    Screen also acts as an ButtonManager class wrapper to provide appropriate
-    game state information to the ButtonManager class.
+    the current state of the game.  Screen also acts as an ButtonManager class
+    wrapper to provide appropriate game state information to the ButtonManager
+    class.
 
     @author Courtney Glosser
  */
@@ -33,8 +27,8 @@ public class Screen {
 
     private ButtonManager bm;
 
-    public Screen() {
-        bm = new ButtonManager();
+    public Screen(ScenesRPGPanel jp) {
+        bm = new ButtonManager(jp);
 
         LoadImages();
     }
@@ -56,21 +50,37 @@ public class Screen {
         g2d.setColor(Color.white);
         g2d.drawString("Welcome", 100, 50);
 
-        bm.drawWelcomeButtons(g2d);
+    }
+
+    public void drawActive(Graphics2D g2d) {
+        g2d.setColor(Color.white);
+        g2d.drawString("Active", 100, 50);
 
     }
 
-    public void drawWin(Graphics2D g2d) {
+    public void drawLoad(Graphics2D g2d) {
         g2d.setColor(Color.white);
-        g2d.drawString("Winner!", 100, 50);
+        g2d.drawString("Load", 100, 50);
 
-        bm.drawWinButtons(g2d);
     }
 
-    public void drawLose(Graphics2D g2d) {
+    public void drawInfo(Graphics2D g2d) {
         g2d.setColor(Color.white);
-        g2d.drawString("Loser!", 100, 50);
+        g2d.drawString("Info", 100, 50);
 
-        bm.drawLoseButtons(g2d);
+    }
+
+    public void drawWin() {
+//        g2d.setColor(Color.white);
+//        g2d.drawString("Winner!", 100, 50);
+
+        bm.drawWinButtons();
+    }
+
+    public void drawLose() {
+//        g2d.setColor(Color.white);
+//        g2d.drawString("Loser!", 100, 50);
+
+        bm.drawLoseButtons();
     }
 }
