@@ -61,65 +61,73 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
         requestFocus();
         readyForTermination();
 
+        this.setLayout(null);
+
         repaint();
     }
 
     public void initBtns() {
         startBtn = new JButton ("Start");
         startBtn.addActionListener( new StartListener());
+        startBtn.setBounds(280, 100, 80, 25);
         this.add(startBtn);
 
         loadBtn = new JButton ("Load");
         loadBtn.addActionListener( new LoadListener());
+        loadBtn.setBounds(280, 130, 80, 25);
         this.add(loadBtn);
 
         infoBtn = new JButton ("Info");
         infoBtn.addActionListener( new InfoListener());
+        infoBtn.setBounds(280, 160, 80, 25);
         this.add(infoBtn);
 
         exitBtn = new JButton ("Exit");
         exitBtn.addActionListener( new ExitListener());
+        exitBtn.setBounds(580, 305, 55, 25);
         this.add(exitBtn);
 
         loseBtn = new JButton ("Lose");
         loseBtn.addActionListener( new LoseListener());
+        loseBtn.setBounds(580, 0, 55, 25);
         this.add(loseBtn);
 
         winBtn = new JButton ("Win");
         winBtn.addActionListener( new WinListener());
+        winBtn.setBounds(580, 30, 55, 25);
         this.add(winBtn);
 
         saveBtn = new JButton("Save");
         saveBtn.addActionListener( new SaveListener());
-        this.add(saveBtn);
+        saveBtn.setBounds(580, 275, 55, 25);
 
         city1Btn = new JButton("City1");
         city1Btn.addActionListener( new CityListener(1));
-        this.add(city1Btn);
+        city1Btn.setBounds(280, 100, 80, 25);
 
         city2Btn = new JButton("City2");
         city2Btn.addActionListener( new CityListener(2));
-        this.add(city2Btn);
+        city2Btn.setBounds(280, 130, 80, 25);
 
         city3Btn = new JButton("City3");
         city3Btn.addActionListener( new CityListener(3));
-        this.add(city3Btn);
+        city3Btn.setBounds(280, 160, 80, 25);
 
         city4Btn = new JButton("City4");
         city4Btn.addActionListener( new CityListener(4));
-        this.add(city4Btn);
+        city4Btn.setBounds(280, 190, 80, 25);
 
         save1Btn = new JButton("Save1");
         save1Btn.addActionListener( new SaveListener(1));
-        this.add(save1Btn);
+        save1Btn.setBounds(280, 100, 80, 25);
 
         save2Btn = new JButton("Save2");
         save2Btn.addActionListener( new SaveListener(2));
-        this.add(save2Btn);
+        save2Btn.setBounds(280, 130, 80, 25);
 
         save3Btn = new JButton("Save3");
         save3Btn.addActionListener( new SaveListener(3));
-        this.add(save3Btn);
+        save3Btn.setBounds(280, 160, 80, 25);
 
     }
 
@@ -274,6 +282,7 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
         this.add(city2Btn);
         this.add(city3Btn);
         this.add(city4Btn);
+        this.add(saveBtn);
         this.add(exitBtn);
     }
 
@@ -295,6 +304,7 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
     private void drawCity(Graphics2D g2d) {
         gameScreen.drawCity(g2d);
 
+        this.add(saveBtn);
         this.add(exitBtn);
     }
 
