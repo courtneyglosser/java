@@ -3,6 +3,7 @@ package cglosser;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;
+import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -47,6 +48,8 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
     public JButton saveBtn, city1Btn, city2Btn, city3Btn, city4Btn;
     public JButton save1Btn, save2Btn, save3Btn;
 
+    public JButton innBtn, storeBtn, missionBtn, adventureBtn;
+
     public ScenesRPGPanel() {
 
         gameState = "welcome";
@@ -70,65 +73,98 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
         startBtn = new JButton ("Start");
         startBtn.addActionListener( new StartListener());
         startBtn.setBounds(280, 100, 80, 25);
+        startBtn.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(startBtn);
 
         loadBtn = new JButton ("Load");
         loadBtn.addActionListener( new LoadListener());
         loadBtn.setBounds(280, 130, 80, 25);
+        loadBtn.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(loadBtn);
 
         infoBtn = new JButton ("Info");
         infoBtn.addActionListener( new InfoListener());
         infoBtn.setBounds(280, 160, 80, 25);
+        infoBtn.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(infoBtn);
 
         exitBtn = new JButton ("Exit");
         exitBtn.addActionListener( new ExitListener());
-        exitBtn.setBounds(580, 305, 55, 25);
+        exitBtn.setBounds(560, 305, 75, 25);
+        exitBtn.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(exitBtn);
 
         loseBtn = new JButton ("Lose");
         loseBtn.addActionListener( new LoseListener());
-        loseBtn.setBounds(580, 0, 55, 25);
+        loseBtn.setBounds(560, 0, 75, 25);
+        loseBtn.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(loseBtn);
 
         winBtn = new JButton ("Win");
         winBtn.addActionListener( new WinListener());
-        winBtn.setBounds(580, 30, 55, 25);
+        winBtn.setBounds(560, 30, 75, 25);
+        winBtn.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(winBtn);
 
         saveBtn = new JButton("Save");
         saveBtn.addActionListener( new SaveListener());
-        saveBtn.setBounds(580, 275, 55, 25);
+        saveBtn.setBounds(560, 275, 75, 25);
+        saveBtn.setHorizontalAlignment(SwingConstants.CENTER);
 
         city1Btn = new JButton("City1");
         city1Btn.addActionListener( new CityListener(1));
         city1Btn.setBounds(280, 100, 80, 25);
+        city1Btn.setHorizontalAlignment(SwingConstants.CENTER);
 
         city2Btn = new JButton("City2");
         city2Btn.addActionListener( new CityListener(2));
         city2Btn.setBounds(280, 130, 80, 25);
+        city2Btn.setHorizontalAlignment(SwingConstants.CENTER);
 
         city3Btn = new JButton("City3");
         city3Btn.addActionListener( new CityListener(3));
         city3Btn.setBounds(280, 160, 80, 25);
+        city3Btn.setHorizontalAlignment(SwingConstants.CENTER);
 
         city4Btn = new JButton("City4");
         city4Btn.addActionListener( new CityListener(4));
         city4Btn.setBounds(280, 190, 80, 25);
+        city4Btn.setHorizontalAlignment(SwingConstants.CENTER);
 
         save1Btn = new JButton("Save1");
         save1Btn.addActionListener( new SaveListener(1));
         save1Btn.setBounds(280, 100, 80, 25);
+        save1Btn.setHorizontalAlignment(SwingConstants.CENTER);
 
         save2Btn = new JButton("Save2");
         save2Btn.addActionListener( new SaveListener(2));
         save2Btn.setBounds(280, 130, 80, 25);
+        save2Btn.setHorizontalAlignment(SwingConstants.CENTER);
 
         save3Btn = new JButton("Save3");
         save3Btn.addActionListener( new SaveListener(3));
         save3Btn.setBounds(280, 160, 80, 25);
+        save3Btn.setHorizontalAlignment(SwingConstants.CENTER);
 
+        innBtn = new JButton("Inn");
+        innBtn.addActionListener( new InnListener());
+        innBtn.setBounds(100, 80, 200, 100);
+        innBtn.setHorizontalAlignment(SwingConstants.CENTER);
+
+        storeBtn = new JButton("Store");
+        storeBtn.addActionListener( new StoreListener());
+        storeBtn.setBounds(310, 80, 200, 100);
+        storeBtn.setHorizontalAlignment(SwingConstants.CENTER);
+
+        missionBtn = new JButton("Mission");
+        missionBtn.addActionListener( new MissionListener());
+        missionBtn.setBounds(100, 190, 200, 100);
+        missionBtn.setHorizontalAlignment(SwingConstants.CENTER);
+
+        adventureBtn = new JButton("Adventure");
+        adventureBtn.addActionListener( new AdventureListener());
+        adventureBtn.setBounds(310, 190, 200, 100);
+        adventureBtn.setHorizontalAlignment(SwingConstants.CENTER);
     }
 
     public void setGameState(String state) {
@@ -226,6 +262,9 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
         else if (gameState == "load") {
             drawLoad(g2d);
         }
+        else if (gameState == "save") {
+            drawSave(g2d);
+        }
         else if (gameState == "info") {
             drawInfo(g2d);
         }
@@ -239,6 +278,18 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
         }
         else if (gameState == "city") {
             drawCity(g2d);
+        }
+        else if (gameState == "inn") {
+            drawInn(g2d);
+        }
+        else if (gameState == "store") {
+            drawStore(g2d);
+        }
+        else if (gameState == "mission") {
+            drawMission(g2d);
+        }
+        else if (gameState == "adventure") {
+            drawAdventure(g2d);
         }
     }
 
@@ -304,7 +355,49 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
     private void drawCity(Graphics2D g2d) {
         gameScreen.drawCity(g2d);
 
+        this.add(innBtn);
+        this.add(storeBtn);
+        this.add(missionBtn);
+        this.add(adventureBtn);
+
         this.add(saveBtn);
+        this.add(exitBtn);
+    }
+
+    private void drawInn(Graphics2D g2d) {
+        gameScreen.drawInn(g2d);
+
+        this.add(saveBtn);
+        this.add(exitBtn);
+    }
+
+    private void drawStore(Graphics2D g2d) {
+        gameScreen.drawStore(g2d);
+
+        this.add(saveBtn);
+        this.add(exitBtn);
+    }
+
+    private void drawMission(Graphics2D g2d) {
+        gameScreen.drawMission(g2d);
+
+        this.add(saveBtn);
+        this.add(exitBtn);
+    }
+
+    private void drawAdventure(Graphics2D g2d) {
+        gameScreen.drawAdventure(g2d);
+
+        this.add(saveBtn);
+        this.add(exitBtn);
+    }
+
+    private void drawSave(Graphics2D g2d) {
+        gameScreen.drawSave(g2d);
+
+        this.add(save1Btn);
+        this.add(save2Btn);
+        this.add(save3Btn);
         this.add(exitBtn);
     }
 
@@ -331,6 +424,11 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
 
     public class ExitListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            // NOTE:  Eventually, we'll want to abstract this more.
+            // The getActionCommand function will help us determine the button
+            if (e.getActionCommand() == "Exit") {
+//                System.out.println("What's the action? " + e);
+            }
             if (gameState == "welcome") {
                 running = false;
             }
@@ -386,6 +484,34 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
         public void actionPerformed(ActionEvent e) {
             gameState = "city";
             whichCity = city;
+            ScenesRPGPanel.this.removeAll();
+        }
+    }
+
+    public class InnListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            gameState = "inn";
+            ScenesRPGPanel.this.removeAll();
+        }
+    }
+
+    public class StoreListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            gameState = "store";
+            ScenesRPGPanel.this.removeAll();
+        }
+    }
+
+    public class MissionListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            gameState = "mission";
+            ScenesRPGPanel.this.removeAll();
+        }
+    }
+
+    public class AdventureListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            gameState = "adventure";
             ScenesRPGPanel.this.removeAll();
         }
     }

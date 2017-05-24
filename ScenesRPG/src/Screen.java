@@ -76,6 +76,36 @@ public class Screen {
 
     }
 
+    public void drawInn(Graphics2D g2d) {
+        g2d.setColor(Color.white);
+        g2d.drawString("Inn", 100, 50);
+
+    }
+
+    public void drawStore(Graphics2D g2d) {
+        g2d.setColor(Color.white);
+        g2d.drawString("Store", 100, 50);
+
+    }
+
+    public void drawMission(Graphics2D g2d) {
+        g2d.setColor(Color.white);
+        g2d.drawString("Mission", 100, 50);
+
+    }
+
+    public void drawAdventure(Graphics2D g2d) {
+        g2d.setColor(Color.white);
+        g2d.drawString("Adventure", 100, 50);
+
+    }
+
+    public void drawSave(Graphics2D g2d) {
+        g2d.setColor(Color.white);
+        g2d.drawString("Save", 100, 50);
+
+    }
+
     public void drawWin() {
 //        g2d.setColor(Color.white);
 //        g2d.drawString("Winner!", 100, 50);
