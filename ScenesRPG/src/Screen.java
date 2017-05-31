@@ -68,6 +68,8 @@ public class Screen {
         g2d.setColor(Color.white);
         g2d.drawString("Info", 100, 50);
 
+        g2d.drawString("Scenes is a simple RPG set in a very basic world.", 150, 80);
+        g2d.drawString("Created by GlosserGames", 225, 200);
     }
 
     public void drawCity(Graphics2D g2d) {
