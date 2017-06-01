@@ -72,9 +72,9 @@ public class Screen {
         g2d.drawString("Created by GlosserGames", 225, 200);
     }
 
-    public void drawCity(Graphics2D g2d) {
+    public void drawCity(Graphics2D g2d, int city) {
         g2d.setColor(Color.white);
-        g2d.drawString("City", 100, 50);
+        g2d.drawString("City " + city, 100, 50);
 
     }
 
@@ -108,16 +108,16 @@ public class Screen {
 
     }
 
-    public void drawWin() {
-//        g2d.setColor(Color.white);
-//        g2d.drawString("Winner!", 100, 50);
+    public void drawWin(Graphics2D g2d) {
+        g2d.setColor(Color.white);
+        g2d.drawString("Winner!", 100, 50);
 
         bm.drawWinButtons();
     }
 
-    public void drawLose() {
-//        g2d.setColor(Color.white);
-//        g2d.drawString("Loser!", 100, 50);
+    public void drawLose(Graphics2D g2d) {
+        g2d.setColor(Color.white);
+        g2d.drawString("Loser!", 100, 50);
 
         bm.drawLoseButtons();
     }
