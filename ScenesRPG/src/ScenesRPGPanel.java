@@ -44,20 +44,12 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
     private Graphics dbg;
     private Image dbImage = null;
 
-    public JButton startBtn, loadBtn, exitBtn, infoBtn, loseBtn, winBtn;
-    public JButton saveBtn, city1Btn, city2Btn, city3Btn, city4Btn;
-    public JButton save1Btn, save2Btn, save3Btn;
-
-    public JButton innBtn, storeBtn, missionBtn, adventureBtn;
-
     public ScenesRPGPanel() {
 
         gameState = "welcome";
         bm = new ButtonManager(this);
         gameScreen = new Screen(this);
         gameStats = new Stats();
-
-        initBtns();
 
         setBackground(Color.black);
         setFocusable(true);
@@ -69,106 +61,12 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
         repaint();
     }
 
-    public void initBtns() {
-        startBtn = new JButton ("Start");
-        startBtn.addActionListener(new NavListener());
-        startBtn.setBounds(280, 100, 80, 25);
-        startBtn.setHorizontalAlignment(SwingConstants.CENTER);
-        this.add(startBtn);
-
-        loadBtn = new JButton ("Load");
-        loadBtn.addActionListener( new NavListener());
-        loadBtn.setBounds(280, 130, 80, 25);
-        loadBtn.setHorizontalAlignment(SwingConstants.CENTER);
-        this.add(loadBtn);
-
-        infoBtn = new JButton ("Info");
-        infoBtn.addActionListener( new NavListener());
-        infoBtn.setBounds(280, 160, 80, 25);
-        infoBtn.setHorizontalAlignment(SwingConstants.CENTER);
-        this.add(infoBtn);
-
-        exitBtn = new JButton ("Exit");
-        exitBtn.addActionListener( new NavListener());
-        exitBtn.setBounds(560, 305, 75, 25);
-        exitBtn.setHorizontalAlignment(SwingConstants.CENTER);
-        this.add(exitBtn);
-
-        loseBtn = new JButton ("Lose");
-        loseBtn.addActionListener( new NavListener());
-        loseBtn.setBounds(560, 0, 75, 25);
-        loseBtn.setHorizontalAlignment(SwingConstants.CENTER);
-        this.add(loseBtn);
-
-        winBtn = new JButton ("Win");
-        winBtn.addActionListener( new NavListener());
-        winBtn.setBounds(560, 30, 75, 25);
-        winBtn.setHorizontalAlignment(SwingConstants.CENTER);
-        this.add(winBtn);
-
-        saveBtn = new JButton("Save");
-        saveBtn.addActionListener( new NavListener());
-        saveBtn.setBounds(560, 275, 75, 25);
-        saveBtn.setHorizontalAlignment(SwingConstants.CENTER);
-
-        city1Btn = new JButton("City1");
-        city1Btn.addActionListener( new NavListener());
-        city1Btn.setBounds(280, 100, 80, 25);
-        city1Btn.setHorizontalAlignment(SwingConstants.CENTER);
-
-        city2Btn = new JButton("City2");
-        city2Btn.addActionListener( new NavListener());
-        city2Btn.setBounds(280, 130, 80, 25);
-        city2Btn.setHorizontalAlignment(SwingConstants.CENTER);
-
-        city3Btn = new JButton("City3");
-        city3Btn.addActionListener( new NavListener());
-        city3Btn.setBounds(280, 160, 80, 25);
-        city3Btn.setHorizontalAlignment(SwingConstants.CENTER);
-
-        city4Btn = new JButton("City4");
-        city4Btn.addActionListener( new NavListener());
-        city4Btn.setBounds(280, 190, 80, 25);
-        city4Btn.setHorizontalAlignment(SwingConstants.CENTER);
-
-        save1Btn = new JButton("Save1");
-        save1Btn.addActionListener( new NavListener());
-        save1Btn.setBounds(280, 100, 80, 25);
-        save1Btn.setHorizontalAlignment(SwingConstants.CENTER);
-
-        save2Btn = new JButton("Save2");
-        save2Btn.addActionListener( new NavListener());
-        save2Btn.setBounds(280, 130, 80, 25);
-        save2Btn.setHorizontalAlignment(SwingConstants.CENTER);
-
-        save3Btn = new JButton("Save3");
-        save3Btn.addActionListener( new NavListener());
-        save3Btn.setBounds(280, 160, 80, 25);
-        save3Btn.setHorizontalAlignment(SwingConstants.CENTER);
-
-        innBtn = new JButton("Inn");
-        innBtn.addActionListener( new NavListener());
-        innBtn.setBounds(100, 80, 200, 100);
-        innBtn.setHorizontalAlignment(SwingConstants.CENTER);
-
-        storeBtn = new JButton("Store");
-        storeBtn.addActionListener( new NavListener());
-        storeBtn.setBounds(310, 80, 200, 100);
-        storeBtn.setHorizontalAlignment(SwingConstants.CENTER);
-
-        missionBtn = new JButton("Mission");
-        missionBtn.addActionListener( new NavListener());
-        missionBtn.setBounds(100, 190, 200, 100);
-        missionBtn.setHorizontalAlignment(SwingConstants.CENTER);
-
-        adventureBtn = new JButton("Adventure");
-        adventureBtn.addActionListener( new NavListener());
-        adventureBtn.setBounds(310, 190, 200, 100);
-        adventureBtn.setHorizontalAlignment(SwingConstants.CENTER);
-    }
-
     public void setGameState(String state) {
         gameState = state;
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
     }
 
     public void run() {
@@ -253,20 +151,20 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
         Graphics2D g2d = (Graphics2D) g;
 
         if (gameState == "active") {
-            drawActive(g2d);
+            gameScreen.drawActive(g2d);
         }
         else if (gameState == "welcome") {
             // Draw a welcome screen
-            drawWelcome(g2d);
+            gameScreen.drawWelcome(g2d);
         }
         else if (gameState == "load") {
-            drawLoad(g2d);
+            gameScreen.drawLoad(g2d);
         }
         else if (gameState == "save") {
-            drawSave(g2d);
+            gameScreen.drawSave(g2d);
         }
         else if (gameState == "info") {
-            drawInfo(g2d);
+            gameScreen.drawInfo(g2d);
         }
         else if (gameState == "win") {
             // Draw a win screen
@@ -277,19 +175,19 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
             gameScreen.drawLose(g2d);
         }
         else if (gameState == "city") {
-            drawCity(g2d);
+            gameScreen.drawCity(g2d, whichCity);
         }
         else if (gameState == "inn") {
-            drawInn(g2d);
+            gameScreen.drawInn(g2d);
         }
         else if (gameState == "store") {
-            drawStore(g2d);
+            gameScreen.drawStore(g2d);
         }
         else if (gameState == "mission") {
-            drawMission(g2d);
+            gameScreen.drawMission(g2d);
         }
         else if (gameState == "adventure") {
-            drawAdventure(g2d);
+            gameScreen.drawAdventure(g2d);
         }
     }
 
@@ -316,155 +214,5 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
         addKeyListener( new KAdapter());
     }
 
-
-    private void drawWelcome(Graphics2D g2d) {
-        gameScreen.drawWelcome(g2d);
-
-        this.add(startBtn);
-        this.add(loadBtn);
-        this.add(infoBtn);
-        this.add(exitBtn);
-    }
-
-    private void drawActive(Graphics2D g2d) {
-        gameScreen.drawActive(g2d);
-
-        this.add(city1Btn);
-        this.add(city2Btn);
-        this.add(city3Btn);
-        this.add(city4Btn);
-        this.add(saveBtn);
-        this.add(exitBtn);
-    }
-
-    private void drawLoad(Graphics2D g2d) {
-        gameScreen.drawLoad(g2d);
-
-        this.add(save1Btn);
-        this.add(save2Btn);
-        this.add(save3Btn);
-        this.add(exitBtn);
-    }
-
-    private void drawInfo(Graphics2D g2d) {
-        gameScreen.drawInfo(g2d);
-
-        this.add(exitBtn);
-    }
-
-    private void drawCity(Graphics2D g2d) {
-        gameScreen.drawCity(g2d, whichCity);
-
-        this.add(innBtn);
-        this.add(storeBtn);
-        this.add(missionBtn);
-        this.add(adventureBtn);
-
-        this.add(saveBtn);
-        this.add(exitBtn);
-    }
-
-    private void drawInn(Graphics2D g2d) {
-        gameScreen.drawInn(g2d);
-
-        this.add(saveBtn);
-        this.add(exitBtn);
-    }
-
-    private void drawStore(Graphics2D g2d) {
-        gameScreen.drawStore(g2d);
-
-        this.add(saveBtn);
-        this.add(exitBtn);
-    }
-
-    private void drawMission(Graphics2D g2d) {
-        gameScreen.drawMission(g2d);
-
-        this.add(saveBtn);
-        this.add(exitBtn);
-    }
-
-    private void drawAdventure(Graphics2D g2d) {
-        gameScreen.drawAdventure(g2d);
-
-        this.add(saveBtn);
-        this.add(exitBtn);
-    }
-
-    private void drawSave(Graphics2D g2d) {
-        gameScreen.drawSave(g2d);
-
-        this.add(save1Btn);
-        this.add(save2Btn);
-        this.add(save3Btn);
-        this.add(exitBtn);
-    }
-
-    public class NavListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            if (e.getActionCommand() == "Start") {
-                gameState = "active";
-            }
-            if (e.getActionCommand() == "Load") {
-                gameState = "load";
-            }
-            if (e.getActionCommand() == "Info") {
-                gameState = "info";
-            }
-            if (e.getActionCommand() == "Lose") {
-                gameState = "lose";
-            }
-            if (e.getActionCommand() == "Win") {
-                gameState = "win";
-            }
-            if (e.getActionCommand() == "Exit") {
-                if (gameState == "welcome") {
-                    running = false;
-                }
-                else {
-                    gameState = "welcome";
-                }
-            }
-            if (e.getActionCommand() == "Save") {
-                gameState = "save";
-            }
-            if (e.getActionCommand() == "Save1" ||
-                e.getActionCommand() == "Save2" ||
-                e.getActionCommand() == "Save3") {
-                gameState = "active";
-            }
-            if (e.getActionCommand() == "City1") {
-                gameState = "city";
-                whichCity = 1;
-            }
-            if (e.getActionCommand() == "City2") {
-                gameState = "city";
-                whichCity = 2;
-            }
-            if (e.getActionCommand() == "City3") {
-                gameState = "city";
-                whichCity = 3;
-            }
-            if (e.getActionCommand() == "City4") {
-                gameState = "city";
-                whichCity = 4;
-            }
-            if (e.getActionCommand() == "Inn") {
-                gameState = "inn";
-            }
-            if (e.getActionCommand() == "Store") {
-                gameState = "store";
-            }
-            if (e.getActionCommand() == "Mission") {
-                gameState = "mission";
-            }
-            if (e.getActionCommand() == "Adventure") {
-                gameState = "adventure";
-            }
-
-            ScenesRPGPanel.this.removeAll();
-        }
-    }
 
 }
