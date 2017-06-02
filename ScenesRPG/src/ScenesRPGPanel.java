@@ -2,22 +2,14 @@
 package cglosser;
 
 import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.SwingConstants;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 /**
     Extendings the Swing JPanel class with ScenesRPG game specific settings.
@@ -25,9 +17,8 @@ import java.awt.event.MouseEvent;
     @author Courtney Glosser
  */
 
-public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
+public class ScenesRPGPanel extends JPanel implements Runnable{
     public String gameState; // welcome, load, main, info, win, lose
-    private ButtonManager bm;
     private Screen gameScreen;
     private Stats gameStats;
 
@@ -41,13 +32,9 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
     private volatile boolean gameOver = false;
     private volatile boolean isPaused = false;
 
-    private Graphics dbg;
-    private Image dbImage = null;
-
     public ScenesRPGPanel() {
 
         gameState = "welcome";
-        bm = new ButtonManager(this);
         gameScreen = new Screen(this);
         gameStats = new Stats();
 
@@ -58,16 +45,15 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
 
         this.setLayout(null);
 
-        repaint();
+        gameRender();
     }
 
-    public void setGameState(String state) {
-        gameState = state;
-    }
+    public void setGameState(String state) { gameState = state;}
+    public void setRunning(boolean running) { this.running = running;}
 
-    public void setRunning(boolean running) {
-        this.running = running;
-    }
+    public String getGameState() { return gameState; }
+    public boolean getRunning() {return running; }
+
 
     public void run() {
         long beforeTime, timeDiff, sleepTime;
@@ -77,7 +63,6 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
         while(running) {
             gameUpdate();
             gameRender();
-            paintScreen();
 
             timeDiff = System.currentTimeMillis() - beforeTime;
             sleepTime = period - timeDiff;
@@ -107,9 +92,7 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
     }
 
     public void gameUpdate() {}
-    public void gameRender() {}
-    // TODO:  Update to take control of this, rather than just using queue
-    public void paintScreen() {
+    public void gameRender() {
         repaint();
     }
 
@@ -191,11 +174,7 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
         }
     }
 
-    public void actionPerformed(ActionEvent e) {
-        repaint();
-    }
-
-    private class KAdapter extends KeyAdapter {
+    private class TerminateAdapter extends KeyAdapter {
         // Listen for esc, q, end, and ctrl-c
         public void keyPressed(KeyEvent e) {
             int keyCode = e.getKeyCode();
@@ -211,7 +190,7 @@ public class ScenesRPGPanel extends JPanel implements ActionListener, Runnable{
     }
 
     private void readyForTermination() {
-        addKeyListener( new KAdapter());
+        addKeyListener( new TerminateAdapter());
     }
 
 
