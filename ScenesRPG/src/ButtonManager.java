@@ -19,6 +19,7 @@ public class ButtonManager {
     public JButton saveBtn, city1Btn, city2Btn, city3Btn, city4Btn;
     public JButton save1Btn, save2Btn, save3Btn;
     public JButton innBtn, storeBtn, missionBtn, adventureBtn;
+    public JButton citySelectBtn;
 
     private boolean debug = true;
     private ScenesRPGPanel myPanel;
@@ -35,6 +36,11 @@ public class ButtonManager {
         startBtn.addActionListener(myNavListener);
         startBtn.setBounds(280, 100, 80, 25);
         startBtn.setHorizontalAlignment(SwingConstants.CENTER);
+
+        citySelectBtn = new JButton ("City Select");
+        citySelectBtn.addActionListener(myNavListener);
+        citySelectBtn.setBounds(280, 130, 80, 25);
+        citySelectBtn.setHorizontalAlignment(SwingConstants.CENTER);
 
         loadBtn = new JButton ("Load");
         loadBtn.addActionListener( myNavListener);
@@ -126,6 +132,7 @@ public class ButtonManager {
     }
 
     public JButton getStartBtn() {return startBtn;}
+    public JButton getCitySelectBtn() {return citySelectBtn;}
     public JButton getLoadBtn() {return loadBtn;}
     public JButton getExitBtn() {return exitBtn;}
     public JButton getInfoBtn() {return infoBtn;}
@@ -152,7 +159,11 @@ public class ButtonManager {
         }
         public void actionPerformed(ActionEvent e) {
             if (e.getActionCommand() == "Start") {
-                myPanel.gameState = "active";
+                myPanel.gameState = "character";
+            }
+            if (e.getActionCommand() == "City Select") {
+                myPanel.gameState = "city_select";
+                System.out.println("Retrieved Character name: " + myPanel.getCharName());
             }
             if (e.getActionCommand() == "Load") {
                 myPanel.gameState = "load";
@@ -180,7 +191,7 @@ public class ButtonManager {
             if (e.getActionCommand() == "Save1" ||
                 e.getActionCommand() == "Save2" ||
                 e.getActionCommand() == "Save3") {
-                myPanel.gameState = "active";
+                myPanel.gameState = "city_select";
             }
             if (e.getActionCommand() == "City1") {
                 myPanel.gameState = "city";

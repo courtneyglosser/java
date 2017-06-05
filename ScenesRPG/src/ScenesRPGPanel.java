@@ -1,7 +1,6 @@
 
 package cglosser;
 
-import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -10,6 +9,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
     Extendings the Swing JPanel class with ScenesRPG game specific settings.
@@ -32,6 +33,9 @@ public class ScenesRPGPanel extends JPanel implements Runnable{
     private volatile boolean gameOver = false;
     private volatile boolean isPaused = false;
 
+    private JTextField playerNameInput;
+    private String charName;
+
     public ScenesRPGPanel() {
 
         gameState = "welcome";
@@ -46,13 +50,20 @@ public class ScenesRPGPanel extends JPanel implements Runnable{
         this.setLayout(null);
 
         gameRender();
+
+        playerNameInput = new JTextField();
+        playerNameInput.setHorizontalAlignment(JTextField.CENTER);
+        playerNameInput.setBounds(280, 100, 80, 25);
+
     }
 
     public void setGameState(String state) { gameState = state;}
     public void setRunning(boolean running) { this.running = running;}
+    public void setCharName(String name) {this.charName = name;}
 
     public String getGameState() { return gameState; }
     public boolean getRunning() {return running; }
+    public String getCharName() {return charName;}
 
 
     public void run() {
@@ -133,8 +144,12 @@ public class ScenesRPGPanel extends JPanel implements Runnable{
     public void doDrawing(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
-        if (gameState == "active") {
-            gameScreen.drawActive(g2d);
+        if (gameState == "city_select") {
+            gameScreen.drawCitySelect(g2d);
+        }
+        else if (gameState == "character") {
+            playerNameInput.requestFocusInWindow();
+            gameScreen.drawCharacter(g2d, playerNameInput);
         }
         else if (gameState == "welcome") {
             // Draw a welcome screen
