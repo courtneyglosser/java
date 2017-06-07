@@ -10,7 +10,6 @@ import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 /**
     Extendings the Swing JPanel class with ScenesRPG game specific settings.
@@ -33,6 +32,8 @@ public class ScenesRPGPanel extends JPanel implements Runnable{
     private volatile boolean gameOver = false;
     private volatile boolean isPaused = false;
 
+    private Player currPlayer;
+
 
     public ScenesRPGPanel() {
 
@@ -47,15 +48,19 @@ public class ScenesRPGPanel extends JPanel implements Runnable{
 
         this.setLayout(null);
 
+        currPlayer = new Player();
+
         gameRender();
 
     }
 
     public void setGameState(String state) { gameState = state;}
     public void setRunning(boolean running) { this.running = running;}
+    public void setCharName(String name) {currPlayer.setName(name);}
 
     public String getGameState() { return gameState; }
     public boolean getRunning() {return running; }
+    public String getCharName() {return currPlayer.getName();}
 
 
     public void run() {

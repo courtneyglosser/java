@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 
 /**
@@ -81,13 +80,16 @@ public class Screen {
         g2d.setColor(Color.white);
         g2d.drawString("Character", 100, 50);
 
-        myPanel.add(bm.getCitySelectBtn());
+        myPanel.add(bm.getKaidenBtn());
+        myPanel.add(bm.getLisaBtn());
         myPanel.add(bm.getExitBtn());
     }
 
     public void drawCitySelect(Graphics2D g2d) {
         g2d.setColor(Color.white);
         g2d.drawString("City Select", 100, 50);
+
+        drawChar(g2d);
 
         myPanel.add(bm.getCity1Btn());
         myPanel.add(bm.getCity2Btn());
@@ -182,5 +184,10 @@ public class Screen {
         g2d.drawString("Loser!", 100, 50);
     }
 
+    public void drawChar(Graphics2D g2d) {
+        g2d.setColor(Color.white);
+        g2d.drawString("Character", 100, 100);
+        g2d.drawString("Name: " + myPanel.getCharName(), 100, 130);
+    }
 
 }
