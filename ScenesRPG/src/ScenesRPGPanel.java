@@ -33,8 +33,6 @@ public class ScenesRPGPanel extends JPanel implements Runnable{
     private volatile boolean gameOver = false;
     private volatile boolean isPaused = false;
 
-    private JTextField playerNameInput;
-    private String charName;
 
     public ScenesRPGPanel() {
 
@@ -51,19 +49,13 @@ public class ScenesRPGPanel extends JPanel implements Runnable{
 
         gameRender();
 
-        playerNameInput = new JTextField();
-        playerNameInput.setHorizontalAlignment(JTextField.CENTER);
-        playerNameInput.setBounds(280, 100, 80, 25);
-
     }
 
     public void setGameState(String state) { gameState = state;}
     public void setRunning(boolean running) { this.running = running;}
-    public void setCharName(String name) {this.charName = name;}
 
     public String getGameState() { return gameState; }
     public boolean getRunning() {return running; }
-    public String getCharName() {return charName;}
 
 
     public void run() {
@@ -148,8 +140,7 @@ public class ScenesRPGPanel extends JPanel implements Runnable{
             gameScreen.drawCitySelect(g2d);
         }
         else if (gameState == "character") {
-            playerNameInput.requestFocusInWindow();
-            gameScreen.drawCharacter(g2d, playerNameInput);
+            gameScreen.drawCharacter(g2d);
         }
         else if (gameState == "welcome") {
             // Draw a welcome screen

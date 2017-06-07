@@ -42,20 +42,15 @@ public class Stats {
     private FontMetrics metrics;
 
     public Stats() {
-        System.out.println("In Stats constructor");
         // Timing elements
         fpsStore = new double[NUM_FPS];
         upsStore = new double[NUM_FPS];
-
-        System.out.println("Not Initialized fpsStore: " + fpsStore);
 
         for (int i=0; i < NUM_FPS; i++) {
             fpsStore[i] = 0.0;
             upsStore[i] = 0.0;
         }
 
-
-        System.out.println("Initialized fpsStore: " + fpsStore);
     }
 
     /**

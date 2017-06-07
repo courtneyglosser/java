@@ -32,7 +32,6 @@ public class Screen {
 
     private boolean debug = true;
 
-
     public Screen(ScenesRPGPanel jp) {
         myPanel = jp;
         LoadImages();
@@ -78,15 +77,12 @@ public class Screen {
         myPanel.add(bm.getExitBtn());
     }
 
-    public void drawCharacter(Graphics2D g2d, JTextField playerNameInput) {
+    public void drawCharacter(Graphics2D g2d) {
         g2d.setColor(Color.white);
         g2d.drawString("Character", 100, 50);
 
-        myPanel.add(playerNameInput);
         myPanel.add(bm.getCitySelectBtn());
         myPanel.add(bm.getExitBtn());
-
-        myPanel.setCharName(playerNameInput.getText());
     }
 
     public void drawCitySelect(Graphics2D g2d) {

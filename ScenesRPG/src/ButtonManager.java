@@ -39,7 +39,7 @@ public class ButtonManager {
 
         citySelectBtn = new JButton ("City Select");
         citySelectBtn.addActionListener(myNavListener);
-        citySelectBtn.setBounds(280, 130, 80, 25);
+        citySelectBtn.setBounds(270, 130, 120, 25);
         citySelectBtn.setHorizontalAlignment(SwingConstants.CENTER);
 
         loadBtn = new JButton ("Load");
@@ -163,7 +163,6 @@ public class ButtonManager {
             }
             if (e.getActionCommand() == "City Select") {
                 myPanel.gameState = "city_select";
-                System.out.println("Retrieved Character name: " + myPanel.getCharName());
             }
             if (e.getActionCommand() == "Load") {
                 myPanel.gameState = "load";
